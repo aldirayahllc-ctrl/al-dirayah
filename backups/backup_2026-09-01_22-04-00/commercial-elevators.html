@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commercial & High-Rise Tower Elevators Installation | Al Dirayah Contracting — Abu Dhabi</title>
+  <meta name="description" content="High-speed commercial passenger lifts, heavy-duty freight elevators, and hospital stretcher lifts by Al Dirayah Electromechanical Contracting LLC in Abu Dhabi & UAE. Certified to EN 81-20/50.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0E1115; --bg-alt: #14181D; --card: #1A1F26; --card-border: rgba(224,138,30,0.2);
+      --amber: #E08A1E; --amber-lt: #F5A93C; --amber-dim: rgba(224,138,30,0.15);
+      --white: #FFFFFF; --paper: #F3F4F6; --steel: #8C9BAE; --steel-lt: #BAC5D3;
+      --line: rgba(255,255,255,0.08); --radius: 12px; --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --f-h: 'Outfit', sans-serif; --f-b: 'Inter', sans-serif; --f-m: 'IBM Plex Mono', monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--paper); font-family: var(--f-b); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    
+    /* Header & Nav */
+    .hdr { position: fixed; top: 0; left: 0; right: 0; z-index: 100; backdrop-filter: blur(16px); background: rgba(14,17,21,0.85); border-bottom: 1px solid var(--line); transition: all .3s; }
+    .hdr-wrap { max-width: 1380px; margin: 0 auto; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: flex; align-items: center; gap: .75rem; font-family: var(--f-h); font-weight: 800; font-size: 1.25rem; letter-spacing: 1px; color: var(--white); }
+    .brand-mark { width: 34px; height: 34px; background: linear-gradient(135deg, var(--amber-lt), var(--amber)); border-radius: 8px; display: grid; place-items: center; color: #000; font-weight: 900; font-size: .95rem; }
+    .nav-tabs { display: flex; gap: .35rem; background: rgba(255,255,255,0.04); padding: .25rem; border-radius: 10px; border: 1px solid var(--line); }
+    .nav-tab { padding: .45rem 1rem; font-size: .8rem; font-family: var(--f-m); font-weight: 500; border-radius: 7px; color: var(--steel); transition: all .2s; }
+    .nav-tab:hover, .nav-tab.act { color: var(--white); background: var(--card); border: 1px solid var(--amber-dim); }
+    .nav-tab.act { color: var(--amber-lt); border-color: var(--amber); }
+    .btn-survey { padding: .55rem 1.25rem; font-family: var(--f-m); font-size: .8rem; font-weight: 600; color: #000; background: linear-gradient(135deg, var(--amber-lt), var(--amber)); border-radius: 8px; transition: transform .2s, box-shadow .2s; }
+    .btn-survey:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(224,138,30,0.3); }
+
+    /* Hero Section */
+    .hero { padding: 9rem 1.5rem 4rem; max-width: 1380px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: center; }
+    .eyebrow { font-family: var(--f-m); font-size: .85rem; color: var(--amber-lt); text-transform: uppercase; letter-spacing: 2px; display: flex; align-items: center; gap: .6rem; margin-bottom: 1rem; }
+    .eyebrow::before { content:''; width: 24px; height: 2px; background: var(--amber-lt); }
+    .hero h1 { font-family: var(--f-h); font-size: clamp(2.4rem, 4.5vw, 3.8rem); font-weight: 800; line-height: 1.1; color: var(--white); margin-bottom: 1.25rem; }
+    .hero p { font-size: 1.1rem; color: var(--steel-lt); margin-bottom: 2rem; max-width: 540px; }
+    .hero-img-card { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid var(--amber-dim); box-shadow: 0 25px 60px rgba(0,0,0,0.9); }
+    .hero-img-card img { width: 100%; height: auto; display: block; object-fit: cover; }
+    .hero-badge { position: absolute; bottom: 1.5rem; left: 1.5rem; background: rgba(14,17,21,0.9); backdrop-filter: blur(12px); padding: 1rem 1.25rem; border-radius: 10px; border: 1px solid var(--amber-dim); }
+    .hero-badge .title { font-family: var(--f-h); font-weight: 700; font-size: 1.1rem; color: var(--white); }
+    .hero-badge .sub { font-size: .8rem; color: var(--amber-lt); font-family: var(--f-m); }
+
+    /* Grid Cards Section */
+    .section { padding: 5rem 1.5rem; max-width: 1380px; margin: 0 auto; }
+    .sec-hdr { text-align: center; max-width: 680px; margin: 0 auto 3.5rem; }
+    .sec-hdr h2 { font-family: var(--f-h); font-size: clamp(2rem, 3.2vw, 2.8rem); font-weight: 700; color: var(--white); margin-bottom: .75rem; }
+    .sec-hdr p { color: var(--steel-lt); font-size: 1.05rem; }
+    
+    .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.75rem; }
+    @media(max-width:960px){ .hero, .card-grid { grid-template-columns: 1fr; } }
+    
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 2rem; transition: all .3s var(--ease); }
+    .card:hover { border-color: var(--amber); transform: translateY(-4px); box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
+    .card-icon { width: 48px; height: 48px; background: var(--amber-dim); border: 1px solid var(--amber); border-radius: 10px; display: grid; place-items: center; color: var(--amber-lt); font-family: var(--f-m); font-weight: 700; font-size: 1.1rem; margin-bottom: 1.25rem; }
+    .card h3 { font-family: var(--f-h); font-size: 1.35rem; font-weight: 700; color: var(--white); margin-bottom: .75rem; }
+    .card p { color: var(--steel); font-size: .95rem; line-height: 1.6; }
+
+    /* Specs Table */
+    .specs-box { background: var(--bg-alt); border: 1px solid var(--card-border); border-radius: 16px; padding: 2.5rem; margin-top: 4rem; }
+    .specs-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 1.75rem; }
+    @media(max-width:768px){ .specs-grid { grid-template-columns: repeat(2, 1fr); } }
+    .spec-item { padding: 1.25rem; background: var(--card); border-radius: 10px; border-left: 3px solid var(--amber); }
+    .spec-lbl { font-family: var(--f-m); font-size: .75rem; color: var(--steel); text-transform: uppercase; margin-bottom: .35rem; }
+    .spec-val { font-family: var(--f-h); font-size: 1.2rem; font-weight: 700; color: var(--white); }
+
+    /* Destination Dispatch Simulator */
+    .traffic-box { background: linear-gradient(135deg, rgba(224,138,30,0.08), rgba(20,24,29,0.95)); border: 1px solid var(--amber-dim); border-radius: 16px; padding: 3rem; margin-top: 4rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    @media(max-width:850px){ .traffic-box { grid-template-columns: 1fr; } }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--line); background: var(--bg-alt); padding: 4rem 1.5rem 2rem; margin-top: 5rem; }
+    .ftr-wrap { max-width: 1380px; margin: 0 auto; display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 3rem; margin-bottom: 3rem; }
+    @media(max-width:850px){ .ftr-wrap { grid-template-columns: 1fr 1fr; } }
+    .ftr-col h4 { font-family: var(--f-h); color: var(--white); font-size: 1.1rem; margin-bottom: 1.25rem; }
+    .ftr-col ul { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+    .ftr-col a { color: var(--steel); font-size: .9rem; transition: color .2s; }
+    .ftr-col a:hover { color: var(--amber-lt); }
+    .ftr-btm { border-top: 1px solid var(--line); max-width: 1380px; margin: 0 auto; padding-top: 1.5rem; display: flex; justify-content: space-between; color: var(--steel); font-size: .85rem; font-family: var(--f-m); }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Blur Header -->
+  <header class="hdr">
+    <div class="hdr-wrap">
+      <a href="index.html" class="brand">
+        <div class="brand-mark">▲</div>
+        <span>AL DIRAYAH</span>
+      </a>
+      <nav class="nav-tabs">
+        <a href="index.html" class="nav-tab ">HUB</a>
+        <a href="lifts.html" class="nav-tab ">LIFTS</a>
+        <a href="escalators.html" class="nav-tab ">ESCALATORS</a>
+      </nav>
+      <a href="index.html#survey" class="btn-survey">REQUEST SURVEY</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div>
+      <div class="eyebrow">COMMERCIAL HIGH-RISE SYSTEMS</div>
+      <h1>High-Speed Commercial &amp; Tower Elevator Systems</h1>
+      <p>High-capacity passenger, heavy freight, and hospital stretcher elevator installations for commercial towers, hotels, and government headquarters across Abu Dhabi &amp; Dubai. Certified to EN 81-20/50.</p>
+      <div style="display:flex;gap:1rem;">
+        <a href="index.html#survey" class="btn-survey" style="padding:.75rem 1.75rem;font-size:.9rem;">REQUEST TOWER SURVEY</a>
+        <a href="#specs" class="nav-tab" style="padding:.75rem 1.5rem;border:1px solid var(--line);">VIEW SPECIFICATIONS</a>
+      </div>
+    </div>
+    <figure class="hero-img-card">
+      <img src="commercial_tower_lift_3d.jpg" alt="Photorealistic 3D Commercial Skyscraper Elevators Bank Abu Dhabi">
+      <div class="hero-badge">
+        <div class="title">Destination Control Elevator Bank</div>
+        <div class="sub">High-Speed 4.0 m/s • Abu Dhabi Financial Tower</div>
+      </div>
+    </figure>
+  </section>
+
+  <!-- Key Offerings Grid -->
+  <section class="section">
+    <div class="sec-hdr">
+      <h2>Commercial Vertical Transportation Solutions</h2>
+      <p>Custom-engineered elevator installations designed for maximum traffic throughput, minimal waiting times, and heavy duty durability.</p>
+    </div>
+    <div class="card-grid">
+      <article class="card">
+        <div class="card-icon">01</div>
+        <h3>High-Speed Skyscraper Passenger Elevators</h3>
+        <p>Advanced traction machines capable of speeds up to 4.0 m/s with active roller guide damping to eliminate car vibration in high-rise commercial towers.</p>
+      </article>
+      <article class="card">
+        <div class="card-icon">02</div>
+        <h3>Heavy-Duty Freight &amp; Service Elevators</h3>
+        <p>Heavy duty payload capacities up to 5,000 kg. Features double-skin reinforced steel walls, checkered plate flooring, and protective bumper rails for logistics centers.</p>
+      </article>
+      <article class="card">
+        <div class="card-icon">03</div>
+        <h3>Medical &amp; Hospital Stretcher Lifts</h3>
+        <p>Designed to EN 81-70 accessibility standards. Includes anti-bacterial stainless steel cabins, priority medical override keys, and ultra-smooth micro-leveling.</p>
+      </article>
+      <article class="card">
+        <div class="card-icon">04</div>
+        <h3>Smart Destination Dispatch Systems</h3>
+        <p>Touchscreen kiosk terminals calculate optimal passenger grouping before boarding, reducing overall elevator transit time and energy consumption by up to 35%.</p>
+      </article>
+      <article class="card">
+        <div class="card-icon">05</div>
+        <h3>Firefighting &amp; Evacuation Elevators</h3>
+        <p>Certified to EN 81-72 fire protection standards with water-resistant electrical enclosures, dual power supply switching, and pressurized shaft ventilation compatibility.</p>
+      </article>
+      <article class="card">
+        <div class="card-icon">06</div>
+        <h3>Regenerative Energy Drives (VFD)</h3>
+        <p>Feeds kinetic energy generated during counterweight descent directly back into the building’s power grid, achieving ISO 25745 Class A energy efficiency ratings.</p>
+      </article>
+    </div>
+
+    <!-- Technical Specifications -->
+    <div class="specs-box" id="specs">
+      <div class="eyebrow">COMMERCIAL BENCHMARKS</div>
+      <h3 style="font-family:var(--f-h);font-size:1.8rem;color:var(--white)">Commercial Tower Specifications</h3>
+      <div class="specs-grid">
+        <div class="spec-item">
+          <div class="spec-lbl">Rated Capacity</div>
+          <div class="spec-val">1,000 kg – 5,000 kg (13 - 66 Persons)</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-lbl">Operating Speed</div>
+          <div class="spec-val">1.6 m/s – 4.0 m/s High-Speed</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-lbl">Maximum Travel</div>
+          <div class="spec-val">Up to 60 Floors (220 Meters)</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-lbl">Door Configuration</div>
+          <div class="spec-val">Center-Opening / 2-Speed Telescopic</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-lbl">Safety Compliance</div>
+          <div class="spec-val">EN 81-20/50 &amp; Civil Defence Fire Code</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-lbl">Control Technology</div>
+          <div class="spec-val">Smart Destination Dispatch &amp; IoT</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-lbl">Energy Rating</div>
+          <div class="spec-val">ISO 25745 Class A Eco-Regenerative</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-lbl">Acoustic Comfort</div>
+          <div class="spec-val">&lt; 48 dB In-Cabin Noise Level</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer style="background:var(--ink-2);border-top:1px solid var(--line);padding:4rem 0 2rem;margin-top:5rem;">
+  <div class="wrap">
+    <!-- Master 4-Column Footer Grid -->
+    <div style="display:grid;grid-template-columns:1.8fr 1.2fr 1.2fr 1.4fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid var(--line)">
+      <!-- Col 1: Profile -->
+      <div>
+        <div style="display:flex;align-items:center;gap:.6rem;font-family:var(--f-d);font-size:1.4rem;color:var(--white);font-weight:700;margin-bottom:1rem">
+          <span style="width:28px;height:28px;background:var(--amber);color:#000;border-radius:6px;display:grid;place-items:center;font-weight:900;font-size:.85rem">▲</span>
+          <span>AL DIRAYAH</span>
+        </div>
+        <p style="color:var(--steel-lt);font-size:.9rem;line-height:1.65;margin-bottom:1.2rem">Al Dirayah Electromechanical Contracting LLC. Certified vertical transportation and building infrastructure engineering specialists in Abu Dhabi and across the United Arab Emirates.</p>
+        <div style="font-family:var(--f-m);font-size:1.1rem;color:var(--amber-lt);direction:rtl;text-align:right">الدراية للمقاولات الكهروميكانيكية</div>
+      </div>
+
+      <!-- Col 2: Divisions -->
+      <div>
+        <h4 style="font-family:var(--f-d);font-size:1.1rem;color:var(--white);margin-bottom:1.2rem;letter-spacing:1px">DIVISIONS &amp; SERVICES</h4>
+        <ul style="list-style:none;padding:0;margin:0;display:grid;gap:.65rem;font-size:.88rem">
+          <li><a href="lifts.html" style="color:var(--steel);transition:color .2s">Vertical Lifts &amp; Elevators</a></li>
+          <li><a href="escalators.html" style="color:var(--steel);transition:color .2s">Escalators &amp; Moving Walkways</a></li>
+          <li><a href="residential-elevators.html" style="color:var(--steel);transition:color .2s">Residential Villa Lifts</a></li>
+          <li><a href="commercial-elevators.html" style="color:var(--steel);transition:color .2s">Commercial Tower Elevators</a></li>
+          <li><a href="maintenance-modernization.html" style="color:var(--steel);transition:color .2s">24/7 Maintenance &amp; AMC</a></li>
+          <li><a href="engineering-services.html" style="color:var(--steel);transition:color .2s">Engineering &amp; Traffic Audits</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Standards -->
+      <div>
+        <h4 style="font-family:var(--f-d);font-size:1.1rem;color:var(--white);margin-bottom:1.2rem;letter-spacing:1px">STANDARDS &amp; CODES</h4>
+        <ul style="list-style:none;padding:0;margin:0;display:grid;gap:.65rem;font-size:.88rem;color:var(--steel)">
+          <li>EN 81-20/50 Safety Matrix</li>
+          <li>EN 115 Commercial Escalator</li>
+          <li>EN 81-70 Hospital &amp; Accessibility</li>
+          <li>ISO 25745 Class A+++ Eco Rating</li>
+          <li>CIBSE Guide D Traffic Simulation</li>
+          <li>Civil Defence Safety Certified</li>
+        </ul>
+      </div>
+
+      <!-- Col 4: Abu Dhabi HQ -->
+      <div>
+        <h4 style="font-family:var(--f-d);font-size:1.1rem;color:var(--white);margin-bottom:1.2rem;letter-spacing:1px">ABU DHABI HEADQUARTERS</h4>
+        <div style="display:grid;gap:.8rem;font-size:.88rem;color:var(--steel-lt)">
+          <div><b style="color:var(--white);display:block;margin-bottom:.2rem">Office Address:</b>Mussafah Industrial Area, Abu Dhabi, UAE</div>
+          <div><b style="color:var(--white);display:block;margin-bottom:.2rem">24/7 Emergency Dispatch:</b><span style="font-family:var(--f-m);color:var(--amber-lt)">+971 2 555 0192</span></div>
+          <div><b style="color:var(--white);display:block;margin-bottom:.2rem">Official Email:</b><span style="font-family:var(--f-m);color:var(--amber-lt)">service@aldirayah.ae</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Copyright Bar -->
+    <div style="padding-top:1.5rem;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;font-family:var(--f-m);font-size:.8rem;color:var(--steel)">
+      <span>© 2026 Al Dirayah Electromechanical Contracting LLC. All rights reserved.</span>
+      <span style="color:var(--amber-lt)">Keep it moving · الحركة لا تتوقف</span>
+    </div>
+  </div>
+</footer>
+<!-- Integrated Request Survey Modal -->
+<div class="modal-overlay" id="surveyModal">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeSurveyModal()">×</button>
+    <div style="font-family:var(--f-m);font-size:.75rem;color:var(--amber-lt);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:.3rem">TECHNICAL CONSULTATION</div>
+    <h3>Request Site Survey &amp; Audit</h3>
+    <p>Select your required product or service below to schedule an on-site technical inspection by an Al Dirayah senior engineer.</p>
+    <form onsubmit="handleSurveySubmit(event)">
+      
+      <!-- Grouped Products & Services Select -->
+      <label>Product or Service Required *
+        <select id="mEquip" required style="width:100%;background:var(--bg);border:1px solid var(--line);color:var(--paper);padding:.7rem .9rem;font-family:var(--f-b);font-size:.9rem;border-radius:6px">
+          <option value="" disabled selected>-- Select Product or Service --</option>
+          <optgroup label="VERTICAL LIFTS & ELEVATORS">
+            <option value="MRL Gearless Passenger Elevators (EN 81-20/50)">MRL Gearless Passenger Elevators (EN 81-20/50)</option>
+            <option value="High-Speed Commercial Skyscraper Lifts (4.0 m/s)">High-Speed Commercial Skyscraper Lifts (4.0 m/s)</option>
+            <option value="Heavy-Duty Freight & Logistics Elevators (5,000 kg)">Heavy-Duty Freight &amp; Logistics Elevators (5,000 kg)</option>
+            <option value="Medical & Hospital Stretcher Elevators (EN 81-70)">Medical &amp; Hospital Stretcher Elevators (EN 81-70)</option>
+          </optgroup>
+          <optgroup label="PRIVATE VILLA ESTATES">
+            <option value="Custom Luxury Villa Elevators (MRL Traction)">Custom Luxury Villa Elevators (MRL Traction)</option>
+            <option value="Low-Pit Hydraulic Villa Lifts (200mm Pit)">Low-Pit Hydraulic Villa Lifts (200mm Pit)</option>
+            <option value="360° Circular Panoramic Glass Elevators">360° Circular Panoramic Glass Elevators</option>
+            <option value="Pitless Pneumatic Vacuum Villa Elevators">Pitless Pneumatic Vacuum Villa Elevators</option>
+          </optgroup>
+          <optgroup label="INCLINE & CONTINUOUS FLOW">
+            <option value="30° & 35° Commercial Escalators (EN 115)">30° &amp; 35° Commercial Escalators (EN 115)</option>
+            <option value="Heavy Transit Metro & Airport Escalators">Heavy Transit Metro &amp; Airport Escalators</option>
+            <option value="Horizontal & Inclined Moving Autowalks (Up to 100m)">Horizontal &amp; Inclined Moving Autowalks (Up to 100m)</option>
+          </optgroup>
+          <optgroup label="MAINTENANCE & REFURBISHMENT">
+            <option value="24/7 Rapid Emergency Response AMC Contract">24/7 Rapid Emergency Response AMC Contract</option>
+            <option value="Microprocessor & VVVF Control Modernization">Microprocessor &amp; VVVF Control Modernization</option>
+            <option value="Luxury Elevator Cabin Fit-Out & Refurbishment">Luxury Elevator Cabin Fit-Out &amp; Refurbishment</option>
+            <option value="Shaft Pit Waterproofing & Sump Pump Installation">Shaft Pit Waterproofing &amp; Sump Pump Installation</option>
+          </optgroup>
+          <optgroup label="ENGINEERING & SAFETY AUDITS">
+            <option value="CIBSE Guide D Passenger Traffic Simulation">CIBSE Guide D Passenger Traffic Simulation</option>
+            <option value="Third-Party EN 81 Compliance Safety Audit">Third-Party EN 81 Compliance Safety Audit</option>
+            <option value="3D BIM Revit Shaft Reaction Load Analysis">3D BIM Revit Shaft Reaction Load Analysis</option>
+            <option value="Abu Dhabi Civil Defence Operational Clearance Filing">Abu Dhabi Civil Defence Operational Clearance Filing</option>
+          </optgroup>
+        </select>
+      </label>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;">
+        <label>Property Type *
+          <select required style="width:100%;background:var(--bg);border:1px solid var(--line);color:var(--paper);padding:.7rem .9rem;font-family:var(--f-b);font-size:.9rem;border-radius:6px">
+            <option value="Luxury Private Villa">Luxury Private Villa</option>
+            <option value="Commercial High-Rise Tower">Commercial High-Rise Tower</option>
+            <option value="Shopping Mall / Retail Center">Shopping Mall / Retail Center</option>
+            <option value="Hospital / Healthcare Facility">Hospital / Healthcare Facility</option>
+            <option value="Hotel & Hospitality Resort">Hotel &amp; Hospitality Resort</option>
+            <option value="Industrial Logistics Warehouse">Industrial Logistics Warehouse</option>
+          </select>
+        </label>
+        <label>Project Stage *
+          <select required style="width:100%;background:var(--bg);border:1px solid var(--line);color:var(--paper);padding:.7rem .9rem;font-family:var(--f-b);font-size:.9rem;border-radius:6px">
+            <option value="New Building Construction">New Building Construction</option>
+            <option value="Existing Elevator Modernization">Existing Elevator Modernization</option>
+            <option value="Emergency Repair & AMC Change">Emergency Repair &amp; AMC Change</option>
+            <option value="Architectural Planning / Concept">Architectural Planning / Concept</option>
+          </select>
+        </label>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;">
+        <label>Contact Name *
+          <input type="text" placeholder="e.g. Eng. Ahmed Al Mansoori" required>
+        </label>
+        <label>Designation / Role
+          <input type="text" placeholder="e.g. Project Manager / Owner">
+        </label>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;">
+        <label>Phone (+971) *
+          <input type="tel" placeholder="+971 50 123 4567" required>
+        </label>
+        <label>Official Email *
+          <input type="email" placeholder="name@company.ae" required>
+        </label>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;">
+        <label>Number of Units
+          <input type="text" placeholder="e.g. 2 Lifts / 4 Escalators">
+        </label>
+        <label>Emirate / Location *
+          <select required style="width:100%;background:var(--bg);border:1px solid var(--line);color:var(--paper);padding:.7rem .9rem;font-family:var(--f-b);font-size:.9rem;border-radius:6px">
+            <option value="Abu Dhabi City & Offshores">Abu Dhabi City &amp; Offshores</option>
+            <option value="Al Ain & Western Region">Al Ain &amp; Western Region</option>
+            <option value="Dubai & Northern Emirates">Dubai &amp; Northern Emirates</option>
+          </select>
+        </label>
+      </div>
+
+      <label>Specific Requirements / Notes
+        <textarea rows="2" placeholder="Mention building height, floors, existing OEM brand (OTIS, TKE, KONE), or urgency..."></textarea>
+      </label>
+
+      <button type="submit" class="btn-survey" style="width:100%;padding:.85rem;font-size:1rem;margin-top:.4rem;cursor:pointer">SUBMIT SITE SURVEY REQUEST →</button>
+    </form>
+  </div>
+</div>
+
+<script>
+function openSurveyModal(cat){ document.getElementById('surveyModal').classList.add('active'); }
+function closeSurveyModal(){ document.getElementById('surveyModal').classList.remove('active'); }
+function handleSurveySubmit(e){
+  e.preventDefault();
+  alert('Thank you! Your survey request has been logged. An Al Dirayah senior engineer will contact you within 4 hours.');
+  closeSurveyModal();
+}
+</script>
+</body>
+</html>

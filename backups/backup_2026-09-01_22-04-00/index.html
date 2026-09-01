@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Al Dirayah Electromechanical Contracting LLC — Vertical Transport & MEP</title>
+  <meta name="description" content="Al Dirayah Electromechanical Contracting LLC in Abu Dhabi & UAE. Specializing in lifts, escalators, residential villa elevators, commercial high-rise towers, 24/7 AMC maintenance, and EN 81 engineering audits.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0E1115; --bg-alt: #14181D; --card: #1A1F26; --card-border: rgba(224,138,30,0.2);
+      --amber: #E08A1E; --amber-lt: #F5A93C; --amber-dim: rgba(224,138,30,0.15);
+      --white: #FFFFFF; --paper: #F3F4F6; --steel: #8C9BAE; --steel-lt: #BAC5D3;
+      --line: rgba(255,255,255,0.08); --radius: 12px; --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --f-h: 'Outfit', sans-serif; --f-b: 'Inter', sans-serif; --f-m: 'IBM Plex Mono', monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--paper); font-family: var(--f-b); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    .wrap { max-width: 1380px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* Header */
+    header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; backdrop-filter: blur(16px); background: rgba(14,17,21,0.85); border-bottom: 1px solid var(--line); }
+    .hdr-wrap { max-width: 1380px; margin: 0 auto; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: flex; align-items: center; gap: .75rem; font-family: var(--f-h); font-weight: 800; font-size: 1.25rem; letter-spacing: 1px; color: var(--white); }
+    .brand-mark { width: 34px; height: 34px; background: linear-gradient(135deg, var(--amber-lt), var(--amber)); border-radius: 8px; display: grid; place-items: center; color: #000; font-weight: 900; font-size: .95rem; }
+    .nav-tabs { display: flex; gap: .35rem; background: rgba(255,255,255,0.04); padding: .25rem; border-radius: 10px; border: 1px solid var(--line); }
+    .nav-tab { padding: .45rem .85rem; font-size: .78rem; font-family: var(--f-m); font-weight: 500; border-radius: 7px; color: var(--steel); transition: all .2s; }
+    .nav-tab:hover, .nav-tab.act { color: var(--white); background: var(--card); border: 1px solid var(--amber-dim); }
+    .nav-tab.act { color: var(--amber-lt); border-color: var(--amber); }
+    .btn-survey { padding: .55rem 1.25rem; font-family: var(--f-m); font-size: .8rem; font-weight: 600; color: #000; background: linear-gradient(135deg, var(--amber-lt), var(--amber)); border-radius: 8px; transition: transform .2s, box-shadow .2s; cursor: pointer; border: none; }
+    .btn-survey:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(224,138,30,0.3); }
+
+    /* Hero */
+    .hero { padding: 9rem 0 4rem; position: relative; }
+    .hero-tag { font-family: var(--f-m); font-size: .85rem; color: var(--amber-lt); text-transform: uppercase; letter-spacing: 2px; display: flex; align-items: center; gap: .6rem; margin-bottom: 1rem; }
+    .hero-tag::before { content:''; width: 24px; height: 2px; background: var(--amber-lt); }
+    .hero h1 { font-family: var(--f-h); font-size: clamp(3rem, 6vw, 5.2rem); font-weight: 800; line-height: 1.05; color: var(--white); margin-bottom: 1.25rem; }
+    .hero h1 span { color: var(--amber-lt); }
+    .hero-sub { font-size: 1.15rem; color: var(--steel-lt); max-width: 680px; margin-bottom: 3rem; }
+
+    /* Divisions Grid */
+    .divisions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.75rem; margin-top: 2rem; }
+    @media(max-width:1050px){ .divisions-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media(max-width:680px){ .divisions-grid { grid-template-columns: 1fr; } }
+
+    .div-card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 1.75rem; transition: all .35s var(--ease); display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; position: relative; }
+    .div-card:hover { border-color: var(--amber); transform: translateY(-5px); box-shadow: 0 20px 45px rgba(0,0,0,0.6); }
+    .card-img-wrap { width: 100%; height: 200px; border-radius: 10px; overflow: hidden; margin-bottom: 1.25rem; border: 1px solid var(--line); position: relative; }
+    .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s var(--ease); }
+    .div-card:hover .card-img { transform: scale(1.06); }
+    .badge { font-family: var(--f-m); font-size: .68rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--amber-lt); background: var(--amber-dim); border: 1px solid var(--amber-dim); padding: .25rem .65rem; border-radius: 4px; display: inline-block; margin-bottom: .8rem; }
+    .div-card h2 { font-family: var(--f-h); font-size: 1.5rem; font-weight: 700; color: var(--white); margin-bottom: .6rem; }
+    .div-card p { font-size: .92rem; color: var(--steel); margin-bottom: 1.5rem; flex: 1; line-height: 1.55; }
+    .btn-go { font-family: var(--f-m); font-size: .82rem; font-weight: 600; color: var(--amber-lt); display: inline-flex; align-items: center; gap: .5rem; transition: gap .25s; }
+    .div-card:hover .btn-go { gap: .8rem; color: var(--white); }
+
+    /* Credentials bar */
+    .cred-bar { margin-top: 4.5rem; background: var(--bg-alt); border: 1px solid var(--card-border); border-radius: 14px; padding: 2.25rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+    @media(max-width:850px){ .cred-bar { grid-template-columns: repeat(2, 1fr); } }
+    .cred-item b { display: block; font-family: var(--f-h); font-size: 1.8rem; color: var(--amber-lt); line-height: 1.1; }
+    .cred-item span { font-family: var(--f-m); font-size: .75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--steel); margin-top: .35rem; display: block; }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--line); background: var(--bg-alt); padding: 4rem 1.5rem 2rem; margin-top: 5rem; }
+    .ftr-wrap { max-width: 1380px; margin: 0 auto; display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 3rem; margin-bottom: 3rem; }
+    @media(max-width:850px){ .ftr-wrap { grid-template-columns: 1fr 1fr; } }
+    .ftr-col h4 { font-family: var(--f-h); color: var(--white); font-size: 1.1rem; margin-bottom: 1.25rem; }
+    .ftr-col ul { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+    .ftr-col a { color: var(--steel); font-size: .9rem; transition: color .2s; }
+    .ftr-col a:hover { color: var(--amber-lt); }
+    .ftr-btm { border-top: 1px solid var(--line); max-width: 1380px; margin: 0 auto; padding-top: 1.5rem; display: flex; justify-content: space-between; color: var(--steel); font-size: .85rem; font-family: var(--f-m); }
+
+    /* Modal */
+    .modal-overlay { position: fixed; inset: 0; z-index: 150; background: rgba(10,13,16,.85); backdrop-filter: blur(10px); display: none; place-items: center; padding: 1.5rem; }
+    .modal-overlay.active { display: grid; }
+    .modal-card { background: var(--card); border: 1px solid var(--amber); border-radius: 14px; max-width: 540px; width: 100%; padding: 2.25rem; box-shadow: 0 25px 60px rgba(0,0,0,.9); position: relative; }
+    .modal-card h3 { font-family: var(--f-h); font-size: 1.8rem; color: var(--white); margin-bottom: .5rem; }
+    .modal-card p { font-size: .9rem; color: var(--steel-lt); margin-bottom: 1.4rem; }
+    .modal-card form { display: grid; gap: 1rem; }
+    .modal-card label { font-family: var(--f-m); font-size: .75rem; text-transform: uppercase; color: var(--amber-lt); display: grid; gap: .35rem; }
+    .modal-card input,.modal-card select,.modal-card textarea { background: var(--bg); border: 1px solid var(--line); color: var(--paper); padding: .7rem .9rem; font-family: var(--f-b); font-size: .9rem; border-radius: 6px; }
+    .modal-card input:focus,.modal-card select:focus,.modal-card textarea:focus { border-color: var(--amber); outline: none; }
+    .modal-close { position: absolute; right: 1.2rem; top: 1.2rem; background: transparent; border: none; color: var(--steel); font-size: 1.5rem; cursor: pointer; }
+    .modal-close:hover { color: var(--amber-lt); }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="hdr-wrap">
+      <a href="index.html" class="brand">
+        <div class="brand-mark">▲</div>
+        <span>AL DIRAYAH</span>
+      </a>
+      <nav class="nav-tabs">
+        <a href="index.html" class="nav-tab active">HUB</a>
+        <a href="lifts.html" class="nav-tab ">LIFTS</a>
+        <a href="escalators.html" class="nav-tab ">ESCALATORS</a>
+      </nav>
+      <button class="btn-survey" onclick="openSurveyModal('Master Hub Inquiry')">REQUEST SURVEY</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-tag">ELECTROMECHANICAL CONTRACTING LLC · ABU DHABI</div>
+      <h1>Motion Systems &amp;<br><span>Building Infrastructure</span></h1>
+      <p class="hero-sub">We supply, install, commission, and maintain high-precision vertical transport and electromechanical systems across Abu Dhabi &amp; Dubai. Approved subcontractor across TKE, OTIS, and KONE OEMs.</p>
+
+      <div class="divisions-grid">
+        <!-- 1: Lifts -->
+        <a class="div-card" href="lifts.html">
+          <div class="card-img-wrap">
+            <img src="lift_real.png" alt="3D Traction Lift" class="card-img">
+          </div>
+          <div>
+            <span class="badge">01 · Vertical Transport</span>
+            <h2>Lifts &amp; Elevators Division</h2>
+            <p>Traction passenger elevators, heavy freight lifts, panoramic cabs, smart destination dispatch, and real-time 3D scroll disassembly engine.</p>
+          </div>
+          <span class="btn-go">Explore Lifts Division &rarr;</span>
+        </a>
+
+        <!-- 2: Escalators -->
+        <a class="div-card" href="escalators.html">
+          <div class="card-img-wrap">
+            <img src="escalator_real.png" alt="3D Commercial Escalator" class="card-img">
+          </div>
+          <div>
+            <span class="badge">02 · Continuous Flow</span>
+            <h2>Escalators &amp; Walkways</h2>
+            <p>30° &amp; 35° commercial escalators, heavy transit units, moving autowalks up to 100m, and real-time 3D truss scroll disassembly.</p>
+          </div>
+          <span class="btn-go">Explore Escalators Division &rarr;</span>
+        </a>
+
+        <!-- 3: Residential Villa Lifts -->
+        <a class="div-card" href="residential-elevators.html">
+          <div class="card-img-wrap">
+            <img src="residential_lift_3d.jpg" alt="Luxury Villa Glass Elevator" class="card-img">
+          </div>
+          <div>
+            <span class="badge">03 · Private Estates</span>
+            <h2>Residential Villa Elevators</h2>
+            <p>Custom MRL gearless &amp; hydraulic home lifts, 360° panoramic glass cabins, pitless options, and bespoke Italian marble interior fit-outs.</p>
+          </div>
+          <span class="btn-go">Configure Villa Lift &rarr;</span>
+        </a>
+
+        <!-- 4: Commercial Tower Elevators -->
+        <a class="div-card" href="commercial-elevators.html">
+          <div class="card-img-wrap">
+            <img src="commercial_tower_lift_3d.jpg" alt="Commercial Skyscraper Elevator Bank" class="card-img">
+          </div>
+          <div>
+            <span class="badge">04 · High-Rise Towers</span>
+            <h2>Commercial Tower Elevators</h2>
+            <p>High-speed passenger lifts up to 4.0 m/s, heavy-duty 5,000 kg freight elevators, EN 81-70 hospital stretcher lifts, and smart destination dispatch.</p>
+          </div>
+          <span class="btn-go">Explore Commercial Lifts &rarr;</span>
+        </a>
+
+        <!-- 5: Maintenance & Fit-Out -->
+        <a class="div-card" href="maintenance-modernization.html">
+          <div class="card-img-wrap">
+            <img src="maintenance_modernization_3d.jpg" alt="Modernized Elevator Cabin Fit-out" class="card-img">
+          </div>
+          <div>
+            <span class="badge">05 · 24/7 Rapid Response</span>
+            <h2>Maintenance &amp; Fit-Out Works</h2>
+            <p>24/7 emergency dispatch SLA, microprocessor control panel upgrades, VVVF inverter conversions, and turnkey luxury cabin interior refurbishment.</p>
+          </div>
+          <span class="btn-go">View AMC Packages &rarr;</span>
+        </a>
+
+        <!-- 6: Engineering Services -->
+        <a class="div-card" href="engineering-services.html">
+          <div class="card-img-wrap">
+            <img src="engineering_audit_3d.jpg" alt="3D BIM Elevator Shaft Load Analysis" class="card-img">
+          </div>
+          <div>
+            <span class="badge">06 · Technical Audits</span>
+            <h2>Engineering &amp; Safety Audits</h2>
+            <p>Vertical transport traffic simulations (CIBSE Guide D), third-party EN 81-20/50 compliance audits, 3D BIM load modeling, and Civil Defence filing.</p>
+          </div>
+          <span class="btn-go">Traffic Calculator &rarr;</span>
+        </a>
+      </div>
+
+      <!-- Credentials -->
+      <div class="cred-bar">
+        <div class="cred-item"><b>TKE · OTIS · KONE</b><span>Approved OEM Subcontractor</span></div>
+        <div class="cred-item"><b>24 / 7 SLA</b><span>Sub-30 Min Rapid Callout</span></div>
+        <div class="cred-item"><b>ADMCC &amp; OSHAD</b><span>Certified Engineers &amp; Technicians</span></div>
+        <div class="cred-item"><b>EN 81-20/50</b><span>Civil Defence Compliance</span></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer style="background:var(--ink-2);border-top:1px solid var(--line);padding:4rem 0 2rem;margin-top:5rem;">
+  <div class="wrap">
+    <!-- Master 4-Column Footer Grid -->
+    <div style="display:grid;grid-template-columns:1.8fr 1.2fr 1.2fr 1.4fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid var(--line)">
+      <!-- Col 1: Profile -->
+      <div>
+        <div style="display:flex;align-items:center;gap:.6rem;font-family:var(--f-d);font-size:1.4rem;color:var(--white);font-weight:700;margin-bottom:1rem">
+          <span style="width:28px;height:28px;background:var(--amber);color:#000;border-radius:6px;display:grid;place-items:center;font-weight:900;font-size:.85rem">▲</span>
+          <span>AL DIRAYAH</span>
+        </div>
+        <p style="color:var(--steel-lt);font-size:.9rem;line-height:1.65;margin-bottom:1.2rem">Al Dirayah Electromechanical Contracting LLC. Certified vertical transportation and building infrastructure engineering specialists in Abu Dhabi and across the United Arab Emirates.</p>
+        <div style="font-family:var(--f-m);font-size:1.1rem;color:var(--amber-lt);direction:rtl;text-align:right">الدراية للمقاولات الكهروميكانيكية</div>
+      </div>
+
+      <!-- Col 2: Divisions -->
+      <div>
+        <h4 style="font-family:var(--f-d);font-size:1.1rem;color:var(--white);margin-bottom:1.2rem;letter-spacing:1px">DIVISIONS &amp; SERVICES</h4>
+        <ul style="list-style:none;padding:0;margin:0;display:grid;gap:.65rem;font-size:.88rem">
+          <li><a href="lifts.html" style="color:var(--steel);transition:color .2s">Vertical Lifts &amp; Elevators</a></li>
+          <li><a href="escalators.html" style="color:var(--steel);transition:color .2s">Escalators &amp; Moving Walkways</a></li>
+          <li><a href="residential-elevators.html" style="color:var(--steel);transition:color .2s">Residential Villa Lifts</a></li>
+          <li><a href="commercial-elevators.html" style="color:var(--steel);transition:color .2s">Commercial Tower Elevators</a></li>
+          <li><a href="maintenance-modernization.html" style="color:var(--steel);transition:color .2s">24/7 Maintenance &amp; AMC</a></li>
+          <li><a href="engineering-services.html" style="color:var(--steel);transition:color .2s">Engineering &amp; Traffic Audits</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Standards -->
+      <div>
+        <h4 style="font-family:var(--f-d);font-size:1.1rem;color:var(--white);margin-bottom:1.2rem;letter-spacing:1px">STANDARDS &amp; CODES</h4>
+        <ul style="list-style:none;padding:0;margin:0;display:grid;gap:.65rem;font-size:.88rem;color:var(--steel)">
+          <li>EN 81-20/50 Safety Matrix</li>
+          <li>EN 115 Commercial Escalator</li>
+          <li>EN 81-70 Hospital &amp; Accessibility</li>
+          <li>ISO 25745 Class A+++ Eco Rating</li>
+          <li>CIBSE Guide D Traffic Simulation</li>
+          <li>Civil Defence Safety Certified</li>
+        </ul>
+      </div>
+
+      <!-- Col 4: Abu Dhabi HQ -->
+      <div>
+        <h4 style="font-family:var(--f-d);font-size:1.1rem;color:var(--white);margin-bottom:1.2rem;letter-spacing:1px">ABU DHABI HEADQUARTERS</h4>
+        <div style="display:grid;gap:.8rem;font-size:.88rem;color:var(--steel-lt)">
+          <div><b style="color:var(--white);display:block;margin-bottom:.2rem">Office Address:</b>Mussafah Industrial Area, Abu Dhabi, UAE</div>
+          <div><b style="color:var(--white);display:block;margin-bottom:.2rem">24/7 Emergency Dispatch:</b><span style="font-family:var(--f-m);color:var(--amber-lt)">+971 2 555 0192</span></div>
+          <div><b style="color:var(--white);display:block;margin-bottom:.2rem">Official Email:</b><span style="font-family:var(--f-m);color:var(--amber-lt)">service@aldirayah.ae</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Copyright Bar -->
+    <div style="padding-top:1.5rem;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;font-family:var(--f-m);font-size:.8rem;color:var(--steel)">
+      <span>© 2026 Al Dirayah Electromechanical Contracting LLC. All rights reserved.</span>
+      <span style="color:var(--amber-lt)">Keep it moving · الحركة لا تتوقف</span>
+    </div>
+  </div>
+</footer>
+
+  <!-- Survey Request Modal -->
+  <!-- Integrated Request Survey Modal -->
+<div class="modal-overlay" id="surveyModal">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeSurveyModal()">×</button>
+    <div style="font-family:var(--f-m);font-size:.75rem;color:var(--amber-lt);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:.3rem">TECHNICAL CONSULTATION</div>
+    <h3>Request Site Survey &amp; Audit</h3>
+    <p>Select your required product or service below to schedule an on-site technical inspection by an Al Dirayah senior engineer.</p>
+    <form onsubmit="handleSurveySubmit(event)">
+      
+      <!-- Grouped Products & Services Select -->
+      <label>Product or Service Required *
+        <select id="mEquip" required>
+          <option value="" disabled selected>-- Select Product or Service --</option>
+          <optgroup label="VERTICAL LIFTS & ELEVATORS">
+            <option value="MRL Gearless Passenger Elevators (EN 81-20/50)">MRL Gearless Passenger Elevators (EN 81-20/50)</option>
+            <option value="High-Speed Commercial Skyscraper Lifts (4.0 m/s)">High-Speed Commercial Skyscraper Lifts (4.0 m/s)</option>
+            <option value="Heavy-Duty Freight & Logistics Elevators (5,000 kg)">Heavy-Duty Freight &amp; Logistics Elevators (5,000 kg)</option>
+            <option value="Medical & Hospital Stretcher Elevators (EN 81-70)">Medical &amp; Hospital Stretcher Elevators (EN 81-70)</option>
+          </optgroup>
+          <optgroup label="PRIVATE VILLA ESTATES">
+            <option value="Custom Luxury Villa Elevators (MRL Traction)">Custom Luxury Villa Elevators (MRL Traction)</option>
+            <option value="Low-Pit Hydraulic Villa Lifts (200mm Pit)">Low-Pit Hydraulic Villa Lifts (200mm Pit)</option>
+            <option value="360° Circular Panoramic Glass Elevators">360° Circular Panoramic Glass Elevators</option>
+            <option value="Pitless Pneumatic Vacuum Villa Elevators">Pitless Pneumatic Vacuum Villa Elevators</option>
+          </optgroup>
+          <optgroup label="INCLINE & CONTINUOUS FLOW">
+            <option value="30° & 35° Commercial Escalators (EN 115)">30° &amp; 35° Commercial Escalators (EN 115)</option>
+            <option value="Heavy Transit Metro & Airport Escalators">Heavy Transit Metro &amp; Airport Escalators</option>
+            <option value="Horizontal & Inclined Moving Autowalks (Up to 100m)">Horizontal &amp; Inclined Moving Autowalks (Up to 100m)</option>
+          </optgroup>
+          <optgroup label="MAINTENANCE & REFURBISHMENT">
+            <option value="24/7 Rapid Emergency Response AMC Contract">24/7 Rapid Emergency Response AMC Contract</option>
+            <option value="Microprocessor & VVVF Control Modernization">Microprocessor &amp; VVVF Control Modernization</option>
+            <option value="Luxury Elevator Cabin Fit-Out & Refurbishment">Luxury Elevator Cabin Fit-Out &amp; Refurbishment</option>
+            <option value="Shaft Pit Waterproofing & Sump Pump Installation">Shaft Pit Waterproofing &amp; Sump Pump Installation</option>
+          </optgroup>
+          <optgroup label="ENGINEERING & SAFETY AUDITS">
+            <option value="CIBSE Guide D Passenger Traffic Simulation">CIBSE Guide D Passenger Traffic Simulation</option>
+            <option value="Third-Party EN 81 Compliance Safety Audit">Third-Party EN 81 Compliance Safety Audit</option>
+            <option value="3D BIM Revit Shaft Reaction Load Analysis">3D BIM Revit Shaft Reaction Load Analysis</option>
+            <option value="Abu Dhabi Civil Defence Operational Clearance Filing">Abu Dhabi Civil Defence Operational Clearance Filing</option>
+          </optgroup>
+        </select>
+      </label>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;">
+        <label>Property Type *
+          <select required>
+            <option value="Luxury Private Villa">Luxury Private Villa</option>
+            <option value="Commercial High-Rise Tower">Commercial High-Rise Tower</option>
+            <option value="Shopping Mall / Retail Center">Shopping Mall / Retail Center</option>
+            <option value="Hospital / Healthcare Facility">Hospital / Healthcare Facility</option>
+            <option value="Hotel & Hospitality Resort">Hotel &amp; Hospitality Resort</option>
+            <option value="Industrial Logistics Warehouse">Industrial Logistics Warehouse</option>
+          </select>
+        </label>
+        <label>Project Stage *
+          <select required>
+            <option value="New Building Construction">New Building Construction</option>
+            <option value="Existing Elevator Modernization">Existing Elevator Modernization</option>
+            <option value="Emergency Repair & AMC Change">Emergency Repair &amp; AMC Change</option>
+            <option value="Architectural Planning / Concept">Architectural Planning / Concept</option>
+          </select>
+        </label>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;">
+        <label>Contact Name *
+          <input type="text" placeholder="e.g. Eng. Ahmed Al Mansoori" required>
+        </label>
+        <label>Designation / Role
+          <input type="text" placeholder="e.g. Project Manager / Owner">
+        </label>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;">
+        <label>Phone (+971) *
+          <input type="tel" placeholder="+971 50 123 4567" required>
+        </label>
+        <label>Official Email *
+          <input type="email" placeholder="name@company.ae" required>
+        </label>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;">
+        <label>Number of Units
+          <input type="text" placeholder="e.g. 2 Lifts / 4 Escalators">
+        </label>
+        <label>Emirate / Location *
+          <select required>
+            <option value="Abu Dhabi City & Offshores">Abu Dhabi City &amp; Offshores</option>
+            <option value="Al Ain & Western Region">Al Ain &amp; Western Region</option>
+            <option value="Dubai & Northern Emirates">Dubai &amp; Northern Emirates</option>
+          </select>
+        </label>
+      </div>
+
+      <label>Specific Requirements / Notes
+        <textarea rows="2" placeholder="Mention building height, floors, existing OEM brand (OTIS, TKE, KONE), or urgency..."></textarea>
+      </label>
+
+      <button type="submit" class="btn-survey" style="width:100%;padding:.85rem;font-size:1rem;margin-top:.4rem;cursor:pointer">SUBMIT SITE SURVEY REQUEST →</button>
+    </form>
+  </div>
+</div>
+
+  <script>
+    function openSurveyModal(cat) { document.getElementById('surveyModal').classList.add('active'); }
+    function closeSurveyModal() { document.getElementById('surveyModal').classList.remove('active'); }
+    function handleSurveySubmit(e) {
+      e.preventDefault();
+      alert('Thank you! Your survey request has been logged. An Al Dirayah senior engineer will contact you within 4 hours.');
+      closeSurveyModal();
+    }
+  </script>
+</body>
+</html>

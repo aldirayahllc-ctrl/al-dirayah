@@ -1,0 +1,1090 @@
+<title>Al Dirayah Brand Guidelines</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
+
+<style>
+/* ============================================================
+   AL DIRAYAH — BRAND GUIDELINES
+   Palette drawn from the subject: machine-room graphite,
+   brushed steel, floor-indicator amber, concrete.
+   ============================================================ */
+
+:root {
+  /* light palette — complete definition */
+  --ground:      #F5F4F1;
+  --surface:     #FFFFFF;
+  --surface-2:   #EDEBE6;
+  --ink:         #1B1E24;
+  --ink-2:       #3D434D;
+  --steel:       #6E7885;
+  --steel-2:     #98A0AB;
+  --line:        #D9D6D0;
+  --line-2:      #C4C0B8;
+  --amber:       #D07C10;
+  --amber-ink:   #8A5008;
+  --amber-soft:  #FBEEDA;
+  --brand-ink:   #1B1E24;
+  --brand-amber: #E08A1E;
+  --brand-steel: #6E7885;
+  --good:        #1F7A4D;
+  --bad:         #B23120;
+  --shadow:      0 1px 2px rgba(27,30,36,.06), 0 8px 24px rgba(27,30,36,.05);
+
+  --measure: 68ch;
+  --rail: 104px;
+  --gap: clamp(1rem, 2.5vw, 2rem);
+
+  --f-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --f-body: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", monospace;
+  --f-ar: "IBM Plex Sans Arabic", "Geeza Pro", "Noto Naskh Arabic", serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground:     #14171B;
+    --surface:    #1B1F25;
+    --surface-2:  #232830;
+    --ink:        #E9E7E2;
+    --ink-2:      #B9BDC5;
+    --steel:      #8C96A3;
+    --steel-2:    #6E7885;
+    --line:       #2C323A;
+    --line-2:     #3A424C;
+    --amber:      #F0A63A;
+    --amber-ink:  #F5C077;
+    --amber-soft: #2A2318;
+    --good:       #4FB07E;
+    --bad:        #E2705C;
+    --shadow:     0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+  }
+}
+
+:root[data-theme="dark"] {
+  --ground:     #14171B;
+  --surface:    #1B1F25;
+  --surface-2:  #232830;
+  --ink:        #E9E7E2;
+  --ink-2:      #B9BDC5;
+  --steel:      #8C96A3;
+  --steel-2:    #6E7885;
+  --line:       #2C323A;
+  --line-2:     #3A424C;
+  --amber:      #F0A63A;
+  --amber-ink:  #F5C077;
+  --amber-soft: #2A2318;
+  --good:       #4FB07E;
+  --bad:        #E2705C;
+  --shadow:     0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 16px;
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+}
+
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 var(--gap); }
+
+/* ---------- type scale ---------- */
+h1, h2, h3, h4 { text-wrap: balance; margin: 0; }
+h2 {
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: clamp(1.9rem, 4.2vw, 2.85rem);
+  line-height: 1.06;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+  margin-bottom: .85rem;
+}
+h3 {
+  font-size: 1.06rem;
+  font-weight: 600;
+  letter-spacing: .005em;
+  margin-top: 2.2rem;
+  margin-bottom: .5rem;
+}
+h4 {
+  font-family: var(--f-mono);
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--steel);
+  margin-bottom: .5rem;
+}
+p { margin: 0 0 1rem; max-width: var(--measure); }
+ul, ol { max-width: var(--measure); padding-left: 1.15rem; margin: 0 0 1rem; }
+li { margin-bottom: .35rem; }
+strong { font-weight: 600; }
+a { color: var(--amber-ink); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; border-radius: 2px; }
+
+.eyebrow {
+  font-family: var(--f-mono);
+  font-size: .7rem;
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--amber-ink);
+  margin: 0 0 .6rem;
+}
+.lede { font-size: 1.12rem; line-height: 1.55; color: var(--ink-2); max-width: 60ch; }
+.note {
+  font-size: .87rem; color: var(--steel); max-width: 62ch;
+  border-left: 2px solid var(--line-2); padding-left: .85rem; margin: 1.1rem 0;
+}
+.mono { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+.ar { font-family: var(--f-ar); direction: rtl; unicode-bidi: isolate; }
+
+/* ---------- cover ---------- */
+.cover {
+  background: var(--brand-ink);
+  color: #E9E7E2;
+  padding: clamp(3rem, 9vw, 7rem) 0 clamp(2.5rem, 6vw, 4.5rem);
+  border-bottom: 4px solid var(--brand-amber);
+}
+.cover__grid { display: grid; gap: clamp(2rem, 5vw, 3.5rem); grid-template-columns: 1fr; }
+@media (min-width: 760px) { .cover__grid { grid-template-columns: 150px 1fr; align-items: start; } }
+.cover h1 {
+  font-family: var(--f-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: clamp(2.6rem, 8vw, 4.6rem);
+  line-height: .96;
+  letter-spacing: .01em;
+  color: #FFF;
+}
+.cover h1 span { color: var(--brand-amber); display: block; }
+.cover__ar { font-size: clamp(1.4rem, 4vw, 2rem); color: #9AA3B0; margin-top: .6rem; font-weight: 500; }
+.cover__meta {
+  display: flex; flex-wrap: wrap; gap: .5rem 2.4rem; margin-top: 2.4rem;
+  font-family: var(--f-mono); font-size: .74rem; letter-spacing: .07em;
+  text-transform: uppercase; color: #7C8593;
+}
+.cover__meta b { color: #C9CED6; font-weight: 500; }
+
+/* ---------- levels (building-section rail) ---------- */
+.level { position: relative; padding: clamp(2.6rem, 6vw, 4.4rem) 0; border-top: 1px solid var(--line); }
+.level:first-of-type { border-top: 0; }
+.level__grid { display: grid; grid-template-columns: 1fr; gap: 1.2rem; }
+@media (min-width: 860px) {
+  .level__grid { grid-template-columns: var(--rail) 1fr; gap: clamp(1.5rem, 4vw, 3rem); }
+}
+.rail { display: flex; align-items: baseline; gap: .6rem; }
+@media (min-width: 860px) {
+  .rail { flex-direction: column; align-items: flex-start; gap: .4rem; position: sticky; top: 1.5rem; }
+}
+.rail__num {
+  font-family: var(--f-mono); font-size: .8rem; font-weight: 600;
+  letter-spacing: .1em; color: var(--amber-ink);
+}
+.rail__tick { display: none; }
+@media (min-width: 860px) {
+  .rail__tick { display: block; width: 100%; height: 3px; background: var(--brand-amber); }
+}
+.rail__label {
+  font-family: var(--f-mono); font-size: .66rem; letter-spacing: .11em;
+  text-transform: uppercase; color: var(--steel-2); line-height: 1.4;
+}
+
+/* ---------- blocks ---------- */
+.card {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 3px; padding: 1.35rem 1.5rem;
+}
+.grid { display: grid; gap: 1rem; }
+.grid--2 { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+.grid--3 { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.grid--4 { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.stack { display: flex; flex-direction: column; gap: 1rem; }
+.full { max-width: none; }
+
+table { border-collapse: collapse; width: 100%; font-size: .89rem; }
+.tablewrap { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--line); border-radius: 3px; background: var(--surface); }
+th, td { text-align: left; padding: .62rem .8rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+thead th {
+  font-family: var(--f-mono); font-size: .68rem; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--steel); font-weight: 600;
+  background: var(--surface-2); white-space: nowrap;
+}
+tbody tr:last-child td { border-bottom: 0; }
+td.num, td .mono { font-variant-numeric: tabular-nums; }
+
+/* ---------- colour chips ---------- */
+.chip { border: 1px solid var(--line); border-radius: 3px; overflow: hidden; background: var(--surface); }
+.chip__swatch { height: 92px; }
+.chip__body { padding: .7rem .8rem .85rem; }
+.chip__name { font-weight: 600; font-size: .9rem; }
+.chip__role { font-size: .76rem; color: var(--steel); margin-bottom: .45rem; }
+.chip__spec { font-family: var(--f-mono); font-size: .7rem; line-height: 1.75; color: var(--ink-2); }
+.chip__spec span { color: var(--steel-2); }
+
+.ratio { display: flex; height: 40px; border-radius: 3px; overflow: hidden; border: 1px solid var(--line); }
+.ratio div { display: flex; align-items: center; justify-content: center; font-family: var(--f-mono); font-size: .66rem; letter-spacing: .06em; }
+
+/* ---------- specimens ---------- */
+.spec { background: var(--surface); border: 1px solid var(--line); border-radius: 3px; padding: 1.4rem 1.5rem; }
+.spec--dark { background: var(--brand-ink); border-color: #2C323A; }
+.specimen-line { margin: 0 0 .35rem; max-width: none; }
+
+.misuse { border: 1px solid var(--line); border-radius: 3px; overflow: hidden; background: var(--surface); }
+.misuse__art { background: var(--surface-2); display: grid; place-items: center; padding: 1.1rem; min-height: 92px; }
+.misuse__cap { padding: .6rem .75rem .75rem; font-size: .78rem; color: var(--ink-2); border-top: 1px solid var(--line); }
+.misuse__cap b { display: block; color: var(--bad); font-size: .68rem; font-family: var(--f-mono);
+  letter-spacing: .1em; text-transform: uppercase; margin-bottom: .2rem; }
+
+.do-dont { display: grid; gap: .55rem; }
+.dd { display: grid; grid-template-columns: 20px 1fr; gap: .6rem; align-items: start; font-size: .9rem; max-width: var(--measure); }
+.dd__m { font-family: var(--f-mono); font-weight: 600; font-size: .8rem; line-height: 1.7; }
+.dd--do .dd__m { color: var(--good); }
+.dd--no .dd__m { color: var(--bad); }
+
+.pill {
+  display: inline-block; font-family: var(--f-mono); font-size: .66rem;
+  letter-spacing: .09em; text-transform: uppercase; padding: .2rem .45rem;
+  border: 1px solid var(--line-2); border-radius: 2px; color: var(--steel);
+}
+
+.callout {
+  background: var(--amber-soft); border: 1px solid var(--line-2);
+  border-left: 3px solid var(--brand-amber); border-radius: 3px;
+  padding: 1rem 1.2rem; margin: 1.2rem 0; max-width: var(--measure);
+}
+.callout h4 { color: var(--amber-ink); margin-top: 0; }
+.callout p:last-child { margin-bottom: 0; }
+
+.pillar { border-top: 3px solid var(--brand-amber); padding-top: .8rem; }
+.pillar h3 { margin-top: 0; font-family: var(--f-display); text-transform: uppercase;
+  font-size: 1.5rem; letter-spacing: .01em; }
+.pillar p { font-size: .88rem; color: var(--ink-2); margin-bottom: 0; }
+
+svg { display: block; max-width: 100%; height: auto; }
+figure { margin: 0; }
+figcaption { font-size: .78rem; color: var(--steel); margin-top: .5rem; }
+
+.toc { display: grid; gap: 0; max-width: var(--measure); }
+.toc a {
+  display: grid; grid-template-columns: 52px 1fr; gap: .8rem;
+  padding: .55rem 0; border-bottom: 1px solid var(--line);
+  color: var(--ink); text-decoration: none; font-size: .95rem;
+}
+.toc a:hover { color: var(--amber-ink); }
+.toc a span:first-child { font-family: var(--f-mono); font-size: .78rem; color: var(--steel); }
+
+footer { background: var(--brand-ink); color: #8A93A1; padding: 2.5rem 0; margin-top: 2rem;
+  font-size: .8rem; border-top: 4px solid var(--brand-amber); }
+footer p { max-width: 70ch; }
+footer b { color: #C9CED6; font-weight: 500; }
+
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+/* ---------- print / PDF ---------- */
+@page { size: A4; margin: 14mm 13mm 15mm; }
+@media print {
+  :root {
+    --ground: #FFFFFF; --surface: #FFFFFF; --surface-2: #F2F1ED;
+    --ink: #16191E; --ink-2: #333941; --steel: #5C6572; --steel-2: #8A929E;
+    --line: #D2CFC8; --line-2: #B9B5AC; --amber: #C4750D; --amber-ink: #8A5008;
+    --amber-soft: #FAF0DE; --shadow: none;
+  }
+  body { background: #FFF; font-size: 10pt; line-height: 1.5; }
+  .wrap { max-width: none; padding: 0; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  .cover {
+    padding: 20mm 15mm 18mm;
+    min-height: 265mm;
+    border-bottom-width: 3px;
+    break-after: page;
+    display: flex;
+    align-items: center;
+  }
+  .cover .wrap { width: 100%; }
+  .cover__grid { grid-template-columns: 34mm 1fr; gap: 12mm; align-items: start; }
+  .cover h1 { font-size: 40pt; line-height: .94; }
+  .cover__ar { font-size: 15pt; margin-top: 5mm; line-height: 1.5; }
+  .cover__meta { margin-top: 14mm; gap: 3mm 12mm; font-size: 7pt; }
+
+  .level { break-before: page; padding: 0 0 8mm; border-top: 0; }
+  #l01 { break-before: auto; }
+  .level__grid { grid-template-columns: 84px 1fr; gap: 10mm; }
+  .rail { position: static; flex-direction: column; align-items: flex-start; }
+  .rail__tick { display: block; width: 100%; height: 2.5px; background: var(--amber); }
+  h2 { font-size: 26pt; margin-bottom: 4.5mm; }
+  h3 { font-size: 11pt; margin-top: 6mm; }
+  .lede { font-size: 11pt; }
+  .grid--2 { grid-template-columns: repeat(2, 1fr); }
+  .grid--3 { grid-template-columns: repeat(3, 1fr); }
+  .grid--4 { grid-template-columns: repeat(4, 1fr); }
+  .chip__swatch { height: 22mm; }
+  .card, .spec, .chip, .misuse, .tablewrap, figure, .callout, table { break-inside: avoid; }
+  tr, li { break-inside: avoid; }
+  .toc { display: none; }
+  .no-print { display: none; }
+  footer { margin-top: 8mm; padding: 6mm 0; break-inside: avoid; }
+  a { color: var(--ink); text-decoration: none; }
+}
+</style>
+
+<!-- ══════════════════════════ COVER ══════════════════════════ -->
+<header class="cover">
+  <div class="wrap">
+    <div class="cover__grid">
+      <div>
+        <svg viewBox="0 0 120 120" width="132" height="132" role="img" aria-label="Al Dirayah mark">
+          <rect width="120" height="120" rx="20" fill="#E08A1E"/>
+          <path d="M35 49 L60 29 L85 49" fill="none" stroke="#1B1E24" stroke-width="10" stroke-linecap="butt"/>
+          <path d="M35 70 L60 50 L85 70" fill="none" stroke="#1B1E24" stroke-width="10" stroke-linecap="butt" opacity=".62"/>
+          <path d="M35 91 L60 71 L85 91" fill="none" stroke="#1B1E24" stroke-width="10" stroke-linecap="butt" opacity=".34"/>
+        </svg>
+      </div>
+      <div>
+        <p class="eyebrow" style="color:#E08A1E">Brand guidelines · Version 1.0</p>
+        <h1>Al<br>Dirayah<span>Electromechanical<br>Contracting</span></h1>
+        <p class="cover__ar ar">الدراية للمقاولات الكهروميكانيكية ذ.م.م</p>
+        <div class="cover__meta">
+          <span><b>Abu Dhabi</b> · United Arab Emirates</span>
+          <span>Issued <b>August 2026</b></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<!-- Contents -->
+<section class="level no-print" style="padding-bottom:0">
+  <div class="level__grid">
+    <div class="rail"><div class="rail__tick"></div><span class="rail__num">00</span><span class="rail__label">Contents</span></div>
+    <div>
+      <h4>In this document</h4>
+      <nav class="toc">
+        <a href="#l01"><span>L01</span><span>The company</span></a>
+        <a href="#l02"><span>L02</span><span>The name</span></a>
+        <a href="#l03"><span>L03</span><span>Brand platform</span></a>
+        <a href="#l04"><span>L04</span><span>The mark</span></a>
+        <a href="#l05"><span>L05</span><span>Colour</span></a>
+        <a href="#l06"><span>L06</span><span>Typography</span></a>
+        <a href="#l07"><span>L07</span><span>Bilingual usage</span></a>
+        <a href="#l08"><span>L08</span><span>Applications</span></a>
+        <a href="#l09"><span>L09</span><span>Governance</span></a>
+      </nav>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ L01 THE COMPANY ══════════════════════ -->
+<section class="level" id="l01">
+  <div class="level__grid">
+    <div class="rail"><div class="rail__tick"></div><span class="rail__num">L01</span><span class="rail__label">The<br>company</span></div>
+    <div>
+      <p class="eyebrow">Who we are</p>
+      <h2>An electromechanical contractor for the whole life of a building</h2>
+      <p class="lede">Al Dirayah supplies, installs and maintains the systems that make a building work — the lifts and escalators that move people through it, the power and electromechanical plant that runs it, and the low-current networks that connect and protect it.</p>
+
+      <h3>Scope of work</h3>
+      <div class="grid grid--2" style="margin:1rem 0 .4rem">
+        <div class="card">
+          <h4>Vertical transport</h4>
+          <p style="margin:0;font-size:.89rem">Lifts, escalators and moving walkways — installation, repair, modernisation and annual maintenance. Approved subcontractor to TKE, OTIS and KONE.</p>
+        </div>
+        <div class="card">
+          <h4>Power &amp; electromechanical</h4>
+          <p style="margin:0;font-size:.89rem">Electromechanical equipment installation and maintenance, power distribution networks and stations, and power transmission line contracting.</p>
+        </div>
+        <div class="card">
+          <h4>Low current / ELV</h4>
+          <p style="margin:0;font-size:.89rem">CCTV and surveillance, access control, structured cabling and network infrastructure. Subject to ADMCC registration.</p>
+        </div>
+        <div class="card">
+          <h4>Supply &amp; trading</h4>
+          <p style="margin:0;font-size:.89rem">Import and wholesale of lifts, escalators and spare parts, supporting both our own installations and third-party projects.</p>
+        </div>
+      </div>
+
+      <h3>Licensed activities</h3>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Code</th><th>Activity</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">4329101</td><td><strong>Elevators and Escalators Installation and Repair</strong> — primary</td></tr>
+            <tr><td class="mono">4322008</td><td>Electromechanical Equipment Installation and Maintenance</td></tr>
+            <tr><td class="mono">4220101</td><td>Networks and Power Transmission Lines Contracting</td></tr>
+            <tr><td class="mono">4220102</td><td>Power Distribution Networks and Stations Contracting</td></tr>
+            <tr><td class="mono">4100015</td><td>Constructional and Engineering Contracting Related to Technology Projects — Final Handover</td></tr>
+            <tr><td class="mono">4659932</td><td>Wholesale of Elevators and Escalators and Spare Parts Trading</td></tr>
+            <tr><td class="mono">4610008</td><td>Importing</td></tr>
+            <tr><td class="mono">4330003</td><td>Tinting and Painting Works</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">ELV activities — surveillance systems, access control and structured cabling — are to be added, and CCTV work additionally requires ADMCC registration with certified technicians. Update this table when the licence is amended.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ L02 THE NAME ══════════════════════ -->
+<section class="level" id="l02">
+  <div class="level__grid">
+    <div class="rail"><div class="rail__tick"></div><span class="rail__num">L02</span><span class="rail__label">The<br>name</span></div>
+    <div>
+      <p class="eyebrow">Meaning and use</p>
+      <h2>Al Dirayah</h2>
+      <p class="lede">دِرَايَة — <em>dirāyah</em> — means thorough know-how: the practical mastery that comes from understanding a thing completely. It is not general knowledge. It is the knowledge that lets someone do the work correctly.</p>
+      <p>That is precisely what a technical contractor sells. Clients do not buy components — they buy the competence to specify, install, commission and maintain them safely. The name states the promise in the language of the market we work in.</p>
+
+      <div class="grid grid--2" style="margin:1.6rem 0">
+        <div class="card">
+          <h4>Arabic</h4>
+          <p class="ar" style="font-size:2rem;line-height:1.5;margin:0">الدراية</p>
+        </div>
+        <div class="card">
+          <h4>Pronunciation</h4>
+          <p class="mono" style="margin:0 0 .4rem;font-size:.95rem">ad-di-RAA-yah</p>
+          <p style="margin:0;font-size:.85rem;color:var(--steel)">The <em>d</em> is a sun letter, so the <em>l</em> of “Al” assimilates in Arabic speech. English speakers saying “al di-RAA-yah” are not wrong. Aldar follows the same pattern.</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <h4>The one rule that matters most</h4>
+        <p><strong>The name is written AL DIRAYAH. Always. Everywhere. By everyone.</strong></p>
+        <p style="margin:.6rem 0 0">Not <em>Diraya</em>. Not <em>Al Diraya</em>. Not <em>Dirayah</em> on its own. Not <em>AlDirayah</em> as one word. Drift usually begins in an email signature or a WhatsApp Business profile and ends up on an invoice, a vendor registration and a site board — after which it is expensive to correct. Both owners are responsible for enforcing this.</p>
+      </div>
+
+      <h3>Approved written forms</h3>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Context</th><th>Form</th></tr></thead>
+          <tbody>
+            <tr><td>Legal / contractual</td><td class="mono">Al Dirayah Electromechanical Contracting LLC</td></tr>
+            <tr><td>Legal, Arabic</td><td class="ar" style="text-align:right">الدراية للمقاولات الكهروميكانيكية ذ.م.م</td></tr>
+            <tr><td>Running text, first mention</td><td class="mono">Al Dirayah Electromechanical Contracting LLC</td></tr>
+            <tr><td>Running text, thereafter</td><td class="mono">Al Dirayah</td></tr>
+            <tr><td>Logo / signage / uniform</td><td class="mono">AL DIRAYAH</td></tr>
+            <tr><td>Email &amp; web</td><td class="mono">aldirayah.ae</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">Never abbreviate to initials. “ADEC”, “ADC” and similar are not approved and collide with well-known Abu Dhabi entities.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ L03 PLATFORM ══════════════════════ -->
+<section class="level" id="l03">
+  <div class="level__grid">
+    <div class="rail"><div class="rail__tick"></div><span class="rail__num">L03</span><span class="rail__label">Brand<br>platform</span></div>
+    <div>
+      <p class="eyebrow">Positioning</p>
+      <h2>What we do, and what we do it to</h2>
+      <p class="lede">The business runs on two axes. Four system families, and three things we do to each of them. Every service, capability statement and proposal should be locatable on this grid.</p>
+
+      <h3>The four systems</h3>
+      <div class="grid grid--4" style="margin:1rem 0 1.8rem">
+        <div class="pillar"><h3>Move</h3><p>Lifts, escalators, moving walkways</p></div>
+        <div class="pillar"><h3>Power</h3><p>Electromechanical plant, distribution networks, substations, transmission</p></div>
+        <div class="pillar"><h3>Connect</h3><p>Structured cabling, network infrastructure</p></div>
+        <div class="pillar"><h3>Protect</h3><p>CCTV, surveillance, access control</p></div>
+      </div>
+
+      <h3>The three engagements</h3>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Stage</th><th>What it means</th><th>Commercial role</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Supply</strong></td><td>Import and wholesale of equipment and spare parts</td><td>Margin on goods</td></tr>
+            <tr><td><strong>Install</strong></td><td>Installation, repair, modernisation, commissioning, handover</td><td>Project revenue; OEM subcontracting</td></tr>
+            <tr><td><strong>Maintain</strong></td><td>Annual maintenance contracts and callout response</td><td>Recurring revenue — the compounding engine</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Positioning statement</h3>
+      <p class="lede" style="border-left:3px solid var(--brand-amber);padding-left:1rem;margin:1rem 0 1.4rem">Al Dirayah supplies, installs and maintains the systems that move, power, connect and protect Abu Dhabi’s buildings — with the certified know-how to be trusted with all four.</p>
+
+      <h3>Lines</h3>
+      <div class="grid grid--2">
+        <div class="spec">
+          <h4>Primary line</h4>
+          <p style="font-family:var(--f-display);font-size:2rem;text-transform:uppercase;line-height:1.05;margin:0 0 .3rem">Built on know-how</p>
+          <p class="ar" style="font-size:1.35rem;margin:0;color:var(--steel)">نبني على الدراية</p>
+        </div>
+        <div class="spec">
+          <h4>Service / AMC line</h4>
+          <p style="font-family:var(--f-display);font-size:2rem;text-transform:uppercase;line-height:1.05;margin:0 0 .3rem">Installed.<br>Maintained.<br>Always on.</p>
+        </div>
+      </div>
+      <p class="note">The primary line is a direct statement of what the name means, and works in both languages. Use one line per artefact — never both together.</p>
+
+      <h3>Tone of voice</h3>
+      <div class="do-dont" style="margin-top:.8rem">
+        <div class="dd dd--do"><span class="dd__m">✓</span><span><strong>Precise.</strong> Give the load rating, the response time, the certification number. Specificity is the proof.</span></div>
+        <div class="dd dd--do"><span class="dd__m">✓</span><span><strong>Plain.</strong> Short sentences. Ordinary words. Our readers are engineers, procurement officers and facility managers reading in a second language.</span></div>
+        <div class="dd dd--do"><span class="dd__m">✓</span><span><strong>Accountable.</strong> Say who does what, by when. Name the standard being met.</span></div>
+        <div class="dd dd--no"><span class="dd__m">✕</span><span><strong>No superlatives.</strong> Not “leading”, “world-class”, “state-of-the-art”. Anyone can type those; nobody believes them.</span></div>
+        <div class="dd dd--no"><span class="dd__m">✕</span><span><strong>No borrowed prestige.</strong> Never imply we are an OEM, or that an OEM endorses us beyond what our agreements permit.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ L04 THE MARK ══════════════════════ -->
+<section class="level" id="l04">
+  <div class="level__grid">
+    <div class="rail"><div class="rail__tick"></div><span class="rail__num">L04</span><span class="rail__label">The<br>mark</span></div>
+    <div>
+      <p class="eyebrow">Logo</p>
+      <h2>Ascent</h2>
+      <p class="lede">Three chevrons rising, each lighter than the one above it. Read as floor levels in a building section, as signal strength, and as upward motion — one form covering vertical transport, low current and the direction of the business.</p>
+
+      <div class="grid grid--2" style="margin:1.6rem 0">
+        <figure class="spec" style="background:var(--brand-ink);border-color:#2C323A">
+          <svg viewBox="0 0 120 120" width="120" height="120" style="margin:0 auto" role="img" aria-label="Primary mark, amber on ink">
+            <rect width="120" height="120" rx="20" fill="#1B1E24"/>
+            <path d="M35 49 L60 29 L85 49" fill="none" stroke="#E08A1E" stroke-width="10"/>
+            <path d="M35 70 L60 50 L85 70" fill="none" stroke="#6E7885" stroke-width="10"/>
+            <path d="M35 91 L60 71 L85 91" fill="none" stroke="#48505C" stroke-width="10"/>
+          </svg>
+          <figcaption style="text-align:center;color:#8A93A1">Primary — amber and steel on ink</figcaption>
+        </figure>
+        <figure class="spec">
+          <svg viewBox="0 0 120 120" width="120" height="120" style="margin:0 auto" role="img" aria-label="Reversed mark, ink on amber">
+            <rect width="120" height="120" rx="20" fill="#E08A1E"/>
+            <path d="M35 49 L60 29 L85 49" fill="none" stroke="#1B1E24" stroke-width="10"/>
+            <path d="M35 70 L60 50 L85 70" fill="none" stroke="#1B1E24" stroke-width="10" opacity=".62"/>
+            <path d="M35 91 L60 71 L85 91" fill="none" stroke="#1B1E24" stroke-width="10" opacity=".34"/>
+          </svg>
+          <figcaption style="text-align:center">Alternate — ink on amber</figcaption>
+        </figure>
+      </div>
+
+      <h3>Single-colour and cut versions</h3>
+      <div class="grid grid--4" style="margin:1rem 0">
+        <figure class="spec">
+          <svg viewBox="0 0 120 120" width="82" height="82" style="margin:0 auto" role="img" aria-label="Solid one-colour mark">
+            <rect width="120" height="120" rx="20" fill="#1B1E24"/>
+            <path d="M35 49 L60 29 L85 49" fill="none" stroke="#FFF" stroke-width="10"/>
+            <path d="M35 70 L60 50 L85 70" fill="none" stroke="#FFF" stroke-width="10"/>
+            <path d="M35 91 L60 71 L85 91" fill="none" stroke="#FFF" stroke-width="10"/>
+          </svg>
+          <figcaption style="text-align:center;font-size:.72rem">Solid, reversed</figcaption>
+        </figure>
+        <figure class="spec">
+          <svg viewBox="0 0 120 120" width="82" height="82" style="margin:0 auto" role="img" aria-label="Solid mark positive">
+            <rect width="120" height="120" rx="20" fill="none" stroke="#1B1E24" stroke-width="3"/>
+            <path d="M35 49 L60 29 L85 49" fill="none" stroke="#1B1E24" stroke-width="10"/>
+            <path d="M35 70 L60 50 L85 70" fill="none" stroke="#1B1E24" stroke-width="10"/>
+            <path d="M35 91 L60 71 L85 91" fill="none" stroke="#1B1E24" stroke-width="10"/>
+          </svg>
+          <figcaption style="text-align:center;font-size:.72rem">Outline, positive</figcaption>
+        </figure>
+        <figure class="spec">
+          <svg viewBox="0 0 120 120" width="82" height="82" style="margin:0 auto" role="img" aria-label="Free-standing chevrons">
+            <path d="M35 49 L60 29 L85 49" fill="none" stroke="#1B1E24" stroke-width="10"/>
+            <path d="M35 70 L60 50 L85 70" fill="none" stroke="#1B1E24" stroke-width="10"/>
+            <path d="M35 91 L60 71 L85 91" fill="none" stroke="#1B1E24" stroke-width="10"/>
+          </svg>
+          <figcaption style="text-align:center;font-size:.72rem">Free-standing</figcaption>
+        </figure>
+        <figure class="spec">
+          <svg viewBox="0 0 120 120" width="82" height="82" style="margin:0 auto" role="img" aria-label="Monogram badge">
+            <rect width="120" height="120" rx="20" fill="#1B1E24"/>
+            <text x="60" y="78" text-anchor="middle" fill="#E08A1E" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-weight="700" font-size="56" letter-spacing="1">AD</text>
+          </svg>
+          <figcaption style="text-align:center;font-size:.72rem">Monogram — badge only</figcaption>
+        </figure>
+      </div>
+      <p class="note">The monogram is for favicons, lapel pins, PPE stickers and other spaces under 15 mm. It never replaces the mark in signage, documents or livery.</p>
+
+      <h3>Horizontal lockup</h3>
+      <figure class="spec" style="margin:1rem 0">
+        <svg viewBox="0 0 520 110" width="520" role="img" aria-label="Horizontal lockup: mark with wordmark">
+          <rect x="8" y="15" width="80" height="80" rx="14" fill="#1B1E24"/>
+          <path d="M31 40 L48 27 L65 40" fill="none" stroke="#E08A1E" stroke-width="6.8"/>
+          <path d="M31 54 L48 41 L65 54" fill="none" stroke="#6E7885" stroke-width="6.8"/>
+          <path d="M31 68 L48 55 L65 68" fill="none" stroke="#48505C" stroke-width="6.8"/>
+          <text x="108" y="58" fill="#1B1E24" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-weight="600" font-size="42" letter-spacing="1.2">AL DIRAYAH</text>
+          <text x="109" y="80" fill="#6E7885" font-family="IBM Plex Mono, monospace" font-weight="500" font-size="11.5" letter-spacing="2.6">ELECTROMECHANICAL CONTRACTING</text>
+        </svg>
+        <figcaption>Primary lockup. The descriptor line is optional below 40&nbsp;mm total width.</figcaption>
+      </figure>
+
+      <h3>Clear space and minimum size</h3>
+      <div class="grid grid--2" style="margin:1rem 0">
+        <figure class="spec">
+          <svg viewBox="0 0 240 160" width="240" role="img" aria-label="Clear space diagram">
+            <rect x="30" y="25" width="180" height="110" fill="none" stroke="#C4C0B8" stroke-width="1" stroke-dasharray="4 3"/>
+            <rect x="85" y="45" width="70" height="70" rx="12" fill="#1B1E24"/>
+            <path d="M105 67 L120 55 L135 67" fill="none" stroke="#E08A1E" stroke-width="6"/>
+            <path d="M105 79 L120 67 L135 79" fill="none" stroke="#6E7885" stroke-width="6"/>
+            <path d="M105 91 L120 79 L135 91" fill="none" stroke="#48505C" stroke-width="6"/>
+            <text x="57" y="84" text-anchor="middle" fill="#8A929E" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="600">X</text>
+            <text x="183" y="84" text-anchor="middle" fill="#8A929E" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="600">X</text>
+            <text x="120" y="39" text-anchor="middle" fill="#8A929E" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="600">X</text>
+            <text x="120" y="130" text-anchor="middle" fill="#8A929E" font-family="IBM Plex Mono, monospace" font-size="12" font-weight="600">X</text>
+          </svg>
+          <figcaption><span class="mono">X</span> equals the height of one chevron. Nothing — type, image, edge or fold — enters this zone.</figcaption>
+        </figure>
+        <div class="spec">
+          <h4>Minimum reproduction size</h4>
+          <div class="tablewrap" style="margin:.4rem 0 0;border:0">
+            <table>
+              <tbody>
+                <tr><td>Mark, print</td><td class="mono">10 mm</td></tr>
+                <tr><td>Mark, embroidered</td><td class="mono">18 mm</td></tr>
+                <tr><td>Mark, screen</td><td class="mono">28 px</td></tr>
+                <tr><td>Horizontal lockup, print</td><td class="mono">40 mm wide</td></tr>
+                <tr><td>Lockup with descriptor</td><td class="mono">55 mm wide</td></tr>
+                <tr><td>Monogram, minimum</td><td class="mono">8 mm</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <h3>Misuse</h3>
+      <div class="grid grid--3" style="margin:1rem 0">
+        <div class="misuse">
+          <div class="misuse__art">
+            <svg viewBox="0 0 70 70" width="58" height="58"><rect width="70" height="70" rx="12" fill="#2E6FD4"/><path d="M20 29 L35 17 L50 29" fill="none" stroke="#FFF" stroke-width="6"/><path d="M20 41 L35 29 L50 41" fill="none" stroke="#FFF" stroke-width="6" opacity=".6"/><path d="M20 53 L35 41 L50 53" fill="none" stroke="#FFF" stroke-width="6" opacity=".33"/></svg>
+          </div>
+          <p class="misuse__cap"><b>Never</b>Recolour outside the palette. Blue in particular reads as an OEM.</p>
+        </div>
+        <div class="misuse">
+          <div class="misuse__art">
+            <svg viewBox="0 0 70 70" width="58" height="58"><rect width="70" height="70" rx="12" fill="#1B1E24"/><g transform="rotate(18 35 35)"><path d="M20 29 L35 17 L50 29" fill="none" stroke="#E08A1E" stroke-width="6"/><path d="M20 41 L35 29 L50 41" fill="none" stroke="#6E7885" stroke-width="6"/><path d="M20 53 L35 41 L50 53" fill="none" stroke="#48505C" stroke-width="6"/></g></svg>
+          </div>
+          <p class="misuse__cap"><b>Never</b>Rotate or tilt. The mark points up; that is the entire idea.</p>
+        </div>
+        <div class="misuse">
+          <div class="misuse__art">
+            <svg viewBox="0 0 70 70" width="58" height="58"><rect width="70" height="70" rx="12" fill="#1B1E24"/><g transform="translate(35 35) scale(1 .58) translate(-35 -35)"><path d="M20 29 L35 17 L50 29" fill="none" stroke="#E08A1E" stroke-width="6"/><path d="M20 41 L35 29 L50 41" fill="none" stroke="#6E7885" stroke-width="6"/><path d="M20 53 L35 41 L50 53" fill="none" stroke="#48505C" stroke-width="6"/></g></svg>
+          </div>
+          <p class="misuse__cap"><b>Never</b>Stretch or compress. Scale proportionally only.</p>
+        </div>
+        <div class="misuse">
+          <div class="misuse__art">
+            <svg viewBox="0 0 70 70" width="58" height="58"><rect width="70" height="70" rx="12" fill="#1B1E24"/><path d="M20 29 L35 17 L50 29" fill="none" stroke="#E08A1E" stroke-width="6"/><path d="M20 41 L35 29 L50 41" fill="none" stroke="#6E7885" stroke-width="6"/><path d="M20 53 L35 41 L50 53" fill="none" stroke="#48505C" stroke-width="6"/><ellipse cx="35" cy="35" rx="33" ry="33" fill="none" stroke="#B23120" stroke-width="3"/><path d="M12 58 L58 12" stroke="#B23120" stroke-width="3"/></svg>
+          </div>
+          <p class="misuse__cap"><b>Never</b>Add effects — shadows, bevels, gradients, outer glows.</p>
+        </div>
+        <div class="misuse">
+          <div class="misuse__art">
+            <svg viewBox="0 0 130 70" width="112" height="60"><rect width="70" height="70" rx="12" fill="#1B1E24"/><path d="M20 29 L35 17 L50 29" fill="none" stroke="#E08A1E" stroke-width="6"/><path d="M20 41 L35 29 L50 41" fill="none" stroke="#6E7885" stroke-width="6"/><path d="M20 53 L35 41 L50 53" fill="none" stroke="#48505C" stroke-width="6"/><text x="74" y="42" fill="#6E7885" font-family="Georgia, serif" font-style="italic" font-size="17">Diraya</text></svg>
+          </div>
+          <p class="misuse__cap"><b>Never</b>Reset the wordmark in another typeface, or drop “Al”.</p>
+        </div>
+        <div class="misuse">
+          <div class="misuse__art">
+            <svg viewBox="0 0 70 70" width="58" height="58"><defs><pattern id="ph" width="10" height="10" patternUnits="userSpaceOnUse"><rect width="10" height="10" fill="#8A929E"/><rect width="5" height="5" fill="#B9B5AC"/><rect x="5" y="5" width="5" height="5" fill="#B9B5AC"/></pattern></defs><rect width="70" height="70" rx="12" fill="url(#ph)"/><path d="M20 29 L35 17 L50 29" fill="none" stroke="#E08A1E" stroke-width="6"/><path d="M20 41 L35 29 L50 41" fill="none" stroke="#6E7885" stroke-width="6"/><path d="M20 53 L35 41 L50 53" fill="none" stroke="#48505C" stroke-width="6"/></svg>
+          </div>
+          <p class="misuse__cap"><b>Never</b>Place free-standing chevrons on a busy image. Use the contained mark.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ L05 COLOUR ══════════════════════ -->
+<section class="level" id="l05">
+  <div class="level__grid">
+    <div class="rail"><div class="rail__tick"></div><span class="rail__num">L05</span><span class="rail__label">Colour</span></div>
+    <div>
+      <p class="eyebrow">Palette</p>
+      <h2>Machine room, brushed steel, indicator amber</h2>
+      <p class="lede">The palette comes from the places we work: the graphite of a machine room, the brushed steel of a lift car, the amber of a floor indicator and of high-visibility PPE. It deliberately avoids contractor blue — the colour our OEM principals already own on site.</p>
+
+      <h3>Core palette</h3>
+      <div class="grid grid--3" style="margin:1rem 0">
+        <div class="chip">
+          <div class="chip__swatch" style="background:#1B1E24"></div>
+          <div class="chip__body">
+            <p class="chip__name" style="margin:0">Anthracite</p>
+            <p class="chip__role">Primary. Ink, grounds, livery base.</p>
+            <p class="chip__spec"><span>HEX</span> #1B1E24<br><span>RGB</span> 27 30 36<br><span>CMYK</span> 72 63 51 48<br><span>PMS</span> 433 C</p>
+          </div>
+        </div>
+        <div class="chip">
+          <div class="chip__swatch" style="background:#E08A1E"></div>
+          <div class="chip__body">
+            <p class="chip__name" style="margin:0">Signal Amber</p>
+            <p class="chip__role">Accent. One per artefact, never as a field.</p>
+            <p class="chip__spec"><span>HEX</span> #E08A1E<br><span>RGB</span> 224 138 30<br><span>CMYK</span> 6 52 96 0<br><span>PMS</span> 1385 C</p>
+          </div>
+        </div>
+        <div class="chip">
+          <div class="chip__swatch" style="background:#6E7885"></div>
+          <div class="chip__body">
+            <p class="chip__name" style="margin:0">Brushed Steel</p>
+            <p class="chip__role">Secondary. Rules, captions, subordinate marks.</p>
+            <p class="chip__spec"><span>HEX</span> #6E7885<br><span>RGB</span> 110 120 133<br><span>CMYK</span> 60 47 37 8<br><span>PMS</span> Cool Gray 9 C</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>Supporting neutrals</h3>
+      <div class="grid grid--4" style="margin:1rem 0">
+        <div class="chip">
+          <div class="chip__swatch" style="background:#F5F4F1;height:64px"></div>
+          <div class="chip__body"><p class="chip__name" style="margin:0">Concrete</p><p class="chip__role">Page ground</p><p class="chip__spec"><span>HEX</span> #F5F4F1</p></div>
+        </div>
+        <div class="chip">
+          <div class="chip__swatch" style="background:#D9D6D0;height:64px"></div>
+          <div class="chip__body"><p class="chip__name" style="margin:0">Dust</p><p class="chip__role">Rules, borders</p><p class="chip__spec"><span>HEX</span> #D9D6D0</p></div>
+        </div>
+        <div class="chip">
+          <div class="chip__swatch" style="background:#48505C;height:64px"></div>
+          <div class="chip__body"><p class="chip__name" style="margin:0">Shadow Steel</p><p class="chip__role">Third chevron</p><p class="chip__spec"><span>HEX</span> #48505C</p></div>
+        </div>
+        <div class="chip">
+          <div class="chip__swatch" style="background:#FFFFFF;height:64px;box-shadow:inset 0 0 0 1px #D9D6D0"></div>
+          <div class="chip__body"><p class="chip__name" style="margin:0">White</p><p class="chip__role">Surfaces, reversed type</p><p class="chip__spec"><span>HEX</span> #FFFFFF</p></div>
+        </div>
+      </div>
+
+      <h3>Functional colours</h3>
+      <p>Used only in reports, dashboards and status labelling. These are never brand colours and never appear in the logo, livery or marketing.</p>
+      <div class="grid grid--3" style="margin:1rem 0">
+        <div class="chip">
+          <div class="chip__swatch" style="background:#1F7A4D;height:56px"></div>
+          <div class="chip__body"><p class="chip__name" style="margin:0">Pass</p><p class="chip__spec"><span>HEX</span> #1F7A4D</p></div>
+        </div>
+        <div class="chip">
+          <div class="chip__swatch" style="background:#C9971A;height:56px"></div>
+          <div class="chip__body"><p class="chip__name" style="margin:0">Attention</p><p class="chip__spec"><span>HEX</span> #C9971A</p></div>
+        </div>
+        <div class="chip">
+          <div class="chip__swatch" style="background:#B23120;height:56px"></div>
+          <div class="chip__body"><p class="chip__name" style="margin:0">Fail</p><p class="chip__spec"><span>HEX</span> #B23120</p></div>
+        </div>
+      </div>
+
+      <h3>Proportion</h3>
+      <div class="ratio" style="margin:1rem 0 .5rem">
+        <div style="flex:60;background:#F5F4F1;color:#6E7885">60 · Concrete / White</div>
+        <div style="flex:28;background:#1B1E24;color:#C9CED6">28 · Anthracite</div>
+        <div style="flex:8;background:#6E7885;color:#fff">8 · Steel</div>
+        <div style="flex:4;background:#E08A1E;color:#1B1E24">4</div>
+      </div>
+      <p class="note">Amber is an accent at roughly 4% of any surface. It marks the one thing that matters on a page — a heading rule, a chevron, a call to action. Large amber fields cheapen it and read as hazard signage rather than brand.</p>
+
+      <div class="callout">
+        <h4>Site and PPE exception</h4>
+        <p>Statutory high-visibility clothing follows EN ISO 20471 and site rules, not this palette. Hi-vis vests, harnesses and helmets stay in their mandated colours. Brand amber is close to hi-vis amber by design, so the two sit together comfortably — but safety specification always wins.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ L06 TYPOGRAPHY ══════════════════════ -->
+<section class="level" id="l06">
+  <div class="level__grid">
+    <div class="rail"><div class="rail__tick"></div><span class="rail__num">L06</span><span class="rail__label">Type</span></div>
+    <div>
+      <p class="eyebrow">Typefaces</p>
+      <h2>Three roles, one engineering voice</h2>
+      <p class="lede">All four faces are open-source and free for commercial use, so every subcontractor, printer and signage supplier can install them without a licence negotiation. That matters more than novelty when the same mark has to be produced by ten different vendors.</p>
+
+      <div class="spec" style="margin:1.4rem 0">
+        <h4>Display — Barlow Condensed, SemiBold 600</h4>
+        <p class="specimen-line" style="font-family:var(--f-display);font-weight:600;font-size:3rem;text-transform:uppercase;line-height:1;letter-spacing:.01em">AL DIRAYAH</p>
+        <p class="specimen-line" style="font-family:var(--f-display);font-weight:500;font-size:1.5rem;text-transform:uppercase;color:var(--steel)">Lifts · Escalators · Power · Low current</p>
+        <p style="font-size:.84rem;color:var(--steel);margin:.8rem 0 0;max-width:60ch">Barlow descends from Californian highway signage — built to be read at distance, narrow enough to fit a van door or a site board. Used for the wordmark, headlines and signage. Uppercase, tracked +10 to +30 units.</p>
+      </div>
+
+      <div class="spec" style="margin:1.4rem 0">
+        <h4>Text — IBM Plex Sans, Regular 400 / SemiBold 600</h4>
+        <p class="specimen-line" style="font-size:1.35rem;font-weight:600">Supply, install and maintain</p>
+        <p class="specimen-line" style="max-width:58ch">Every proposal, method statement, maintenance report and pre-qualification document is set in IBM Plex Sans. It was drawn for engineering documentation, holds up at small sizes, and its numerals are unambiguous — which matters when a document carries load ratings and part numbers.</p>
+        <p style="font-size:.84rem;color:var(--steel);margin:.8rem 0 0">Body 10–11 pt, line height 1.5. Never below 9 pt in print.</p>
+      </div>
+
+      <div class="spec" style="margin:1.4rem 0">
+        <h4>Arabic — IBM Plex Sans Arabic, Regular 400 / SemiBold 600</h4>
+        <p class="specimen-line ar" style="font-size:2rem;font-weight:600">الدراية للمقاولات الكهروميكانيكية</p>
+        <p class="specimen-line ar" style="font-size:1.05rem;max-width:58ch">نورّد ونركّب ونصون الأنظمة التي تدير المبنى — من المصاعد والسلالم المتحركة إلى شبكات الطاقة وأنظمة التيار المنخفض.</p>
+        <p style="font-size:.84rem;color:var(--steel);margin:.8rem 0 0;max-width:60ch">The Arabic companion to Plex, drawn on the same skeleton — so bilingual documents hold together instead of looking assembled from two unrelated fonts. This is the only approved Arabic face.</p>
+      </div>
+
+      <div class="spec" style="margin:1.4rem 0">
+        <h4>Data — IBM Plex Mono, Regular 400 / Medium 500</h4>
+        <p class="specimen-line mono" style="font-size:1.05rem">4329101 · 1600 kg · 1.75 m/s · AMC-2026-0114</p>
+        <p style="font-size:.84rem;color:var(--steel);margin:.8rem 0 0;max-width:60ch">Activity codes, part numbers, contract references, specifications, tabular data and small technical labels. Also the descriptor line under the wordmark. Tracked +100 to +250 for uppercase labels.</p>
+      </div>
+
+      <h3>Hierarchy</h3>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Role</th><th>Face</th><th>Size / weight</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Display heading</td><td>Barlow Condensed</td><td class="mono">28–48 pt / 600</td><td>Uppercase, tracked +20</td></tr>
+            <tr><td>Section heading</td><td>IBM Plex Sans</td><td class="mono">13–16 pt / 600</td><td>Sentence case</td></tr>
+            <tr><td>Body</td><td>IBM Plex Sans</td><td class="mono">10–11 pt / 400</td><td>Line height 1.5</td></tr>
+            <tr><td>Caption</td><td>IBM Plex Sans</td><td class="mono">8.5–9 pt / 400</td><td>Brushed Steel</td></tr>
+            <tr><td>Label / eyebrow</td><td>IBM Plex Mono</td><td class="mono">7–8 pt / 500</td><td>Uppercase, tracked +160</td></tr>
+            <tr><td>Data / codes</td><td>IBM Plex Mono</td><td class="mono">9–10 pt / 400</td><td>Tabular figures on</td></tr>
+            <tr><td>Arabic body</td><td>IBM Plex Sans Arabic</td><td class="mono">11–12 pt / 400</td><td>Set 1 pt larger than Latin</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">Arabic is set one point larger than its Latin equivalent. Arabic letterforms carry more detail at the same nominal size, and this keeps the two scripts optically matched on bilingual documents.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ L07 BILINGUAL ══════════════════════ -->
+<section class="level" id="l07">
+  <div class="level__grid">
+    <div class="rail"><div class="rail__tick"></div><span class="rail__num">L07</span><span class="rail__label">Bilingual<br>usage</span></div>
+    <div>
+      <p class="eyebrow">Arabic and English together</p>
+      <h2>Equal weight, correct order</h2>
+      <p class="lede">Everything client-facing in Abu Dhabi is bilingual. Arabic is not a translation bolted on at the end — on government, municipality and developer submissions it is the primary language, and getting the hierarchy wrong is noticed.</p>
+
+      <h3>Stacked lockup</h3>
+      <figure class="spec" style="margin:1rem 0">
+        <svg viewBox="0 0 480 150" width="480" role="img" aria-label="Bilingual stacked lockup">
+          <rect x="10" y="30" width="90" height="90" rx="16" fill="#1B1E24"/>
+          <path d="M36 60 L55 45 L74 60" fill="none" stroke="#E08A1E" stroke-width="7.6"/>
+          <path d="M36 76 L55 61 L74 76" fill="none" stroke="#6E7885" stroke-width="7.6"/>
+          <path d="M36 92 L55 77 L74 92" fill="none" stroke="#48505C" stroke-width="7.6"/>
+          <text x="122" y="66" fill="#1B1E24" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-weight="600" font-size="40" letter-spacing="1.2">AL DIRAYAH</text>
+          <line x1="122" y1="79" x2="452" y2="79" stroke="#D9D6D0" stroke-width="1"/>
+          <text x="452" y="108" text-anchor="end" fill="#3D434D" font-family="IBM Plex Sans Arabic, sans-serif" font-weight="600" font-size="27">الدراية</text>
+        </svg>
+        <figcaption>English above, Arabic below, separated by a hairline rule in Dust. Both align to the same optical width.</figcaption>
+      </figure>
+
+      <h3>Rules</h3>
+      <div class="do-dont">
+        <div class="dd dd--do"><span class="dd__m">✓</span><span>On bilingual documents, Arabic occupies the right column and English the left, matching reading direction.</span></div>
+        <div class="dd dd--do"><span class="dd__m">✓</span><span>Set Arabic 1 pt larger than the matching Latin text for optical parity.</span></div>
+        <div class="dd dd--do"><span class="dd__m">✓</span><span>On government, DMT, ADDC and municipality submissions, Arabic leads.</span></div>
+        <div class="dd dd--do"><span class="dd__m">✓</span><span>Have a native Arabic speaker proof every set piece before it is printed. Shaping and joining errors are invisible to non-readers and glaring to readers.</span></div>
+        <div class="dd dd--no"><span class="dd__m">✕</span><span>Never transliterate English marketing copy into Arabic script. Write it in Arabic, or leave it in English.</span></div>
+        <div class="dd dd--no"><span class="dd__m">✕</span><span>Never use a substitute Arabic font because Plex Arabic was not installed. Fix the installation.</span></div>
+        <div class="dd dd--no"><span class="dd__m">✕</span><span>Never stretch Arabic glyphs (kashida-padding) to force a line to justify.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ L08 APPLICATIONS ══════════════════════ -->
+<section class="level" id="l08">
+  <div class="level__grid">
+    <div class="rail"><div class="rail__tick"></div><span class="rail__num">L08</span><span class="rail__label">Applications</span></div>
+    <div>
+      <p class="eyebrow">In use</p>
+      <h2>Where the brand actually lives</h2>
+      <p class="lede">Almost nobody will see this brand on a website first. They will see it on a technician’s coverall in a machine room, on a van in a basement car park, and on the cover of a pre-qualification document. Those three are the priority.</p>
+
+      <h3>Business card — 85 × 55 mm</h3>
+      <div class="grid grid--2" style="margin:1rem 0">
+        <figure>
+          <svg viewBox="0 0 340 220" width="340" role="img" aria-label="Business card front">
+            <rect width="340" height="220" rx="5" fill="#1B1E24"/>
+            <rect x="0" y="0" width="340" height="5" fill="#E08A1E"/>
+            <rect x="30" y="42" width="58" height="58" rx="10" fill="none" stroke="#3D434D" stroke-width="1.5"/>
+            <path d="M46 68 L59 58 L72 68" fill="none" stroke="#E08A1E" stroke-width="5.4"/>
+            <path d="M46 80 L59 70 L72 80" fill="none" stroke="#6E7885" stroke-width="5.4"/>
+            <path d="M46 92 L59 82 L72 92" fill="none" stroke="#48505C" stroke-width="5.4"/>
+            <text x="30" y="140" fill="#FFF" font-family="Barlow Condensed, sans-serif" font-weight="600" font-size="30" letter-spacing="1">AL DIRAYAH</text>
+            <text x="31" y="157" fill="#8A929E" font-family="IBM Plex Mono, monospace" font-size="7.6" letter-spacing="2">ELECTROMECHANICAL CONTRACTING</text>
+            <text x="310" y="190" text-anchor="end" fill="#6E7885" font-family="IBM Plex Sans Arabic, sans-serif" font-size="15">الدراية</text>
+          </svg>
+          <figcaption>Front — anthracite, amber edge rule</figcaption>
+        </figure>
+        <figure>
+          <svg viewBox="0 0 340 220" width="340" role="img" aria-label="Business card back">
+            <rect width="340" height="220" rx="5" fill="#FFFFFF" stroke="#D9D6D0"/>
+            <rect x="0" y="0" width="340" height="5" fill="#E08A1E"/>
+            <text x="30" y="62" fill="#1B1E24" font-family="IBM Plex Sans, sans-serif" font-weight="600" font-size="17">Name Surname</text>
+            <text x="30" y="80" fill="#6E7885" font-family="IBM Plex Mono, monospace" font-size="8.4" letter-spacing="1.6">MANAGING PARTNER</text>
+            <line x1="30" y1="96" x2="310" y2="96" stroke="#D9D6D0"/>
+            <text x="30" y="122" fill="#3D434D" font-family="IBM Plex Mono, monospace" font-size="9.4">+971 __ ___ ____</text>
+            <text x="30" y="140" fill="#3D434D" font-family="IBM Plex Mono, monospace" font-size="9.4">name@aldirayah.ae</text>
+            <text x="30" y="158" fill="#3D434D" font-family="IBM Plex Mono, monospace" font-size="9.4">aldirayah.ae</text>
+            <text x="30" y="188" fill="#8A929E" font-family="IBM Plex Sans, sans-serif" font-size="8.4">Mussafah, Abu Dhabi, United Arab Emirates</text>
+          </svg>
+          <figcaption>Back — white, contact detail in mono</figcaption>
+        </figure>
+      </div>
+
+      <h3>Workwear and PPE</h3>
+      <div class="grid grid--2" style="margin:1rem 0">
+        <figure class="spec">
+          <svg viewBox="0 0 220 150" width="200" style="margin:0 auto" role="img" aria-label="Hard hat with mark">
+            <path d="M22 108 Q22 52 72 42 Q110 34 148 42 Q198 52 198 108 Z" fill="#E08A1E"/>
+            <path d="M14 108 Q110 96 206 108 L206 118 Q110 106 14 118 Z" fill="#C4750D"/>
+            <rect x="82" y="58" width="40" height="40" rx="7" fill="#1B1E24"/>
+            <path d="M93 78 L102 71 L111 78" fill="none" stroke="#E08A1E" stroke-width="3.6"/>
+            <path d="M93 86 L102 79 L111 86" fill="none" stroke="#8A929E" stroke-width="3.6"/>
+            <text x="134" y="84" fill="#1B1E24" font-family="Barlow Condensed, sans-serif" font-weight="700" font-size="15" letter-spacing=".6">AL DIRAYAH</text>
+          </svg>
+          <figcaption>Helmet — amber shell, mark at 30 mm on the side, name to the rear of it. Helmet colour follows site convention where a client mandates one.</figcaption>
+        </figure>
+        <figure class="spec">
+          <svg viewBox="0 0 220 150" width="200" style="margin:0 auto" role="img" aria-label="Coverall with embroidered mark">
+            <path d="M62 30 L96 22 L124 22 L158 30 L168 66 L150 72 L150 140 L70 140 L70 72 L52 66 Z" fill="#22262E"/>
+            <path d="M96 22 L110 40 L124 22 Z" fill="#171A20"/>
+            <rect x="78" y="82" width="64" height="10" fill="#E08A1E" opacity=".9"/>
+            <rect x="78" y="112" width="64" height="10" fill="#E08A1E" opacity=".9"/>
+            <rect x="124" y="52" width="22" height="22" rx="4" fill="#E08A1E"/>
+            <path d="M130 66 L135 62 L140 66" fill="none" stroke="#1B1E24" stroke-width="2.2"/>
+            <path d="M130 71 L135 67 L140 71" fill="none" stroke="#1B1E24" stroke-width="2.2" opacity=".6"/>
+            <text x="74" y="66" fill="#E9E7E2" font-family="Barlow Condensed, sans-serif" font-weight="600" font-size="11" letter-spacing=".4">AL DIRAYAH</text>
+          </svg>
+          <figcaption>Coverall — anthracite with reflective banding. Mark embroidered at 25 mm on the right chest, name on the left, full lockup across the back at 180 mm.</figcaption>
+        </figure>
+      </div>
+
+      <h3>Vehicle livery</h3>
+      <figure class="spec" style="margin:1rem 0">
+        <svg viewBox="0 0 620 200" width="620" role="img" aria-label="Van side livery">
+          <path d="M18 148 L18 74 L150 74 L196 34 L470 34 L470 148 Z" fill="#FFFFFF" stroke="#D9D6D0" stroke-width="1.5"/>
+          <path d="M18 148 L470 148 L470 166 L18 166 Z" fill="#1B1E24"/>
+          <rect x="196" y="148" width="274" height="4" fill="#E08A1E"/>
+          <path d="M156 78 L198 42 L262 42 L262 78 Z" fill="#C8CDD4"/>
+          <rect x="272" y="42" width="76" height="36" fill="#C8CDD4"/>
+          <circle cx="128" cy="166" r="22" fill="#1B1E24"/><circle cx="128" cy="166" r="9" fill="#6E7885"/>
+          <circle cx="398" cy="166" r="22" fill="#1B1E24"/><circle cx="398" cy="166" r="9" fill="#6E7885"/>
+          <rect x="46" y="92" width="46" height="46" rx="8" fill="#1B1E24"/>
+          <path d="M58 114 L69 106 L80 114" fill="none" stroke="#E08A1E" stroke-width="4.4"/>
+          <path d="M58 123 L69 115 L80 123" fill="none" stroke="#6E7885" stroke-width="4.4"/>
+          <path d="M58 132 L69 124 L80 132" fill="none" stroke="#48505C" stroke-width="4.4"/>
+          <text x="104" y="122" fill="#1B1E24" font-family="Barlow Condensed, sans-serif" font-weight="600" font-size="34" letter-spacing="1">AL DIRAYAH</text>
+          <text x="105" y="137" fill="#6E7885" font-family="IBM Plex Mono, monospace" font-size="8.6" letter-spacing="2.4">LIFTS · ESCALATORS · MEP · LOW CURRENT</text>
+          <text x="452" y="122" text-anchor="end" fill="#6E7885" font-family="IBM Plex Sans Arabic, sans-serif" font-size="19">الدراية</text>
+          <text x="452" y="138" text-anchor="end" fill="#8A929E" font-family="IBM Plex Mono, monospace" font-size="8.6">aldirayah.ae</text>
+        </svg>
+        <figcaption>White body, anthracite skirt, amber rule at the sill. The mark and wordmark occupy the forward third; Arabic and the domain sit at the rear. Legible from two lanes away — which is the only test that matters.</figcaption>
+      </figure>
+
+      <h3>Document cover — pre-qualification and proposals</h3>
+      <div class="grid grid--2" style="margin:1rem 0">
+        <figure>
+          <svg viewBox="0 0 240 330" width="230" role="img" aria-label="Pre-qualification document cover">
+            <rect width="240" height="330" fill="#FFFFFF" stroke="#D9D6D0"/>
+            <rect x="0" y="0" width="240" height="86" fill="#1B1E24"/>
+            <rect x="0" y="86" width="240" height="3.5" fill="#E08A1E"/>
+            <rect x="24" y="24" width="38" height="38" rx="7" fill="none" stroke="#3D434D" stroke-width="1.2"/>
+            <path d="M34 43 L43 36 L52 43" fill="none" stroke="#E08A1E" stroke-width="3.4"/>
+            <path d="M34 51 L43 44 L52 51" fill="none" stroke="#6E7885" stroke-width="3.4"/>
+            <text x="74" y="45" fill="#FFF" font-family="Barlow Condensed, sans-serif" font-weight="600" font-size="21" letter-spacing=".8">AL DIRAYAH</text>
+            <text x="75" y="57" fill="#8A929E" font-family="IBM Plex Mono, monospace" font-size="5.4" letter-spacing="1.6">ELECTROMECHANICAL CONTRACTING</text>
+            <text x="24" y="138" fill="#8A5008" font-family="IBM Plex Mono, monospace" font-size="6.4" letter-spacing="1.8">PRE-QUALIFICATION</text>
+            <text x="24" y="170" fill="#1B1E24" font-family="Barlow Condensed, sans-serif" font-weight="600" font-size="30" letter-spacing=".4">CAPABILITY</text>
+            <text x="24" y="196" fill="#1B1E24" font-family="Barlow Condensed, sans-serif" font-weight="600" font-size="30" letter-spacing=".4">STATEMENT</text>
+            <line x1="24" y1="214" x2="216" y2="214" stroke="#D9D6D0"/>
+            <text x="24" y="234" fill="#3D434D" font-family="IBM Plex Sans, sans-serif" font-size="8">Lifts · Escalators · Electromechanical</text>
+            <text x="24" y="248" fill="#3D434D" font-family="IBM Plex Sans, sans-serif" font-size="8">Power networks · Low current systems</text>
+            <text x="216" y="292" text-anchor="end" fill="#6E7885" font-family="IBM Plex Sans Arabic, sans-serif" font-size="13">الدراية</text>
+            <text x="24" y="306" fill="#8A929E" font-family="IBM Plex Mono, monospace" font-size="6">ABU DHABI · 2026</text>
+          </svg>
+          <figcaption>Anthracite band, amber rule, Barlow Condensed title</figcaption>
+        </figure>
+        <div class="stack">
+          <div class="card">
+            <h4>Cover requirements</h4>
+            <ul style="margin:0;font-size:.88rem">
+              <li>Lockup top-left in the anthracite band, always</li>
+              <li>Amber rule separates band from field — 3.5 pt at A4</li>
+              <li>Title in Barlow Condensed, uppercase, two lines maximum</li>
+              <li>Arabic name bottom-right</li>
+              <li>Document reference and date in mono, bottom-left</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h4>ID badge</h4>
+            <p style="margin:0;font-size:.88rem">Portrait 54 × 86 mm. Anthracite header with monogram, photo, name in Plex Sans SemiBold, trade and certification in mono, ADMCC or OEM certification number where applicable. Reverse carries emergency contact and the licence number.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>Site signage</h3>
+      <p>Project boards follow the main contractor’s template where one is issued. Where we control the board: anthracite ground, mark and wordmark at the top-left, amber rule beneath, scope line in mono, and both languages present. Minimum wordmark height on a hoarding is 150 mm.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ L09 GOVERNANCE ══════════════════════ -->
+<section class="level" id="l09">
+  <div class="level__grid">
+    <div class="rail"><div class="rail__tick"></div><span class="rail__num">L09</span><span class="rail__label">Governance</span></div>
+    <div>
+      <p class="eyebrow">Identity data and rules</p>
+      <h2>Keeping it consistent</h2>
+
+      <h3>Identity record</h3>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Field</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td>Legal name, English</td><td class="mono">Al Dirayah Electromechanical Contracting LLC</td></tr>
+            <tr><td>Legal name, Arabic</td><td class="ar" style="text-align:right">الدراية للمقاولات الكهروميكانيكية ذ.م.م</td></tr>
+            <tr><td>Trading name</td><td class="mono">Al Dirayah</td></tr>
+            <tr><td>Emirate / authority</td><td>Abu Dhabi · ADDED</td></tr>
+            <tr><td>Primary activity</td><td class="mono">4329101 — Elevators and Escalators Installation and Repair</td></tr>
+            <tr><td>Primary domain</td><td class="mono">aldirayah.ae</td></tr>
+            <tr><td>Defensive domains</td><td class="mono">aldirayahgroup.com · aldirayah.net</td></tr>
+            <tr><td>Email format</td><td class="mono">firstname@aldirayah.ae</td></tr>
+            <tr><td>Shared mailboxes</td><td class="mono">info@ · service@ · accounts@ · tenders@</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">Complete this table with the licence number, establishment card number and registered address once the licence is issued, and reissue the document as version 1.1.</p>
+
+      <h3>File naming</h3>
+      <p class="mono" style="font-size:.86rem;background:var(--surface-2);border:1px solid var(--line);border-radius:3px;padding:.7rem .85rem;max-width:none">ALD_[type]_[client-or-project]_[YYYY-MM-DD]_[v##].[ext]</p>
+      <p style="font-size:.88rem;color:var(--steel)">Example: <span class="mono">ALD_PQ_EmiratesFM_2026-09-14_v02.pdf</span> — the <span class="mono">ALD</span> prefix is for internal file management only and is never used as a public abbreviation of the company name.</p>
+
+      <h3>Brand rules relating to our OEM principals</h3>
+      <div class="callout">
+        <h4>Read the agreement before you print anything</h4>
+        <p>Subcontractor agreements with TKE, OTIS and KONE place strict limits on the use of their names, marks and colours. Assume the following unless a specific written permission says otherwise:</p>
+        <ul style="margin:.7rem 0 0">
+          <li>Never place an OEM logo on our website, vehicles, uniforms, stationery or marketing.</li>
+          <li>Never describe ourselves as “authorised”, “approved” or “official” without the exact wording permitted in writing.</li>
+          <li>Never adopt an OEM’s colours or design language — one reason this identity avoids blue entirely.</li>
+          <li>Client-facing claims about OEM relationships go through a named partner before publication.</li>
+        </ul>
+        <p style="margin-top:.7rem">The trading activity on our licence — wholesale of lifts, escalators and spare parts — may conflict with exclusivity or genuine-parts clauses in those agreements. Check every clause before trading a single component.</p>
+      </div>
+
+      <h3>Approval</h3>
+      <div class="do-dont">
+        <div class="dd dd--do"><span class="dd__m">✓</span><span>Anything carrying the mark and leaving the company is approved by a named partner before it is produced.</span></div>
+        <div class="dd dd--do"><span class="dd__m">✓</span><span>Master artwork lives in one place, controlled by the partners. Suppliers receive files from that source only.</span></div>
+        <div class="dd dd--do"><span class="dd__m">✓</span><span>Supply printers and signage vendors with vector files — SVG, EPS or PDF. Never a screenshot or a PNG lifted from the website.</span></div>
+        <div class="dd dd--no"><span class="dd__m">✕</span><span>Nobody redraws, re-traces or “tidies” the mark. If a supplier says they need to, they need the vector file instead.</span></div>
+      </div>
+
+      <h3>Open items</h3>
+      <ul>
+        <li><strong>ADDED trade name reservation</strong> — clear <span class="mono">الدراية</span> and <span class="mono">Al Dirayah</span> in both scripts, and confirm whether <em>Al Diraya</em> and <em>Al Dirayah</em> count as one reservation or two.</li>
+        <li><strong>Primary activity</strong> — set 4329101 as primary. It currently appears to be set to Importing, which would change the licence type and the legal descriptor in this document.</li>
+        <li><strong>ELV activities</strong> — add surveillance, access control and structured cabling; obtain ADMCC registration for CCTV.</li>
+        <li><strong>Manpower supply</strong> — if pursued, it requires a separate MOHRE-licensed entity. The architecture supports <span class="mono">Al Dirayah Workforce LLC</span> using the same mark with a divisional descriptor.</li>
+        <li><strong>Domains</strong> — register <span class="mono">aldirayah.ae</span> on licence issue; secure <span class="mono">aldirayahgroup.com</span> and <span class="mono">aldirayah.net</span> now.</li>
+        <li><strong>Trademark</strong> — consider filing the mark and wordmark with the UAE Ministry of Economy in the relevant classes once trading begins.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <p><b>Al Dirayah Electromechanical Contracting LLC</b> · <span class="ar">الدراية للمقاولات الكهروميكانيكية ذ.م.م</span></p>
+    <p>Brand guidelines version 1.0 · Issued August 2026 · Abu Dhabi, United Arab Emirates</p>
+    <p style="margin-top:1rem">This document is the controlled reference for the Al Dirayah identity. Where a supplier, printer or designer needs direction not covered here, they ask a partner rather than deciding for themselves. Reissue with an incremented version number whenever the licence details, activity list or identity data change.</p>
+  </div>
+</footer>

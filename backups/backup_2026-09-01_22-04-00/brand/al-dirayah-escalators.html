@@ -1,0 +1,788 @@
+<title>Al Dirayah Escalators</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap">
+
+<style>
+/* ─────────────────────────────────────────────────────────────
+   AL DIRAYAH — ESCALATORS & MOVING WALKWAYS
+   Motion language: 30° diagonal, continuous, never stopping.
+   Single-theme by intent; every colour painted explicitly.
+   ───────────────────────────────────────────────────────────── */
+:root{
+  --ink:#0E1115; --ink-2:#151A20; --surface:#1B2128; --surface-2:#232A33;
+  --line:#2B333D; --line-2:#3A4550;
+  --amber:#E08A1E; --amber-lt:#F5A93C; --amber-dim:#8A5A14;
+  --steel:#6E7885; --steel-lt:#9AA3B0; --paper:#E9E7E2; --white:#fff;
+  --f-d:"Barlow Condensed","Arial Narrow",sans-serif;
+  --f-b:"IBM Plex Sans",system-ui,sans-serif;
+  --f-m:"IBM Plex Mono",ui-monospace,monospace;
+  --f-a:"IBM Plex Sans Arabic",serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0; background:var(--ink); color:var(--paper); font-family:var(--f-b);
+  font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden}
+h1,h2,h3{margin:0; text-wrap:balance; font-family:var(--f-d); font-weight:600;
+  text-transform:uppercase; line-height:.95; letter-spacing:.01em}
+p{margin:0 0 1rem; max-width:62ch}
+a{color:inherit; text-decoration:none}
+:focus-visible{outline:2px solid var(--amber); outline-offset:3px; border-radius:2px}
+.wrap{max-width:1180px; margin:0 auto; padding:0 clamp(1.1rem,4vw,2.5rem)}
+#hero > .wrap, .pin > .wrap{width:100%}
+.eyebrow{font-family:var(--f-m); font-size:.68rem; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--amber); margin:0 0 1rem}
+.mono{font-family:var(--f-m); font-variant-numeric:tabular-nums}
+.ar{font-family:var(--f-a); direction:rtl; unicode-bidi:isolate}
+.lede{font-size:clamp(1.02rem,1.6vw,1.2rem); color:var(--steel-lt); max-width:56ch}
+h2.big{font-size:clamp(2.2rem,6vw,4.2rem); color:var(--white); margin-bottom:1.1rem}
+
+/* ── diagonal backdrop ─────────────────────────────────────── */
+#bg{position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden}
+
+/* Tread band. Lines sit perpendicular to a 30°-above-horizontal travel
+   vector, so sliding along that vector reads as steps passing.
+   One loop = 8 periods × 27px = 216px along (cos30, −sin30) → (187.06, −108),
+   which lands exactly on the pattern repeat, so the cycle is seamless. */
+#hatch{position:absolute; inset:-45%; opacity:.30;
+  background:repeating-linear-gradient(60deg,
+    transparent 0 21px, rgba(122,136,152,.16) 21px 22.5px,
+    rgba(0,0,0,.16) 22.5px 24px, transparent 24px 27px);
+  animation:treadrun 8s linear infinite;
+  will-change:transform}
+@keyframes treadrun{
+  from{ transform:translate3d(0,0,0) }
+  to  { transform:translate3d(187.06px,-108px,0) }
+}
+#beam{position:absolute; left:-10%; right:-10%; height:150%; top:-25%;
+  background:linear-gradient(-30deg, transparent 42%, rgba(224,138,30,.09) 50%, transparent 58%)}
+#vig{position:absolute; inset:0;
+  background:radial-gradient(80% 60% at 50% 0%, rgba(224,138,30,.13), transparent 65%)}
+
+/* ── handrail ──────────────────────────────────────────────────
+   Runs continuously, and at a speed matched to the tread band —
+   EN 115 requires handrail speed within a few percent of step speed,
+   so the two loops are deliberately time-matched, not eyeballed:
+   treads 216px / 8s = 27px/s · marks 164px / 6.07s = 27px/s.       */
+#handrail{position:fixed; top:0; right:0; bottom:0; width:20px; background:#07090B;
+  z-index:55; overflow:hidden;
+  box-shadow:inset 3px 0 5px -2px rgba(255,255,255,.18),
+             inset -4px 0 7px -2px rgba(0,0,0,.9), -7px 0 26px rgba(0,0,0,.6)}
+#handrail .marks{position:absolute; left:0; right:0; top:-150%; height:400%;
+  background:repeating-linear-gradient(180deg,
+    transparent 0 78px, rgba(255,255,255,.085) 78px 81px, transparent 81px 164px);
+  animation:railrun 6.07s linear infinite; will-change:transform}
+#handrail .sheen{position:absolute; left:2px; width:4px; top:0; bottom:0; border-radius:2px;
+  background:linear-gradient(90deg, rgba(255,255,255,.18), rgba(255,255,255,.015))}
+@keyframes railrun{ from{transform:translate3d(0,0,0)} to{transform:translate3d(0,-164px,0)} }
+
+/* ── the ride ──────────────────────────────────────────────────
+   Each content block is its own step on the chain. The chain is
+   rigid, so every block travels the identical 30° vector at the
+   identical rate — 90px across, 52px up (90·tan30). What differs
+   is phase: each block is bound to its OWN view() timeline, so its
+   position on the incline follows its position in the viewport.
+   Blocks pass through zero at mid-view, square to the reader
+   exactly while being read.                                      */
+/* Direction: content enters displaced UP-RIGHT and leaves DOWN-LEFT —
+   the parallax of ascending past fixed surroundings. The machinery
+   (treads, handrail) keeps running up; the world you pass runs down. */
+@keyframes ride30{
+  from{ transform:translate3d( 64px,-36.95px, 0) }
+  to  { transform:translate3d(-64px, 36.95px, 0) }
+}
+/* Travel must never exceed the available gutter, or blocks clip at the
+   viewport edge. The gutter is (vw−1180)/2 + wrap padding, which shrinks
+   faster than the viewport does — hence a ladder rather than a scale.
+   Ratio is fixed at tan30 throughout, so the angle never changes.       */
+@media(max-width:1240px){          /* gutter ≥ 36px */
+  @keyframes ride30{
+    from{ transform:translate3d( 34px,-19.63px, 0) }
+    to  { transform:translate3d(-34px, 19.63px, 0) }
+  }
+}
+@media(max-width:900px){           /* gutter ≥ 22px */
+  @keyframes ride30{
+    from{ transform:translate3d( 20px,-11.55px, 0) }
+    to  { transform:translate3d(-20px, 11.55px, 0) }
+  }
+}
+@media(max-width:560px){           /* gutter ≥ 17.6px */
+  @keyframes ride30{
+    from{ transform:translate3d( 14px,-8.08px, 0) }
+    to  { transform:translate3d(-14px, 8.08px, 0) }
+  }
+}
+/* clip (not hidden) — never creates a scroll container, so it cannot
+   interfere with the sticky pin used elsewhere on the page */
+.ride{ overflow-x:clip }
+@supports (animation-timeline: view()){
+  .ride .step{
+    animation:ride30 linear both;
+    animation-timeline:view();
+    animation-range:entry 0% exit 100%;
+    will-change:transform;
+  }
+}
+/* the reveal handles opacity only here — transform belongs to the chain */
+.ride .rv{ transform:none }
+
+/* ── rise gauge (sits inboard of the handrail) ─────────────── */
+#rg{position:fixed; right:calc(20px + clamp(.7rem,2vw,1.5rem)); top:50%; transform:translateY(-50%);
+  z-index:40; background:#0A0D10; border:1px solid var(--line-2); border-radius:8px;
+  padding:.75rem .6rem; display:flex; flex-direction:column; align-items:center; gap:.55rem;
+  box-shadow:0 12px 40px rgba(0,0,0,.6)}
+#rg .ang{font-family:var(--f-m); font-size:.62rem; letter-spacing:.1em; color:var(--amber);
+  border:1px solid var(--amber-dim); border-radius:2px; padding:.12rem .3rem}
+#rg .val{font-family:var(--f-m); font-weight:600; font-size:1.15rem; color:var(--amber-lt);
+  line-height:1; text-shadow:0 0 14px rgba(245,169,60,.5)}
+#rg .unit{font-family:var(--f-m); font-size:.55rem; letter-spacing:.16em; color:var(--steel)}
+#rg .gauge{width:4px; height:118px; background:#1A2027; border-radius:2px; position:relative; overflow:hidden}
+#rg .gauge i{position:absolute; left:0; right:0; bottom:0; height:0%;
+  background:linear-gradient(0deg,var(--amber-dim),var(--amber-lt))}
+@media(max-width:700px){ #rg .gauge{height:64px} #rg .ang{display:none} }
+
+/* ── header ────────────────────────────────────────────────── */
+header{position:fixed; top:0; left:0; right:0; z-index:50; padding:1.1rem 0;
+  border-bottom:1px solid transparent; transition:background .4s, backdrop-filter .4s, border-color .4s}
+header.stuck{background:rgba(14,17,21,.82); backdrop-filter:blur(14px); border-bottom-color:var(--line)}
+header .wrap{display:flex; align-items:center; justify-content:space-between; gap:1rem}
+.brand{display:flex; align-items:center; gap:.7rem}
+.brand svg{width:34px; height:34px; flex:none}
+.brand .nm{font-family:var(--f-d); font-size:1.4rem; letter-spacing:.045em;
+  text-transform:uppercase; font-weight:600; color:var(--white)}
+.brand .div{font-family:var(--f-m); font-size:.58rem; letter-spacing:.18em; color:var(--amber);
+  border-left:1px solid var(--line-2); padding-left:.7rem; text-transform:uppercase}
+nav{display:flex; gap:1.5rem}
+nav a{font-family:var(--f-m); font-size:.67rem; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--steel-lt); transition:color .25s}
+nav a:hover{color:var(--amber)}
+.cta{font-family:var(--f-m); font-size:.65rem; letter-spacing:.14em; text-transform:uppercase;
+  border:1px solid var(--amber); color:var(--amber); padding:.5rem .9rem; border-radius:2px;
+  transition:background .25s,color .25s}
+.cta:hover{background:var(--amber); color:var(--ink)}
+@media(max-width:900px){ nav{display:none} .brand .div{display:none} }
+
+main{position:relative; z-index:2}
+section{position:relative}
+.pad{padding:clamp(5rem,13vh,9rem) 0}
+
+/* ── hero ──────────────────────────────────────────────────── */
+#hero{min-height:100svh; display:grid; align-content:center; padding-top:5.5rem; overflow:hidden}
+#hero h1{font-size:clamp(3.2rem,14vw,10rem); color:var(--white)}
+#hero h1 .am{color:var(--amber)}
+.h-line{overflow:hidden}
+.h-line span{display:block; transform:translate(-30px,105%); opacity:0;
+  animation:diagrise 1.2s var(--ease) forwards}
+@keyframes diagrise{to{transform:translate(0,0); opacity:1}}
+.h-sub{max-width:46ch; color:var(--steel-lt); font-size:clamp(1rem,1.7vw,1.18rem);
+  opacity:0; animation:fade 1s var(--ease) .8s forwards}
+@keyframes fade{to{opacity:1}}
+.h-meta{display:flex; flex-wrap:wrap; gap:.6rem 2rem; margin-top:2.2rem; font-family:var(--f-m);
+  font-size:.66rem; letter-spacing:.15em; text-transform:uppercase; color:var(--steel);
+  opacity:0; animation:fade 1s var(--ease) 1.05s forwards}
+
+/* hero step ribbon — the signature continuous motion */
+#ribbon{position:absolute; left:-12%; right:-12%; bottom:-4%; height:46vh;
+  pointer-events:none; opacity:.85}
+#ribbon .band{position:absolute; inset:0; display:flex; gap:0;
+  transform:rotate(-30deg); transform-origin:center}
+.rstep{width:74px; height:150px; flex:none; position:relative}
+.rstep::before{content:""; position:absolute; left:2px; right:2px; top:0; height:13px;
+  background:linear-gradient(180deg,#4C5763,#38414B); border-radius:2px 2px 0 0;
+  box-shadow:0 1px 0 rgba(255,255,255,.05)}
+.rstep::after{content:""; position:absolute; left:2px; right:2px; top:13px; height:24px;
+  background:linear-gradient(180deg,#232A33,#1A2027)}
+#ribbon .rail{position:absolute; left:0; right:0; top:-46px; height:12px; border-radius:6px;
+  background:linear-gradient(180deg,#5A6672,#2E353E); transform:rotate(-30deg); transform-origin:center}
+
+/* ── reveals (diagonal) ────────────────────────────────────── */
+.rv{opacity:0; transform:translate(-22px,28px);
+  transition:opacity .9s var(--ease), transform .9s var(--ease)}
+.rv.in{opacity:1; transform:none}
+.rv[data-d="1"]{transition-delay:.09s} .rv[data-d="2"]{transition-delay:.18s}
+.rv[data-d="3"]{transition-delay:.27s} .rv[data-d="4"]{transition-delay:.36s}
+
+/* ── type cards ────────────────────────────────────────────── */
+.types{display:grid; gap:1px; background:var(--line); border:1px solid var(--line);
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); margin-top:2.8rem}
+.types article{background:var(--ink-2); padding:1.6rem 1.4rem 1.9rem; transition:background .4s}
+.types article:hover{background:var(--surface)}
+.types svg{width:100%; height:auto; display:block; margin-bottom:1.1rem}
+.types h3{font-size:1.55rem; color:var(--white); margin-bottom:.4rem}
+.types p{font-size:.87rem; color:var(--steel-lt); margin:0 0 .9rem}
+.types dl{display:grid; grid-template-columns:auto 1fr; gap:.2rem .8rem; margin:0;
+  font-family:var(--f-m); font-size:.68rem}
+.types dt{color:var(--steel)} .types dd{margin:0; color:var(--amber-lt)}
+
+/* ── pinned ────────────────────────────────────────────────── */
+.pinwrap{position:relative}
+.pin{position:sticky; top:0; height:100svh; display:grid; align-content:center; overflow:hidden}
+
+/* anatomy */
+.an{display:grid; gap:1.6rem; align-items:center; grid-template-columns:1fr}
+@media(min-width:960px){ .an{grid-template-columns:minmax(0,1fr) 320px} }
+.an figure{margin:0}
+.an svg{display:block; width:100%; max-width:720px; margin:0 auto; height:auto; max-height:58svh}
+.an ul{list-style:none; margin:1rem 0 0; padding:0; display:flex; flex-direction:column}
+.an li{display:grid; grid-template-columns:26px 1fr; gap:.7rem; padding:.46rem .1rem;
+  border-bottom:1px solid var(--line); font-size:.86rem; color:#4E5864;
+  transition:color .35s, border-color .35s}
+.an li .ix{font-family:var(--f-m); font-size:.64rem}
+.an li[data-on]{color:var(--paper); border-color:var(--line-2)}
+.an li[data-on] .ix{color:var(--amber)}
+@media(max-width:959px){
+  .an svg{max-height:34svh}
+  .an li{padding:.26rem .1rem; font-size:.76rem}
+  .an > div > p{display:none}
+  .an h2{font-size:1.6rem !important}
+}
+
+/* step circuit */
+.circ{display:grid; gap:1.6rem; grid-template-columns:1fr; align-items:center}
+@media(min-width:960px){ .circ{grid-template-columns:minmax(0,1fr) 300px} }
+.stagewrap{display:grid; place-items:center; overflow:hidden}
+.stage{position:relative; width:660px; height:430px; transform-origin:center; flex:none}
+.stage svg{position:absolute; inset:0; width:660px; height:430px}
+.chainstep{position:absolute; width:19px; height:19px; margin:-9.5px 0 0 -9.5px;
+  border-radius:2px; border:1px solid #6E7885;
+  offset-path:path("M120,330 L500,110 A24,24 0 0 1 524,151.6 L144,371.6 A24,24 0 0 1 120,330 Z");
+  offset-rotate:0deg;
+  /* both animations share one timeline and delay, so colour tracks true
+     position on the circuit: carrying run ends at 42.7% of path length */
+  animation:circulate 9s linear infinite, runcolour 9s linear infinite;
+}
+@keyframes circulate{ from{offset-distance:0%} to{offset-distance:100%} }
+@keyframes runcolour{
+  0%,   41%  { background:#F5A93C; border-color:#F7BB63 }
+  46%,  90%  { background:#48525E; border-color:#6E7885 }
+  95%,  100% { background:#F5A93C; border-color:#F7BB63 }
+}
+.circ .legend{display:grid; gap:.55rem; margin-top:1rem}
+.circ .legend div{display:grid; grid-template-columns:12px 1fr; gap:.7rem; align-items:start;
+  font-size:.85rem; color:var(--steel-lt)}
+.circ .legend i{width:12px; height:12px; border-radius:2px; margin-top:.35rem; display:block}
+
+/* capacity calculator */
+.calc{display:grid; gap:2rem; grid-template-columns:1fr}
+@media(min-width:900px){ .calc{grid-template-columns:1fr 1fr; align-items:start} }
+.ctrl{margin-bottom:1.8rem}
+.ctrl > span{font-family:var(--f-m); font-size:.63rem; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--steel); display:block; margin-bottom:.6rem}
+.seg{display:flex; gap:0; border:1px solid var(--line-2); border-radius:3px; overflow:hidden}
+.seg button{flex:1; background:transparent; border:0; border-right:1px solid var(--line-2);
+  color:var(--steel-lt); font-family:var(--f-m); font-size:.78rem; padding:.65rem .4rem;
+  cursor:pointer; transition:background .25s,color .25s}
+.seg button:last-child{border-right:0}
+.seg button:hover{color:var(--paper); background:var(--surface)}
+.seg button[aria-pressed="true"]{background:var(--amber); color:var(--ink); font-weight:600}
+.readout{background:var(--ink-2); border:1px solid var(--line); padding:1.8rem 1.6rem}
+.readout .num{font-family:var(--f-d); font-size:clamp(3.2rem,9vw,5.6rem); color:var(--amber);
+  line-height:.9; font-variant-numeric:tabular-nums}
+.readout .cap{font-family:var(--f-m); font-size:.65rem; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--steel); margin-top:.5rem}
+.readout hr{border:0; border-top:1px solid var(--line); margin:1.4rem 0}
+.readout dl{display:grid; grid-template-columns:1fr auto; gap:.5rem 1rem; margin:0;
+  font-family:var(--f-m); font-size:.78rem}
+.readout dt{color:var(--steel)} .readout dd{margin:0; color:var(--paper); text-align:right}
+
+/* safety */
+.safe{display:grid; gap:1px; background:var(--line); border:1px solid var(--line);
+  grid-template-columns:repeat(auto-fit,minmax(215px,1fr)); margin-top:2.4rem}
+.safe div{background:var(--ink-2); padding:1.3rem 1.2rem 1.5rem}
+.safe b{font-family:var(--f-m); font-size:.6rem; letter-spacing:.15em; color:var(--amber);
+  display:block; margin-bottom:.55rem; font-weight:500}
+.safe h3{font-size:1.1rem; font-family:var(--f-b); font-weight:600; text-transform:none;
+  color:var(--white); margin-bottom:.3rem; letter-spacing:0; line-height:1.3}
+.safe p{font-size:.83rem; color:var(--steel-lt); margin:0}
+
+/* CTA */
+#cta{background:var(--ink-2); border-top:1px solid var(--line)}
+.ctarow{display:grid; gap:2rem; grid-template-columns:1fr}
+@media(min-width:860px){ .ctarow{grid-template-columns:1.3fr 1fr; align-items:end} }
+.big-cta{display:inline-flex; align-items:center; gap:.8rem; background:var(--amber); color:var(--ink);
+  font-family:var(--f-d); text-transform:uppercase; font-size:1.5rem; letter-spacing:.03em;
+  padding:.75rem 1.6rem; border-radius:2px; transition:transform .3s var(--ease), background .3s}
+.big-cta:hover{background:var(--amber-lt); transform:translate(6px,-3px)}
+.dl{display:grid; gap:.5rem; font-family:var(--f-m); font-size:.82rem; color:var(--steel-lt)}
+.dl b{color:var(--steel); font-weight:400; letter-spacing:.12em; font-size:.62rem;
+  text-transform:uppercase; display:block}
+footer{border-top:1px solid var(--line); padding:2.2rem 0; font-family:var(--f-m); font-size:.68rem;
+  letter-spacing:.09em; color:#49535E; display:flex; flex-wrap:wrap; gap:.7rem 2rem; justify-content:space-between}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms !important; animation-iteration-count:1 !important;
+    transition-duration:.01ms !important}
+  .h-line span,.h-sub,.h-meta{transform:none !important; opacity:1 !important; animation:none !important}
+  .rv{opacity:1 !important; transform:none !important}
+  .pin{position:relative; height:auto; padding:4rem 0}
+  .chainstep,#hatch,#handrail .marks{animation:none !important; transform:none !important}
+  .ride .step{animation:none !important; transform:none !important}
+  #ribbon{opacity:.45}
+}
+</style>
+
+<div id="bg" aria-hidden="true"><div id="hatch"></div><div id="beam"></div><div id="vig"></div></div>
+<div id="handrail" aria-hidden="true"><div class="marks"></div><div class="sheen"></div></div>
+
+<aside id="rg" aria-label="Rise and incline indicator">
+  <span class="ang" id="rgAng">30°</span>
+  <span class="val" id="rgVal">0.0</span>
+  <span class="unit">M rise</span>
+  <div class="gauge"><i id="rgBar"></i></div>
+</aside>
+
+<header id="hdr">
+  <div class="wrap">
+    <a class="brand" href="#hero">
+      <svg viewBox="0 0 120 120" aria-hidden="true">
+        <rect width="120" height="120" rx="20" fill="#E08A1E"/>
+        <path d="M35 49 L60 29 L85 49" fill="none" stroke="#0E1115" stroke-width="10"/>
+        <path d="M35 70 L60 50 L85 70" fill="none" stroke="#0E1115" stroke-width="10" opacity=".62"/>
+        <path d="M35 91 L60 71 L85 91" fill="none" stroke="#0E1115" stroke-width="10" opacity=".34"/>
+      </svg>
+      <span class="nm">Al Dirayah</span>
+      <span class="div">Escalators</span>
+    </a>
+    <nav><a href="#types">Types</a><a href="#anat">Anatomy</a><a href="#circ">Step circuit</a><a href="#cap">Capacity</a><a href="#safe">Safety</a></nav>
+    <a class="cta" href="#cta">Request a survey</a>
+  </div>
+</header>
+
+<main>
+
+<!-- ══════════ HERO ══════════ -->
+<section id="hero" data-rise="0">
+  <div id="ribbon" aria-hidden="true">
+    <div class="rail"></div>
+    <div class="band" id="rband"></div>
+  </div>
+  <div class="wrap">
+    <p class="eyebrow" style="opacity:0;animation:fade .9s var(--ease) .55s forwards">Escalators &amp; moving walkways · Abu Dhabi</p>
+    <h1>
+      <span class="h-line"><span style="animation-delay:.05s">Never</span></span>
+      <span class="h-line"><span class="am" style="animation-delay:.18s">Stops</span></span>
+    </h1>
+    <p class="h-sub" style="margin-top:1.7rem">An escalator runs every hour the building is open — roughly 5,000 hours a year, carrying thousands of people who never think about it once. That only stays true if somebody maintains it properly.</p>
+    <div class="h-meta">
+      <span>Install</span><span>Modernise</span><span>Maintain</span><span>EN 115</span>
+      <span class="ar" style="letter-spacing:0">الدراية</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ TYPES ══════════ -->
+<section id="types" class="pad ride" data-rise="1.2">
+  <div class="wrap">
+    <p class="eyebrow rv">01 — Configurations</p>
+    <h2 class="big rv" data-d="1">Three geometries</h2>
+    <p class="lede rv" data-d="2">The angle decides everything downstream — the truss length, the pit, the structural loading and the capacity. We survey and specify all three.</p>
+    <div class="types">
+      <article class="rv">
+        <svg viewBox="0 0 260 120" role="img" aria-label="Escalator at 30 degrees">
+          <line x1="14" y1="106" x2="246" y2="106" stroke="#2B333D" stroke-width="1" stroke-dasharray="4 4"/>
+          <path d="M30 106 L200 8" stroke="#E08A1E" stroke-width="4" fill="none"/>
+          <path d="M30 106 L200 106" stroke="#3A4550" stroke-width="2"/>
+          <path d="M62 106 A32 32 0 0 0 46 92" fill="none" stroke="#6E7885" stroke-width="1.4"/>
+          <text x="70" y="99" font-family="IBM Plex Mono, monospace" font-size="11" fill="#9AA3B0">30°</text>
+        </svg>
+        <h3>Escalator</h3>
+        <p>The standard for retail, transport and mixed-use. Steps remain horizontal throughout the incline.</p>
+        <dl><dt>Incline</dt><dd>30°</dd><dt>Rise</dt><dd>to 6 m</dd><dt>Step width</dt><dd>600–1000 mm</dd></dl>
+      </article>
+      <article class="rv" data-d="1">
+        <svg viewBox="0 0 260 120" role="img" aria-label="Steep escalator at 35 degrees">
+          <line x1="14" y1="106" x2="246" y2="106" stroke="#2B333D" stroke-width="1" stroke-dasharray="4 4"/>
+          <path d="M30 106 L172 6" stroke="#E08A1E" stroke-width="4" fill="none"/>
+          <path d="M30 106 L172 106" stroke="#3A4550" stroke-width="2"/>
+          <path d="M62 106 A32 32 0 0 0 44 90" fill="none" stroke="#6E7885" stroke-width="1.4"/>
+          <text x="70" y="99" font-family="IBM Plex Mono, monospace" font-size="11" fill="#9AA3B0">35°</text>
+        </svg>
+        <h3>Steep escalator</h3>
+        <p>A shorter truss and a smaller footprint where the floor plate is tight. Restricted to lower rises by standard.</p>
+        <dl><dt>Incline</dt><dd>35°</dd><dt>Rise</dt><dd>to 6 m</dd><dt>Footprint</dt><dd>Reduced</dd></dl>
+      </article>
+      <article class="rv" data-d="2">
+        <svg viewBox="0 0 260 120" role="img" aria-label="Moving walkway at 12 degrees">
+          <line x1="14" y1="106" x2="246" y2="106" stroke="#2B333D" stroke-width="1" stroke-dasharray="4 4"/>
+          <path d="M22 100 L238 54" stroke="#E08A1E" stroke-width="4" fill="none"/>
+          <path d="M22 100 L238 100" stroke="#3A4550" stroke-width="2"/>
+          <text x="54" y="94" font-family="IBM Plex Mono, monospace" font-size="11" fill="#9AA3B0">0–12°</text>
+        </svg>
+        <h3>Moving walkway</h3>
+        <p>Pallet type, level or gently inclined. Airports, car parks and long horizontal runs — trolley-capable where specified.</p>
+        <dl><dt>Incline</dt><dd>0–12°</dd><dt>Length</dt><dd>to 100 m</dd><dt>Pallet</dt><dd>800–1400 mm</dd></dl>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ ANATOMY (pinned, diagonal explode) ══════════ -->
+<section id="anat" class="pinwrap" style="height:340svh" data-rise="2.6">
+  <div class="pin">
+    <div class="wrap">
+      <div class="an">
+        <figure>
+          <svg id="anSvg" viewBox="0 0 720 420" width="720" height="420" role="img" aria-label="Exploded view of an escalator truss assembly">
+            <defs>
+              <linearGradient id="mtl" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#5A6672"/><stop offset=".5" stop-color="#3C4650"/><stop offset="1" stop-color="#262E37"/>
+              </linearGradient>
+              <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#5E6975" stop-opacity=".5"/><stop offset="1" stop-color="#39424D" stop-opacity=".25"/>
+              </linearGradient>
+            </defs>
+
+            <!-- floor datums -->
+            <g stroke="#2B333D" stroke-width="1" stroke-dasharray="4 5" opacity=".7">
+              <line x1="20" y1="358" x2="700" y2="358"/><line x1="360" y1="112" x2="700" y2="112"/>
+            </g>
+
+            <!-- 5 · lower landing / tension station -->
+            <g class="ex-g" data-dx="-58" data-dy="46" data-ix="5">
+              <rect x="34" y="330" width="94" height="34" rx="3" fill="url(#mtl)"/>
+              <rect x="40" y="322" width="82" height="10" rx="2" fill="#5A6672"/>
+              <g fill="#0E1115">
+                <rect x="44" y="324" width="3" height="6"/><rect x="52" y="324" width="3" height="6"/>
+                <rect x="60" y="324" width="3" height="6"/><rect x="68" y="324" width="3" height="6"/>
+                <rect x="76" y="324" width="3" height="6"/><rect x="84" y="324" width="3" height="6"/>
+                <rect x="92" y="324" width="3" height="6"/><rect x="100" y="324" width="3" height="6"/>
+                <rect x="108" y="324" width="3" height="6"/><rect x="116" y="324" width="3" height="6"/>
+              </g>
+              <circle cx="60" cy="347" r="9" fill="none" stroke="#6E7885" stroke-width="2.5"/>
+            </g>
+
+            <!-- 4 · upper landing + drive machine -->
+            <g class="ex-g" data-dx="46" data-dy="-64" data-ix="4">
+              <rect x="516" y="86" width="112" height="38" rx="3" fill="url(#mtl)"/>
+              <rect x="522" y="78" width="100" height="10" rx="2" fill="#5A6672"/>
+              <g fill="#0E1115">
+                <rect x="526" y="80" width="3" height="6"/><rect x="534" y="80" width="3" height="6"/>
+                <rect x="542" y="80" width="3" height="6"/><rect x="550" y="80" width="3" height="6"/>
+                <rect x="558" y="80" width="3" height="6"/><rect x="566" y="80" width="3" height="6"/>
+                <rect x="574" y="80" width="3" height="6"/><rect x="582" y="80" width="3" height="6"/>
+                <rect x="590" y="80" width="3" height="6"/><rect x="598" y="80" width="3" height="6"/>
+              </g>
+              <rect x="560" y="96" width="52" height="24" rx="3" fill="#333C46" stroke="#6E7885"/>
+              <circle cx="534" cy="108" r="11" fill="none" stroke="#8E98A5" stroke-width="3"/>
+              <circle cx="534" cy="108" r="3" fill="#E08A1E"/>
+            </g>
+
+            <!-- incline assembly, rotated -30° about (128,340) -->
+            <g transform="rotate(-30 128 340)">
+              <!-- 3 · truss (anchor) -->
+              <g class="ex-g" data-dx="0" data-dy="0" data-ix="3">
+                <rect x="128" y="330" width="470" height="46" fill="#1D242C" stroke="#3A4550"/>
+                <g stroke="#39424D" stroke-width="2">
+                  <path d="M128 376 L172 330 M172 376 L216 330 M216 376 L260 330 M260 376 L304 330
+                           M304 376 L348 330 M348 376 L392 330 M392 376 L436 330 M436 376 L480 330
+                           M480 376 L524 330 M524 376 L568 330"/>
+                </g>
+                <rect x="128" y="330" width="470" height="5" fill="#4A5560"/>
+                <rect x="128" y="371" width="470" height="5" fill="#4A5560"/>
+              </g>
+              <!-- 2 · step band + chain -->
+              <g class="ex-g" data-dx="-13" data-dy="-22" data-ix="2">
+                <rect x="130" y="300" width="466" height="8" fill="#2A323B"/>
+                <g fill="url(#mtl)" stroke="#6E7885" stroke-width=".8">
+                  <rect x="134" y="282" width="34" height="19"/><rect x="172" y="282" width="34" height="19"/>
+                  <rect x="210" y="282" width="34" height="19"/><rect x="248" y="282" width="34" height="19"/>
+                  <rect x="286" y="282" width="34" height="19"/><rect x="324" y="282" width="34" height="19"/>
+                  <rect x="362" y="282" width="34" height="19"/><rect x="400" y="282" width="34" height="19"/>
+                  <rect x="438" y="282" width="34" height="19"/><rect x="476" y="282" width="34" height="19"/>
+                  <rect x="514" y="282" width="34" height="19"/><rect x="552" y="282" width="34" height="19"/>
+                </g>
+              </g>
+              <!-- 1 · balustrade + handrail -->
+              <g class="ex-g" data-dx="-40" data-dy="-69" data-ix="1">
+                <rect x="140" y="196" width="450" height="82" fill="url(#glass)" stroke="#4A5560" stroke-width="1"/>
+                <rect x="134" y="182" width="462" height="14" rx="7" fill="#2A323B" stroke="#6E7885" stroke-width="1.2"/>
+                <rect x="138" y="185" width="454" height="4" rx="2" fill="#5A6672" opacity=".8"/>
+              </g>
+              <!-- 6 · skirt panel + lighting -->
+              <g class="ex-g" data-dx="16" data-dy="27" data-ix="6">
+                <rect x="132" y="308" width="462" height="20" fill="#232A33" stroke="#3A4550" stroke-width=".8"/>
+                <rect x="136" y="314" width="454" height="3" fill="#E08A1E" opacity=".55"/>
+              </g>
+            </g>
+          </svg>
+        </figure>
+        <div>
+          <p class="eyebrow">02 — Anatomy</p>
+          <h2 style="font-size:clamp(1.9rem,4vw,2.9rem);color:var(--white)">What we are<br>certified on</h2>
+          <p style="font-size:.92rem;color:var(--steel-lt);margin:.8rem 0 0">Scroll to separate the assembly. Every item is one our technicians are trained to inspect, adjust and replace.</p>
+          <ul id="anParts">
+            <li data-p="1"><span class="ix">01</span><span>Balustrade &amp; handrail drive</span></li>
+            <li data-p="2"><span class="ix">02</span><span>Step band &amp; step chain</span></li>
+            <li data-p="3"><span class="ix">03</span><span>Truss &amp; support angles</span></li>
+            <li data-p="4"><span class="ix">04</span><span>Drive machine &amp; upper landing</span></li>
+            <li data-p="5"><span class="ix">05</span><span>Tension station &amp; lower landing</span></li>
+            <li data-p="6"><span class="ix">06</span><span>Skirt panels &amp; comb lighting</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ STEP CIRCUIT ══════════ -->
+<section id="circ" class="pad ride" data-rise="4.0">
+  <div class="wrap">
+    <p class="eyebrow rv">03 — The step circuit</p>
+    <h2 class="big rv" data-d="1" style="font-size:clamp(2rem,5vw,3.4rem)">Steps don't end.<br>They come back.</h2>
+    <p class="lede rv" data-d="2" style="margin-bottom:2.4rem">The most common misconception about an escalator is that the steps disappear at the top. They don't — they flatten, turn under the comb plate, and travel back along the underside of the truss on the same continuous chain. That return path is where most wear happens, and it's the part nobody inspects.</p>
+    <div class="circ rv" data-d="3">
+      <div class="stagewrap">
+        <div class="stage" id="stage">
+          <svg viewBox="0 0 660 430" width="660" height="430" aria-hidden="true">
+            <path d="M120,330 L500,110 A24,24 0 0 1 524,151.6 L144,371.6 A24,24 0 0 1 120,330 Z"
+                  fill="none" stroke="#2B333D" stroke-width="1.4" stroke-dasharray="5 6"/>
+            <line x1="96" y1="344" x2="548" y2="82" stroke="#3A4550" stroke-width="2"/>
+            <circle cx="512" cy="131" r="17" fill="none" stroke="#4A5560" stroke-width="2"/>
+            <circle cx="132" cy="351" r="17" fill="none" stroke="#4A5560" stroke-width="2"/>
+            <text x="520" y="72" font-family="IBM Plex Mono, monospace" font-size="10" fill="#6E7885" letter-spacing="1.5">UPPER TURNAROUND</text>
+            <text x="42" y="404" font-family="IBM Plex Mono, monospace" font-size="10" fill="#6E7885" letter-spacing="1.5">TENSION STATION</text>
+            <text x="230" y="196" font-family="IBM Plex Mono, monospace" font-size="10" fill="#8A5A14" letter-spacing="1.5">CARRYING RUN</text>
+            <text x="250" y="330" font-family="IBM Plex Mono, monospace" font-size="10" fill="#4E5864" letter-spacing="1.5">RETURN RUN</text>
+          </svg>
+        </div>
+      </div>
+      <div>
+        <div class="legend">
+          <div><i style="background:linear-gradient(180deg,#F5A93C,#8A5A14)"></i><span><strong style="color:var(--paper)">Carrying run.</strong> Steps under load, horizontal to the passenger, climbing at 30°.</span></div>
+          <div><i style="background:linear-gradient(180deg,#5C6874,#39424D)"></i><span><strong style="color:var(--paper)">Return run.</strong> Steps inverted beneath the truss — unloaded, unseen, and where roller wear accumulates.</span></div>
+        </div>
+        <div style="margin-top:1.8rem;border-top:1px solid var(--line);padding-top:1.2rem">
+          <p style="font-size:.86rem;color:var(--steel-lt);margin:0">On a planned maintenance visit we lift the comb plates and inspect the return run directly — step rollers, chain tension, and the sag switch. A step chain that has stretched beyond tolerance is the failure that closes a mall on a Saturday.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CAPACITY ══════════ -->
+<section id="cap" class="pad ride" data-rise="5.0">
+  <div class="wrap">
+    <p class="eyebrow rv">04 — Sizing</p>
+    <h2 class="big rv" data-d="1" style="font-size:clamp(2rem,5vw,3.4rem)">How many people<br>per hour?</h2>
+    <p class="lede rv" data-d="2" style="margin-bottom:2.6rem">Theoretical capacity to EN 115, based on a 0.4 m step depth. Real throughput runs lower — expect 70–80% in retail, less where passengers carry luggage or trolleys.</p>
+    <div class="calc rv" data-d="3">
+      <div>
+        <div class="ctrl">
+          <span>Step width</span>
+          <div class="seg" id="segW">
+            <button data-v="1" aria-pressed="false">600 mm</button>
+            <button data-v="1.5" aria-pressed="true">800 mm</button>
+            <button data-v="2" aria-pressed="false">1000 mm</button>
+          </div>
+        </div>
+        <div class="ctrl">
+          <span>Rated speed</span>
+          <div class="seg" id="segV">
+            <button data-v="0.5" aria-pressed="true">0.50 m/s</button>
+            <button data-v="0.65" aria-pressed="false">0.65 m/s</button>
+            <button data-v="0.75" aria-pressed="false">0.75 m/s</button>
+          </div>
+        </div>
+        <div class="ctrl">
+          <span>Rise</span>
+          <div class="seg" id="segR">
+            <button data-v="3.5" aria-pressed="true">3.5 m</button>
+            <button data-v="4.5" aria-pressed="false">4.5 m</button>
+            <button data-v="6" aria-pressed="false">6.0 m</button>
+          </div>
+        </div>
+      </div>
+      <div class="readout">
+        <div class="num" id="capNum">6,750</div>
+        <div class="cap">Persons per hour · theoretical</div>
+        <hr>
+        <dl>
+          <dt>Realistic throughput</dt><dd id="capReal">5,060</dd>
+          <dt>Steps per minute</dt><dd id="capSpm">75</dd>
+          <dt>Travel time</dt><dd id="capTime">14 s</dd>
+          <dt>Truss length approx.</dt><dd id="capLen">12.4 m</dd>
+          <dt>Standard</dt><dd>EN 115-1</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SAFETY ══════════ -->
+<section id="safe" class="pad ride" data-rise="5.6">
+  <div class="wrap">
+    <p class="eyebrow rv">05 — Safety devices</p>
+    <h2 class="big rv" data-d="1" style="font-size:clamp(2rem,5vw,3.4rem)">Every one gets tested</h2>
+    <p class="lede rv" data-d="2">EN 115 mandates these devices. On a planned visit we function-test each of them and record the result — so when an inspector asks, there is a signed sheet rather than an assurance.</p>
+    <div class="safe">
+      <div class="rv"><b>/ 01</b><h3>Comb impact device</h3><p>Stops the unit if an object jams between the comb plate and the step tread, in either axis.</p></div>
+      <div class="rv" data-d="1"><b>/ 02</b><h3>Step sag switch</h3><p>Detects a step that has dropped below the tread line before it reaches the comb.</p></div>
+      <div class="rv" data-d="2"><b>/ 03</b><h3>Handrail entry guard</h3><p>Stops the drive if a hand, sleeve or child's finger is drawn into the newel entry point.</p></div>
+      <div class="rv" data-d="3"><b>/ 04</b><h3>Step chain safety</h3><p>Monitors chain elongation and breakage, triggering the brake before the band can run back.</p></div>
+      <div class="rv"><b>/ 05</b><h3>Missing step detector</h3><p>Verifies step presence on the return run and halts before a gap reaches passengers.</p></div>
+      <div class="rv" data-d="1"><b>/ 06</b><h3>Overspeed &amp; reversal</h3><p>Detects speed above 1.2× rated, or unintended reversal of travel direction on the incline.</p></div>
+      <div class="rv" data-d="2"><b>/ 07</b><h3>Skirt deflection switch</h3><p>Trips when a shoe or clothing is trapped in the skirt-to-step clearance.</p></div>
+      <div class="rv" data-d="3"><b>/ 08</b><h3>Emergency stop</h3><p>Accessible push-buttons at both landings, with a controlled brake rather than an abrupt one.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CTA ══════════ -->
+<section id="cta" class="pad ride" data-rise="6.0">
+  <div class="wrap">
+    <div class="ctarow">
+      <div>
+        <p class="eyebrow rv">Get in touch</p>
+        <h2 class="big rv" data-d="1">Book a site survey</h2>
+        <p class="lede rv" data-d="2" style="margin-bottom:2rem">Tell us the rise, the footfall and the problem. We attend, measure, function-test what's there, and come back with a written report and a fixed price.</p>
+        <a class="big-cta rv" data-d="3" href="#cta">Request a survey →</a>
+      </div>
+      <div class="dl rv" data-d="2">
+        <div><b>Office</b>Mussafah Industrial Area, Abu Dhabi</div>
+        <div><b>Service desk</b>+971 __ ___ ____ · 24/7</div>
+        <div><b>Email</b>service@aldirayah.ae</div>
+        <div><b>Web</b>aldirayah.ae</div>
+        <div class="ar" style="font-size:1.15rem;color:var(--steel-lt);margin-top:.5rem">الدراية للمقاولات الكهروميكانيكية</div>
+      </div>
+    </div>
+    <footer>
+      <span>© 2026 Al Dirayah Electromechanical Contracting LLC</span>
+      <span>Keep it moving · الحركة لا تتوقف</span>
+    </footer>
+  </div>
+</section>
+
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var clamp = function(v,a,b){ return v<a?a:v>b?b:v; };
+  var fmt = function(n){ return n.toLocaleString("en-US"); };
+
+  /* Put every content block on the chain. Each becomes its own view()
+     subject, so blocks share one speed and differ only in phase.
+     The animated step-circuit stage is left off — it already moves. */
+  document.querySelectorAll(".ride").forEach(function(sec){
+    sec.querySelectorAll(
+      ":scope > .wrap > .eyebrow, :scope > .wrap > h2, :scope > .wrap > .lede," +
+      " .types > article, .safe > div, .figs > div," +
+      " .calc > div, .ctarow > div, .circ > div:not(.stagewrap)"
+    ).forEach(function(el){ el.classList.add("step"); });
+  });
+
+  /* hero step ribbon */
+  var rb = document.getElementById("rband");
+  if(rb){ for(var i=0;i<28;i++){ var d=document.createElement("div"); d.className="rstep"; rb.appendChild(d); } }
+
+  /* step circuit — populate chain */
+  var stage = document.getElementById("stage");
+  if(stage){
+    var N = 26;
+    for(var s=0;s<N;s++){
+      var e = document.createElement("div");
+      e.className = "chainstep";
+      var d = (-(9 / N) * s).toFixed(3) + "s";
+      e.style.animationDelay = d + "," + d;   /* keep both timelines in step */
+      stage.appendChild(e);
+    }
+    var fitStage = function(){
+      var w = stage.parentElement.getBoundingClientRect().width;
+      var sc = clamp(w / 660, 0.34, 1);
+      stage.style.transform = "scale(" + sc + ")";
+      stage.parentElement.style.height = Math.round(430 * sc) + "px";
+    };
+    fitStage(); addEventListener("resize", fitStage, {passive:true});
+  }
+
+  /* scroll engine */
+  var hdr = document.getElementById("hdr");
+  var rgVal = document.getElementById("rgVal"), rgBar = document.getElementById("rgBar"),
+      rgAng = document.getElementById("rgAng");
+  var anat = document.getElementById("anat");
+  var exG = [].slice.call(document.querySelectorAll(".ex-g"));
+  var anParts = document.getElementById("anParts");
+  var secs = [].slice.call(document.querySelectorAll("[data-rise]"));
+  var ticking = false;
+
+  function frame(){
+    ticking = false;
+    var y = pageYOffset, vh = innerHeight;
+    hdr.classList.toggle("stuck", y > 40);
+
+    var total = document.documentElement.scrollHeight - vh;
+    var prog = clamp(y / (total||1), 0, 1);
+
+    /* rise gauge — scroll mapped to 0–6.0 m */
+    rgVal.textContent = (prog * 6).toFixed(1);
+    rgBar.style.height = (prog * 100) + "%";
+
+    /* angle badge follows the active section */
+    var act = secs[0];
+    for(var i=0;i<secs.length;i++){
+      if(secs[i].getBoundingClientRect().top <= vh * 0.45) act = secs[i];
+    }
+    if(rgAng) rgAng.textContent = (act.id === "types") ? "0–35°" : "30°";
+
+    /* anatomy explode, perpendicular to the 30° incline */
+    if(anat && !RM){
+      var r = anat.getBoundingClientRect();
+      var p = clamp((-r.top) / (anat.offsetHeight - vh), 0, 1);
+      var e = p < .5 ? 4*p*p*p : 1 - Math.pow(-2*p+2,3)/2;
+      for(var k=0;k<exG.length;k++){
+        var g = exG[k];
+        g.setAttribute("transform","translate(" + ((+g.dataset.dx||0)*e).toFixed(2) + "," + ((+g.dataset.dy||0)*e).toFixed(2) + ")");
+      }
+      if(anParts){
+        var idx = clamp(Math.floor(e*6)+1, 1, 6);
+        for(var j=0;j<anParts.children.length;j++){
+          var li = anParts.children[j];
+          if(e > .04 && (+li.dataset.p) <= idx) li.setAttribute("data-on",""); else li.removeAttribute("data-on");
+        }
+      }
+    }
+  }
+  addEventListener("scroll", function(){ if(!ticking){ ticking = true; requestAnimationFrame(frame); } }, {passive:true});
+  addEventListener("resize", frame, {passive:true});
+
+  /* reveals */
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); } });
+  }, {threshold:.16, rootMargin:"0px 0px -8% 0px"});
+  document.querySelectorAll(".rv").forEach(function(el){ io.observe(el); });
+
+  /* capacity calculator */
+  var W = 1.5, V = 0.5, R = 3.5;
+  var capNum=document.getElementById("capNum"), capReal=document.getElementById("capReal"),
+      capSpm=document.getElementById("capSpm"), capTime=document.getElementById("capTime"),
+      capLen=document.getElementById("capLen");
+
+  function recalc(){
+    var stepsPerHour = V * 3600 / 0.4;          /* 0.4 m step depth */
+    var cap = Math.round(stepsPerHour * W);
+    var inclLen = R / Math.sin(30 * Math.PI/180);   /* 30° incline */
+    capNum.textContent  = fmt(cap);
+    capReal.textContent = fmt(Math.round(cap * 0.75));
+    capSpm.textContent  = Math.round(stepsPerHour / 60);
+    capTime.textContent = Math.round(inclLen / V) + " s";
+    capLen.textContent  = (R / Math.tan(30 * Math.PI/180) + 5.2).toFixed(1) + " m";
+  }
+  function wire(id, set){
+    var box = document.getElementById(id); if(!box) return;
+    box.addEventListener("click", function(ev){
+      var b = ev.target.closest("button"); if(!b) return;
+      [].forEach.call(box.children, function(x){ x.setAttribute("aria-pressed","false"); });
+      b.setAttribute("aria-pressed","true");
+      set(parseFloat(b.dataset.v)); recalc();
+    });
+  }
+  wire("segW", function(v){ W = v; });
+  wire("segV", function(v){ V = v; });
+  wire("segR", function(v){ R = v; });
+  recalc();
+
+  frame();
+})();
+</script>
