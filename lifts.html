@@ -370,6 +370,30 @@ footer{border-top:1px solid var(--line); padding:2.2rem 0; font-family:var(--f-m
   color: #F5A93C !important;
 }
 
+
+/* Single Unbroken Line Hero Tagline */
+.hero-title-single {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  flex-wrap: nowrap !important;
+  white-space: nowrap !important;
+  gap: 0.35em !important;
+  font-family: var(--f-d) !important;
+  font-size: clamp(2.4rem, 6.2vw, 5.5rem) !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  line-height: 1 !important;
+  letter-spacing: .02em !important;
+  margin: 0 0 1.2rem 0 !important;
+  color: var(--white) !important;
+}
+.hero-title-single .am {
+  color: var(--amber-lt) !important;
+  text-shadow: 0 0 25px rgba(245,169,60,0.3) !important;
+}
+
 </style>
 </head>
 <body>
@@ -422,10 +446,10 @@ footer{border-top:1px solid var(--line); padding:2.2rem 0; font-family:var(--f-m
 <section id="hero" data-floor="L" data-label="Lobby">
   <div class="wrap">
     <p class="eyebrow" style="opacity:0;animation:fade .9s var(--ease) .5s forwards">Abu Dhabi · Electromechanical Contracting</p>
-    <h1>
-      <span class="h-line"><span style="animation-delay:.05s">Keep</span></span>
-      <span class="h-line"><span style="animation-delay:.17s">it</span></span>
-      <span class="h-line"><span class="am" style="animation-delay:.29s">Moving</span></span>
+    <h1 class="hero-title-single">
+      <span>Keep</span>
+      <span>It</span>
+      <span class="am">Moving</span>
     </h1>
     <p class="h-sub" style="margin-top:1.8rem">We supply, install and maintain the systems that move, power, connect and protect Abu Dhabi's buildings — with certified know-how across TKE, OTIS and KONE infrastructure.</p>
     <div class="h-meta">
@@ -890,6 +914,30 @@ Standard: EN 81-20/50 | ISO 25745 Class A+++</code>
 }
 .modal-close:hover {
   color: #F5A93C !important;
+}
+
+
+/* Single Unbroken Line Hero Tagline */
+.hero-title-single {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  flex-wrap: nowrap !important;
+  white-space: nowrap !important;
+  gap: 0.35em !important;
+  font-family: var(--f-d) !important;
+  font-size: clamp(2.4rem, 6.2vw, 5.5rem) !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  line-height: 1 !important;
+  letter-spacing: .02em !important;
+  margin: 0 0 1.2rem 0 !important;
+  color: var(--white) !important;
+}
+.hero-title-single .am {
+  color: var(--amber-lt) !important;
+  text-shadow: 0 0 25px rgba(245,169,60,0.3) !important;
 }
 
 </style>
