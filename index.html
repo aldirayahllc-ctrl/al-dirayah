@@ -155,17 +155,117 @@ section.pad{padding:6rem 0; position:relative}
 .rv.in{opacity:1; transform:translateY(0)}
 
 /* Modal Overlay */
-.modal-overlay{position:fixed; inset:0; z-index:100; background:rgba(10,13,16,.88); backdrop-filter:blur(12px); display:none; place-items:center; padding:1.5rem}
-.modal-overlay.active{display:grid}
-.modal-card{background:var(--ink-2); border:1px solid var(--amber); border-radius:10px; max-width:560px; width:100%; padding:2.2rem; box-shadow:0 25px 60px rgba(0,0,0,.9); position:relative}
-.modal-card h3{font-size:2.2rem; color:var(--white); margin-bottom:.4rem}
-.modal-card p{font-size:.9rem; color:var(--steel-lt); margin-bottom:1.4rem}
-.modal-card form{display:grid; gap:.9rem}
-.modal-card label{font-family:var(--f-m); font-size:.64rem; letter-spacing:.14em; text-transform:uppercase; color:var(--amber-lt); display:grid; gap:.3rem}
-.modal-card input,.modal-card select,.modal-card textarea{background:var(--surface); border:1px solid var(--line-2); color:var(--paper); padding:.65rem .85rem; font-family:var(--f-b); font-size:.9rem; border-radius:4px}
-.modal-card input:focus,.modal-card select:focus,.modal-card textarea:focus{border-color:var(--amber); outline:none}
-.modal-close{position:absolute; right:1.2rem; top:1.2rem; background:transparent; border:none; color:var(--steel); font-size:1.5rem; cursor:pointer}
-.modal-close:hover{color:var(--amber-lt)}
+
+
+
+
+
+
+
+
+
+
+
+
+/* ══════════ REQUEST SURVEY MODAL STYLING ══════════ */
+.modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 9999 !important;
+  background: rgba(10,13,16,.88) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  display: none;
+  place-items: center !important;
+  padding: 1.5rem !important;
+  overflow-y: auto !important;
+}
+.modal-overlay.active {
+  display: grid !important;
+}
+.modal-card {
+  background: #151A20 !important;
+  border: 1px solid #E08A1E !important;
+  border-radius: 12px !important;
+  max-width: 580px !important;
+  width: 100% !important;
+  padding: 2.2rem !important;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.9) !important;
+  position: relative !important;
+  box-sizing: border-box !important;
+  margin: auto !important;
+}
+.modal-card h3 {
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif !important;
+  font-size: 2.2rem !important;
+  color: #ffffff !important;
+  margin: 0 0 .4rem 0 !important;
+  text-transform: uppercase !important;
+  line-height: 1 !important;
+}
+.modal-card p {
+  font-family: "IBM Plex Sans", system-ui, sans-serif !important;
+  font-size: .9rem !important;
+  color: #9AA3B0 !important;
+  margin: 0 0 1.4rem 0 !important;
+  line-height: 1.5 !important;
+  max-width: 100% !important;
+}
+.modal-card form {
+  display: grid !important;
+  gap: .9rem !important;
+  width: 100% !important;
+}
+.modal-card label {
+  font-family: "IBM Plex Mono", ui-monospace, monospace !important;
+  font-size: .66rem !important;
+  letter-spacing: .14em !important;
+  text-transform: uppercase !important;
+  color: #F5A93C !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: .35rem !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+.modal-card input,
+.modal-card select,
+.modal-card textarea {
+  background: #1B2128 !important;
+  border: 1px solid #3A4550 !important;
+  color: #E9E7E2 !important;
+  padding: .7rem .9rem !important;
+  font-family: "IBM Plex Sans", system-ui, sans-serif !important;
+  font-size: .9rem !important;
+  border-radius: 4px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  display: block !important;
+  outline: none !important;
+}
+.modal-card input:focus,
+.modal-card select:focus,
+.modal-card textarea:focus {
+  border-color: #E08A1E !important;
+  box-shadow: 0 0 12px rgba(224,138,30,0.35) !important;
+}
+.modal-close {
+  position: absolute !important;
+  right: 1.2rem !important;
+  top: 1.2rem !important;
+  background: transparent !important;
+  border: none !important;
+  color: #6E7885 !important;
+  font-size: 1.8rem !important;
+  cursor: pointer !important;
+  line-height: 1 !important;
+  padding: 0 !important;
+}
+.modal-close:hover {
+  color: #F5A93C !important;
+}
+
 </style>
 </head>
 <body>
