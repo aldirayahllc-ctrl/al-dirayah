@@ -371,27 +371,45 @@ footer{border-top:1px solid var(--line); padding:2.2rem 0; font-family:var(--f-m
 }
 
 
-/* Single Unbroken Line Hero Tagline */
-.hero-title-single {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-  flex-wrap: nowrap !important;
-  white-space: nowrap !important;
-  gap: 0.35em !important;
+
+/* Incline-style 2-Line Hero Tagline */
+.hero-title-incline-style {
   font-family: var(--f-d) !important;
-  font-size: clamp(2.4rem, 6.2vw, 5.5rem) !important;
+  font-size: clamp(3.2rem, 13vw, 9.2rem) !important;
   font-weight: 700 !important;
   text-transform: uppercase !important;
-  line-height: 1 !important;
-  letter-spacing: .02em !important;
-  margin: 0 0 1.2rem 0 !important;
+  line-height: .92 !important;
+  letter-spacing: .01em !important;
+  margin: 0 0 1.5rem 0 !important;
   color: var(--white) !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
-.hero-title-single .am {
+.hero-title-incline-style .h-line {
+  display: block !important;
+  overflow: hidden !important;
+}
+.hero-title-incline-style .h-line span {
+  display: block !important;
+  transform: translate(-30px, 105%);
+  opacity: 0;
+  animation: diagrise 1.2s var(--ease) forwards;
+}
+.hero-title-incline-style .am {
   color: var(--amber-lt) !important;
-  text-shadow: 0 0 25px rgba(245,169,60,0.3) !important;
+  text-shadow: 0 0 30px rgba(245,169,60,0.35) !important;
+}
+
+
+@keyframes diagrise {
+  from { transform: translate(-20px, 40px); opacity: 0; }
+  to { transform: translate(0, 0); opacity: 1; }
+}
+.hero-title-incline-style .h-line span {
+  display: block !important;
+  opacity: 1 !important;
+  transform: none !important;
+  animation: diagrise 0.9s var(--ease) forwards !important;
 }
 
 </style>
@@ -446,10 +464,9 @@ footer{border-top:1px solid var(--line); padding:2.2rem 0; font-family:var(--f-m
 <section id="hero" data-floor="L" data-label="Lobby">
   <div class="wrap">
     <p class="eyebrow" style="opacity:0;animation:fade .9s var(--ease) .5s forwards">Abu Dhabi · Electromechanical Contracting</p>
-    <h1 class="hero-title-single">
-      <span>Keep</span>
-      <span>It</span>
-      <span class="am">Moving</span>
+    <h1 class="hero-title-incline-style">
+      <span class="h-line"><span style="animation-delay:.05s">KEEP IT</span></span>
+      <span class="h-line"><span class="am" style="animation-delay:.22s">MOVING</span></span>
     </h1>
     <p class="h-sub" style="margin-top:1.8rem">We supply, install and maintain the systems that move, power, connect and protect Abu Dhabi's buildings — with certified know-how across TKE, OTIS and KONE infrastructure.</p>
     <div class="h-meta">
@@ -917,27 +934,45 @@ Standard: EN 81-20/50 | ISO 25745 Class A+++</code>
 }
 
 
-/* Single Unbroken Line Hero Tagline */
-.hero-title-single {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-  flex-wrap: nowrap !important;
-  white-space: nowrap !important;
-  gap: 0.35em !important;
+
+/* Incline-style 2-Line Hero Tagline */
+.hero-title-incline-style {
   font-family: var(--f-d) !important;
-  font-size: clamp(2.4rem, 6.2vw, 5.5rem) !important;
+  font-size: clamp(3.2rem, 13vw, 9.2rem) !important;
   font-weight: 700 !important;
   text-transform: uppercase !important;
-  line-height: 1 !important;
-  letter-spacing: .02em !important;
-  margin: 0 0 1.2rem 0 !important;
+  line-height: .92 !important;
+  letter-spacing: .01em !important;
+  margin: 0 0 1.5rem 0 !important;
   color: var(--white) !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
-.hero-title-single .am {
+.hero-title-incline-style .h-line {
+  display: block !important;
+  overflow: hidden !important;
+}
+.hero-title-incline-style .h-line span {
+  display: block !important;
+  transform: translate(-30px, 105%);
+  opacity: 0;
+  animation: diagrise 1.2s var(--ease) forwards;
+}
+.hero-title-incline-style .am {
   color: var(--amber-lt) !important;
-  text-shadow: 0 0 25px rgba(245,169,60,0.3) !important;
+  text-shadow: 0 0 30px rgba(245,169,60,0.35) !important;
+}
+
+
+@keyframes diagrise {
+  from { transform: translate(-20px, 40px); opacity: 0; }
+  to { transform: translate(0, 0); opacity: 1; }
+}
+.hero-title-incline-style .h-line span {
+  display: block !important;
+  opacity: 1 !important;
+  transform: none !important;
+  animation: diagrise 0.9s var(--ease) forwards !important;
 }
 
 </style>
