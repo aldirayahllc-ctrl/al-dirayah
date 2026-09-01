@@ -201,49 +201,64 @@
   </section>
 
   <!-- Footer -->
-  <footer>
-    <div class="ftr-wrap">
+  <footer style="background:var(--ink-2);border-top:1px solid var(--line);padding:4rem 0 2rem;margin-top:5rem;">
+  <div class="wrap">
+    <!-- Master 4-Column Footer Grid -->
+    <div style="display:grid;grid-template-columns:1.8fr 1.2fr 1.2fr 1.4fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid var(--line)">
+      <!-- Col 1: Profile -->
       <div>
-        <div class="brand" style="margin-bottom:1rem;">
-          <div class="brand-mark">▲</div>
+        <div style="display:flex;align-items:center;gap:.6rem;font-family:var(--f-d);font-size:1.4rem;color:var(--white);font-weight:700;margin-bottom:1rem">
+          <span style="width:28px;height:28px;background:var(--amber);color:#000;border-radius:6px;display:grid;place-items:center;font-weight:900;font-size:.85rem">▲</span>
           <span>AL DIRAYAH</span>
         </div>
-        <p style="color:var(--steel);font-size:.9rem;max-width:320px;line-height:1.6;">Al Dirayah Electromechanical Contracting LLC. Certified vertical transportation engineering specialists in Abu Dhabi and across the United Arab Emirates.</p>
+        <p style="color:var(--steel-lt);font-size:.9rem;line-height:1.65;margin-bottom:1.2rem">Al Dirayah Electromechanical Contracting LLC. Certified vertical transportation and building infrastructure engineering specialists in Abu Dhabi and across the United Arab Emirates.</p>
+        <div style="font-family:var(--f-m);font-size:1.1rem;color:var(--amber-lt);direction:rtl;text-align:right">الدراية للمقاولات الكهروميكانيكية</div>
       </div>
-      <div class="ftr-col">
-        <h4>Navigation</h4>
-        <ul>
-          <li><a href="index.html">Master Hub</a></li>
-          <li><a href="lifts.html">Lifts Division</a></li>
-          <li><a href="escalators.html">Escalators Division</a></li>
-          <li><a href="residential-elevators.html">Residential Lifts</a></li>
-          <li><a href="commercial-elevators.html">Commercial Lifts</a></li>
+
+      <!-- Col 2: Divisions -->
+      <div>
+        <h4 style="font-family:var(--f-d);font-size:1.1rem;color:var(--white);margin-bottom:1.2rem;letter-spacing:1px">DIVISIONS &amp; SERVICES</h4>
+        <ul style="list-style:none;padding:0;margin:0;display:grid;gap:.65rem;font-size:.88rem">
+          <li><a href="lifts.html" style="color:var(--steel);transition:color .2s">Vertical Lifts &amp; Elevators</a></li>
+          <li><a href="escalators.html" style="color:var(--steel);transition:color .2s">Escalators &amp; Moving Walkways</a></li>
+          <li><a href="residential-elevators.html" style="color:var(--steel);transition:color .2s">Residential Villa Lifts</a></li>
+          <li><a href="commercial-elevators.html" style="color:var(--steel);transition:color .2s">Commercial Tower Elevators</a></li>
+          <li><a href="maintenance-modernization.html" style="color:var(--steel);transition:color .2s">24/7 Maintenance &amp; AMC</a></li>
+          <li><a href="engineering-services.html" style="color:var(--steel);transition:color .2s">Engineering &amp; Traffic Audits</a></li>
         </ul>
       </div>
-      <div class="ftr-col">
-        <h4>Services</h4>
-        <ul>
-          <li><a href="maintenance-modernization.html">24/7 AMC Maintenance</a></li>
-          <li><a href="maintenance-modernization.html">Cabin Interior Fit-Out</a></li>
-          <li><a href="engineering-services.html">EN 81 Safety Audits</a></li>
-          <li><a href="engineering-services.html">Traffic Calculations</a></li>
+
+      <!-- Col 3: Standards -->
+      <div>
+        <h4 style="font-family:var(--f-d);font-size:1.1rem;color:var(--white);margin-bottom:1.2rem;letter-spacing:1px">STANDARDS &amp; CODES</h4>
+        <ul style="list-style:none;padding:0;margin:0;display:grid;gap:.65rem;font-size:.88rem;color:var(--steel)">
+          <li>EN 81-20/50 Safety Matrix</li>
+          <li>EN 115 Commercial Escalator</li>
+          <li>EN 81-70 Hospital &amp; Accessibility</li>
+          <li>ISO 25745 Class A+++ Eco Rating</li>
+          <li>CIBSE Guide D Traffic Simulation</li>
+          <li>Civil Defence Safety Certified</li>
         </ul>
       </div>
-      <div class="ftr-col">
-        <h4>Abu Dhabi HQ</h4>
-        <ul>
-          <li style="color:var(--steel);font-size:.88rem;">Al Dirayah Contracting LLC</li>
-          <li style="color:var(--steel);font-size:.88rem;">Abu Dhabi, United Arab Emirates</li>
-          <li style="color:var(--amber-lt);font-size:.88rem;font-family:var(--f-m);margin-top:.5rem;">Phone: +971 2 564 4186</li>
-          <li style="color:var(--amber-lt);font-size:.88rem;font-family:var(--f-m);">Email: info@aldirayah.ae</li>
-        </ul>
+
+      <!-- Col 4: Abu Dhabi HQ -->
+      <div>
+        <h4 style="font-family:var(--f-d);font-size:1.1rem;color:var(--white);margin-bottom:1.2rem;letter-spacing:1px">ABU DHABI HEADQUARTERS</h4>
+        <div style="display:grid;gap:.8rem;font-size:.88rem;color:var(--steel-lt)">
+          <div><b style="color:var(--white);display:block;margin-bottom:.2rem">Office Address:</b>Mussafah Industrial Area, Abu Dhabi, UAE</div>
+          <div><b style="color:var(--white);display:block;margin-bottom:.2rem">24/7 Emergency Dispatch:</b><span style="font-family:var(--f-m);color:var(--amber-lt)">+971 2 555 0192</span></div>
+          <div><b style="color:var(--white);display:block;margin-bottom:.2rem">Official Email:</b><span style="font-family:var(--f-m);color:var(--amber-lt)">service@aldirayah.ae</span></div>
+        </div>
       </div>
     </div>
-    <div class="ftr-btm">
+
+    <!-- Bottom Copyright Bar -->
+    <div style="padding-top:1.5rem;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;font-family:var(--f-m);font-size:.8rem;color:var(--steel)">
       <span>© 2026 Al Dirayah Electromechanical Contracting LLC. All rights reserved.</span>
-      <span>EN 81-20/50 &amp; UAE Civil Defence Certified</span>
+      <span style="color:var(--amber-lt)">Keep it moving · الحركة لا تتوقف</span>
     </div>
-  </footer>
+  </div>
+</footer>
 <!-- Integrated Request Survey Modal -->
 <div class="modal-overlay" id="surveyModal">
   <div class="modal-card">
