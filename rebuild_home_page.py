@@ -1,4 +1,4 @@
-<!doctype html>
+html = '''<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -644,4 +644,8 @@ section.pad{padding:6rem 0; position:relative}
 })();
 </script>
 </body>
-</html>
+</html>'''
+
+with open("index.html", "w", encoding="utf-8") as f:
+    f.write(html)
+print("Rebuilt index.html with Lift & Escalator theme!")
