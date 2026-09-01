@@ -1,0 +1,842 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Al Dirayah — Escalators & Moving Walkways</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap">
+
+<style>
+:root{
+  --ink:#0E1115; --ink-2:#151A20; --surface:#1B2128; --surface-2:#232A33;
+  --line:#2B333D; --line-2:#3A4550;
+  --amber:#E08A1E; --amber-lt:#F5A93C; --amber-dim:#8A5A14;
+  --steel:#6E7885; --steel-lt:#9AA3B0; --paper:#E9E7E2; --white:#fff;
+  --f-d:"Barlow Condensed","Arial Narrow",sans-serif;
+  --f-b:"IBM Plex Sans",system-ui,sans-serif;
+  --f-m:"IBM Plex Mono",ui-monospace,monospace;
+  --f-a:"IBM Plex Sans Arabic",serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0; background:var(--ink); color:var(--paper); font-family:var(--f-b);
+  font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden}
+h1,h2,h3{margin:0; text-wrap:balance; font-family:var(--f-d); font-weight:600;
+  text-transform:uppercase; line-height:.95; letter-spacing:.01em}
+p{margin:0 0 1rem; max-width:62ch}
+a{color:inherit; text-decoration:none}
+:focus-visible{outline:2px solid var(--amber); outline-offset:3px; border-radius:2px}
+.wrap{max-width:1180px; margin:0 auto; padding:0 clamp(1.1rem,4vw,2.5rem)}
+#hero > .wrap, .pin > .wrap{width:100%}
+.eyebrow{font-family:var(--f-m); font-size:.68rem; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--amber); margin:0 0 1rem}
+.mono{font-family:var(--f-m); font-variant-numeric:tabular-nums}
+.ar{font-family:var(--f-a); direction:rtl; unicode-bidi:isolate}
+.lede{font-size:clamp(1.02rem,1.6vw,1.2rem); color:var(--steel-lt); max-width:56ch}
+h2.big{font-size:clamp(2.2rem,6vw,4.2rem); color:var(--white); margin-bottom:1.1rem}
+
+/* ── diagonal backdrop ─────────────────────────────────────── */
+#bg{position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden}
+
+#hatch{position:absolute; inset:-45%; opacity:.30;
+  background:repeating-linear-gradient(60deg,
+    transparent 0 21px, rgba(122,136,152,.16) 21px 22.5px,
+    rgba(0,0,0,.16) 22.5px 24px, transparent 24px 27px);
+  animation:treadrun 8s linear infinite;
+  will-change:transform}
+@keyframes treadrun{
+  from{ transform:translate3d(0,0,0) }
+  to  { transform:translate3d(187.06px,-108px,0) }
+}
+#beam{position:absolute; left:-10%; right:-10%; height:150%; top:-25%;
+  background:linear-gradient(-30deg, transparent 42%, rgba(224,138,30,.09) 50%, transparent 58%)}
+#vig{position:absolute; inset:0;
+  background:radial-gradient(80% 60% at 50% 0%, rgba(224,138,30,.13), transparent 65%)}
+
+/* ── handrail ────────────────────────────────────────────────── */
+#handrail{position:fixed; top:0; right:0; bottom:0; width:20px; background:#07090B;
+  z-index:55; overflow:hidden;
+  box-shadow:inset 3px 0 5px -2px rgba(255,255,255,.18),
+             inset -4px 0 7px -2px rgba(0,0,0,.9), -7px 0 26px rgba(0,0,0,.6)}
+#handrail .marks{position:absolute; left:0; right:0; top:-150%; height:400%;
+  background:repeating-linear-gradient(180deg,
+    transparent 0 78px, rgba(255,255,255,.085) 78px 81px, transparent 81px 164px);
+  animation:railrun 6.07s linear infinite; will-change:transform}
+#handrail .sheen{position:absolute; left:2px; width:4px; top:0; bottom:0; border-radius:2px;
+  background:linear-gradient(90deg, rgba(255,255,255,.18), rgba(255,255,255,.015))}
+@keyframes railrun{ from{transform:translate3d(0,0,0)} to{transform:translate3d(0,-164px,0)} }
+
+/* ── the ride (30° motion vector) ────────────────────────────── */
+@keyframes ride30{
+  from{ transform:translate3d( 64px,-36.95px, 0) }
+  to  { transform:translate3d(-64px, 36.95px, 0) }
+}
+@media(max-width:1240px){
+  @keyframes ride30{
+    from{ transform:translate3d( 34px,-19.63px, 0) }
+    to  { transform:translate3d(-34px, 19.63px, 0) }
+  }
+}
+@media(max-width:900px){
+  @keyframes ride30{
+    from{ transform:translate3d( 20px,-11.55px, 0) }
+    to  { transform:translate3d(-20px, 11.55px, 0) }
+  }
+}
+.ride{ overflow-x:clip }
+@supports (animation-timeline: view()){
+  .ride .step{
+    animation:ride30 linear both;
+    animation-timeline:view();
+    animation-range:entry 0% exit 100%;
+    will-change:transform;
+  }
+}
+.ride .rv{ transform:none }
+
+/* ── rise gauge ──────────────────────────────────────────────── */
+#rg{position:fixed; right:calc(20px + clamp(.7rem,2vw,1.5rem)); top:50%; transform:translateY(-50%);
+  z-index:40; background:#0A0D10; border:1px solid var(--line-2); border-radius:8px;
+  padding:.75rem .6rem; display:flex; flex-direction:column; align-items:center; gap:.55rem;
+  box-shadow:0 12px 40px rgba(0,0,0,.7)}
+#rg .ang{font-family:var(--f-m); font-size:.62rem; letter-spacing:.1em; color:var(--amber);
+  border:1px solid var(--amber-dim); border-radius:2px; padding:.12rem .3rem}
+#rg .val{font-family:var(--f-m); font-weight:600; font-size:1.15rem; color:var(--amber-lt);
+  line-height:1; text-shadow:0 0 14px rgba(245,169,60,.5)}
+#rg .unit{font-family:var(--f-m); font-size:.55rem; letter-spacing:.16em; color:var(--steel)}
+#rg .gauge{width:4px; height:118px; background:#1A2027; border-radius:2px; position:relative; overflow:hidden}
+#rg .gauge i{position:absolute; left:0; right:0; bottom:0; height:0%;
+  background:linear-gradient(0deg,var(--amber-dim),var(--amber-lt))}
+@media(max-width:700px){ #rg .gauge{height:64px} #rg .ang{display:none} }
+
+/* ── header ────────────────────────────────────────────────── */
+header{position:fixed; top:0; left:0; right:0; z-index:50; padding:.9rem 0;
+  border-bottom:1px solid transparent; transition:background .4s, backdrop-filter .4s, border-color .4s}
+header.stuck{background:rgba(14,17,21,.92); backdrop-filter:blur(16px); border-bottom-color:var(--line)}
+header .wrap{display:flex; align-items:center; justify-content:space-between; gap:1rem}
+.brand{display:flex; align-items:center; gap:.7rem}
+.brand svg{width:34px; height:34px; flex:none}
+.brand .nm{font-family:var(--f-d); font-size:1.4rem; letter-spacing:.045em;
+  text-transform:uppercase; font-weight:600; color:var(--white)}
+
+/* Switcher pills */
+.div-switcher{display:flex; background:rgba(21,26,32,0.85); padding:3px; border-radius:6px; border:1px solid var(--line-2)}
+.sw-pill{font-family:var(--f-m); font-size:.64rem; letter-spacing:.12em; text-transform:uppercase; color:var(--steel-lt); padding:.35rem .75rem; border-radius:4px; transition:all .25s ease; display:inline-flex; align-items:center; gap:.4rem; text-decoration:none}
+.sw-pill:hover{color:var(--white); background:rgba(255,255,255,0.06)}
+.sw-pill.active{background:var(--amber); color:var(--ink); font-weight:600; box-shadow:0 0 12px rgba(224,138,30,0.35)}
+.sw-pill .icon{font-size:.75rem}
+
+nav{display:flex; gap:1.4rem}
+nav a{font-family:var(--f-m); font-size:.67rem; letter-spacing:.16em; text-transform:uppercase; color:var(--steel-lt); transition:color .25s}
+nav a:hover{color:var(--amber)}
+.cta-btn{font-family:var(--f-m); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase;
+  border:1px solid var(--amber); color:var(--amber); padding:.5rem .95rem; border-radius:3px; background:transparent; cursor:pointer;
+  transition:background .25s,color .25s,box-shadow .25s}
+.cta-btn:hover{background:var(--amber); color:var(--ink); box-shadow:0 0 14px rgba(224,138,30,.4)}
+@media(max-width:920px){ nav{display:none} }
+
+main{position:relative; z-index:2}
+section{position:relative}
+.pad{padding:clamp(5rem,13vh,9rem) 0}
+
+/* ── hero ──────────────────────────────────────────────────── */
+#hero{min-height:100svh; display:grid; align-content:center; padding-top:5.5rem; overflow:hidden}
+#hero h1{font-size:clamp(3.2rem,14vw,9.5rem); color:var(--white)}
+#hero h1 .am{color:var(--amber)}
+.h-line{overflow:hidden}
+.h-line span{display:block; transform:translate(-30px,105%); opacity:0;
+  animation:diagrise 1.2s var(--ease) forwards}
+@keyframes diagrise{to{transform:translate(0,0); opacity:1}}
+.h-sub{max-width:46ch; color:var(--steel-lt); font-size:clamp(1rem,1.7vw,1.18rem);
+  opacity:0; animation:fade 1s var(--ease) .8s forwards}
+@keyframes fade{to{opacity:1}}
+.h-meta{display:flex; flex-wrap:wrap; gap:.6rem 2rem; margin-top:2.2rem; font-family:var(--f-m);
+  font-size:.66rem; letter-spacing:.15em; text-transform:uppercase; color:var(--steel);
+  opacity:0; animation:fade 1s var(--ease) 1.05s forwards}
+
+/* Motion Engine Controls Bar */
+.incline-ctrls{display:flex; align-items:center; gap:1rem; margin-top:2.2rem; background:rgba(14,17,21,.95); border:1px solid var(--amber-dim); border-radius:6px; padding:.65rem 1.1rem; width:fit-content; backdrop-filter:blur(14px); position:relative; z-index:10; opacity:0; animation:fade 1s var(--ease) 1.2s forwards; box-shadow:0 10px 30px rgba(0,0,0,.6)}
+.incline-ctrls label{font-family:var(--f-m); font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; color:var(--paper)}
+.incline-ctrls button{background:var(--surface-2); border:1px solid var(--line-2); color:var(--paper); font-family:var(--f-m); font-size:.62rem; padding:.3rem .7rem; border-radius:3px; cursor:pointer; transition:all .2s}
+.incline-ctrls button:hover,.incline-ctrls button.active{background:var(--amber); color:var(--ink); border-color:var(--amber); font-weight:600}
+
+/* hero step ribbon */
+#ribbon{position:absolute; left:-12%; right:-12%; bottom:-4%; height:46vh; pointer-events:none; opacity:.85}
+#ribbon .band{position:absolute; inset:0; display:flex; gap:0; transform:rotate(-30deg); transform-origin:center}
+.rstep{width:74px; height:150px; flex:none; position:relative}
+.rstep::before{content:""; position:absolute; left:2px; right:2px; top:0; height:13px;
+  background:linear-gradient(180deg,#4C5763,#38414B); border-radius:2px 2px 0 0}
+.rstep::after{content:""; position:absolute; left:2px; right:2px; top:13px; height:24px;
+  background:linear-gradient(180deg,#232A33,#1A2027)}
+
+/* reveals */
+.rv{opacity:0; transform:translate(-22px,28px); transition:opacity .9s var(--ease), transform .9s var(--ease)}
+.rv.in{opacity:1; transform:none}
+
+/* types */
+.types{display:grid; gap:1.5rem; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); margin-top:3rem}
+.types article{background:var(--ink-2); border:1px solid var(--line); border-radius:6px; padding:1.8rem; transition:all .35s}
+.types article:hover{border-color:var(--amber); background:var(--surface)}
+.types svg{width:100%; height:110px; display:block; margin-bottom:1rem}
+.types h3{font-size:1.6rem; color:var(--white); margin-bottom:.5rem}
+.types p{font-size:.88rem; color:var(--steel-lt); margin-bottom:1.2rem}
+.types dl{display:grid; grid-template-columns:auto 1fr; gap:.4rem 1rem; font-family:var(--f-m); font-size:.72rem; border-top:1px solid var(--line); padding-top:.8rem}
+.types dt{color:var(--steel); text-transform:uppercase}
+.types dd{color:var(--amber); margin:0; text-align:right; font-weight:600}
+
+/* pinned anatomy */
+.pinwrap{position:relative}
+.pin{position:sticky; top:0; height:100svh; display:grid; align-content:center; overflow:hidden}
+.an{display:grid; gap:2rem; align-items:center; grid-template-columns:1fr}
+@media(min-width:940px){ .an{grid-template-columns:minmax(0,1fr) 340px} }
+.an figure{margin:0}
+.an svg{display:block; width:100%; max-width:720px; margin:0 auto; height:auto; max-height:62svh}
+
+/* 3D Photorealistic Render Anatomy Styles */
+.real-3d-wrap{margin:0; position:relative; width:100%; max-width:720px; margin:0 auto}
+.img-3d-container{position:relative; width:100%; height:540px; border-radius:8px; overflow:hidden; border:1px solid var(--amber-dim); background:#07090B; box-shadow:0 15px 50px rgba(0,0,0,0.8)}
+.img-3d-layer{position:absolute; inset:0; width:100%; height:100%; object-fit:contain; transition:opacity .15s ease-out, transform .15s ease-out}
+.overlay-3d-svg{position:absolute; inset:0; width:100%; height:100%; pointer-events:auto}
+
+.an ul{display:flex; flex-direction:column; gap:.2rem; margin-top:1rem; padding:0}
+.an ul li{list-style:none; display:grid; grid-template-columns:26px 1fr; gap:.7rem; padding:.55rem .4rem; border-bottom:1px solid var(--line); font-size:.88rem; color:#4E5864; cursor:pointer; border-radius:4px; transition:all .3s}
+.an ul li .ix{font-family:var(--f-m); font-size:.66rem}
+.an ul li:hover{background:rgba(224,138,30,.06); color:var(--paper)}
+.an ul li[data-on]{color:var(--white); background:rgba(224,138,30,.12); border-color:var(--amber)}
+.an ul li[data-on] .ix{color:var(--amber); font-weight:600}
+.ex-g{will-change:transform; cursor:pointer; transition:filter .3s, opacity .3s}
+.ex-g:hover,.ex-g.active{filter:drop-shadow(0 0 14px rgba(245,169,60,.95))}
+
+/* circuit stage */
+.circ{display:grid; gap:2.4rem; grid-template-columns:1fr; margin-top:2.5rem}
+@media(min-width:900px){ .circ{grid-template-columns:1.3fr 1fr; align-items:center} }
+.stagewrap{background:var(--ink-2); border:1px solid var(--line); border-radius:8px; padding:1.5rem; display:flex; justify-content:center; overflow:hidden}
+.stage{width:660px; height:430px; position:relative; transform-origin:center}
+.legend{display:flex; flex-direction:column; gap:1rem}
+.legend div{display:flex; gap:.8rem; font-size:.88rem; color:var(--steel-lt)}
+.legend i{width:14px; height:14px; border-radius:3px; flex:none; margin-top:.3rem}
+
+/* capacity calculator */
+.calc{display:grid; gap:2rem; grid-template-columns:1fr; margin-top:2.6rem}
+@media(min-width:860px){ .calc{grid-template-columns:1fr 340px} }
+.ctrl{margin-bottom:1.4rem}
+.ctrl span{display:block; font-family:var(--f-m); font-size:.65rem; letter-spacing:.14em; text-transform:uppercase; color:var(--steel-lt); margin-bottom:.5rem}
+.seg{display:flex; background:var(--ink-2); border:1px solid var(--line); border-radius:4px; padding:2px}
+.seg button{flex:1; background:transparent; border:none; color:var(--steel-lt); font-family:var(--f-m); font-size:.75rem; padding:.5rem; cursor:pointer; border-radius:3px; transition:all .2s}
+.seg button[aria-pressed="true"]{background:var(--amber); color:var(--ink); font-weight:600}
+.readout{background:var(--ink-2); border:1px solid var(--line-2); border-radius:8px; padding:1.8rem}
+.readout .num{font-family:var(--f-d); font-size:3.8rem; color:var(--amber); line-height:1}
+.readout .cap{font-family:var(--f-m); font-size:.65rem; letter-spacing:.12em; text-transform:uppercase; color:var(--steel-lt); margin-top:.2rem}
+.readout hr{border:0; border-top:1px solid var(--line); margin:1.4rem 0}
+.readout dl{display:grid; grid-template-columns:1fr auto; gap:.6rem; font-family:var(--f-m); font-size:.78rem}
+.readout dt{color:var(--steel-lt)}
+.readout dd{color:var(--white); margin:0; font-weight:500; text-align:right}
+
+/* spec export box */
+.spec-box{margin-top:1.5rem; background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:1rem}
+.spec-box .t{font-family:var(--f-m); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:var(--amber); margin-bottom:.4rem}
+.spec-box code{display:block; font-family:var(--f-m); font-size:.72rem; color:var(--steel-lt); line-height:1.5}
+.spec-box button{margin-top:.8rem; width:100%; background:rgba(224,138,30,.15); border:1px solid var(--amber); color:var(--amber); font-family:var(--f-m); font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; padding:.45rem; border-radius:3px; cursor:pointer; transition:all .2s}
+.spec-box button:hover{background:var(--amber); color:var(--ink)}
+
+/* safety devices */
+.safe{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); margin-top:2.6rem}
+.safe > div{background:var(--ink-2); padding:1.5rem 1.3rem; transition:background .3s}
+.safe > div:hover{background:var(--surface)}
+.safe b{font-family:var(--f-m); font-size:.62rem; color:var(--amber); letter-spacing:.14em; display:block; margin-bottom:.6rem}
+.safe h3{font-size:1.35rem; color:var(--white); margin-bottom:.4rem}
+.safe p{font-size:.85rem; color:var(--steel-lt); margin:0}
+
+/* contact */
+#cta{background:var(--ink-2); border-top:1px solid var(--line)}
+.ctarow{display:grid; gap:2rem; grid-template-columns:1fr}
+@media(min-width:860px){ .ctarow{grid-template-columns:1.3fr 1fr; align-items:end} }
+.big-cta{display:inline-flex; align-items:center; gap:.8rem; background:var(--amber); color:var(--ink);
+  font-family:var(--f-d); text-transform:uppercase; font-size:1.5rem; letter-spacing:.03em;
+  padding:.75rem 1.6rem; border-radius:3px; cursor:pointer; border:none; transition:transform .3s var(--ease), background .3s}
+.big-cta:hover{background:var(--amber-lt); transform:translateX(6px)}
+.dl{display:grid; gap:.5rem; font-family:var(--f-m); font-size:.82rem; color:var(--steel-lt)}
+.dl b{color:var(--steel); font-weight:400; letter-spacing:.12em; font-size:.62rem; text-transform:uppercase; display:block}
+footer{border-top:1px solid var(--line); padding:2.2rem 0; font-family:var(--f-m); font-size:.68rem;
+  letter-spacing:.09em; color:#49535E; display:flex; flex-wrap:wrap; gap:.7rem 2rem; justify-content:space-between}
+
+/* Modal */
+.modal-overlay{position:fixed; inset:0; z-index:100; background:rgba(10,13,16,.85); backdrop-filter:blur(10px); display:none; place-items:center; padding:1.5rem}
+.modal-overlay.active{display:grid}
+.modal-card{background:var(--ink-2); border:1px solid var(--amber); border-radius:8px; max-width:540px; width:100%; padding:2rem; box-shadow:0 20px 60px rgba(0,0,0,.8); position:relative}
+.modal-card h3{font-size:2rem; color:var(--white); margin-bottom:.5rem}
+.modal-card p{font-size:.88rem; color:var(--steel-lt); margin-bottom:1.4rem}
+.modal-card form{display:grid; gap:1rem}
+.modal-card label{font-family:var(--f-m); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:var(--steel); display:grid; gap:.3rem}
+.modal-card input,.modal-card select,.modal-card textarea{background:var(--surface); border:1px solid var(--line-2); color:var(--paper); padding:.6rem .8rem; font-family:var(--f-b); font-size:.88rem; border-radius:4px}
+.modal-card input:focus,.modal-card select:focus,.modal-card textarea:focus{border-color:var(--amber); outline:none}
+.modal-close{position:absolute; right:1.2rem; top:1.2rem; background:transparent; border:none; color:var(--steel); font-size:1.4rem; cursor:pointer}
+.modal-close:hover{color:var(--amber)}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important}
+  .rv{opacity:1 !important; transform:none !important}
+  .pin{position:relative; height:auto; padding:4rem 0}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ diagonal backdrop ══════════ -->
+<div id="bg" aria-hidden="true">
+  <div id="hatch"></div>
+  <div id="beam"></div>
+  <div id="vig"></div>
+</div>
+
+<!-- ══════════ handrail ══════════ -->
+<div id="handrail" aria-hidden="true">
+  <div class="marks" id="railMarks"></div>
+  <div class="sheen"></div>
+</div>
+
+<!-- ══════════ rise gauge ══════════ -->
+<aside id="rg" aria-label="Rise gauge">
+  <span class="ang" id="rgAng">30°</span>
+  <span class="val" id="rgVal">0.0</span>
+  <span class="unit">METERS</span>
+  <div class="gauge"><i id="rgBar"></i></div>
+</aside>
+
+<header id="hdr">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg viewBox="0 0 120 120" aria-hidden="true">
+        <rect width="120" height="120" rx="20" fill="#E08A1E"/>
+        <path d="M35 49 L60 29 L85 49" fill="none" stroke="#0E1115" stroke-width="10"/>
+        <path d="M35 70 L60 50 L85 70" fill="none" stroke="#0E1115" stroke-width="10" opacity=".62"/>
+        <path d="M35 91 L60 71 L85 91" fill="none" stroke="#0E1115" stroke-width="10" opacity=".34"/>
+      </svg>
+      <span class="nm">Al Dirayah</span>
+    </a>
+
+    <div class="div-switcher">
+      <a href="index.html" class="sw-pill"><span class="icon">🏠</span> Hub</a>
+      <a href="lifts.html" class="sw-pill"><span class="icon">↕</span> Lifts</a>
+      <a href="escalators.html" class="sw-pill active"><span class="icon">↗</span> Escalators</a>
+    </div>
+
+    <nav>
+      <a href="#types">Types</a><a href="#anat">Anatomy</a><a href="#circ">Circuit</a><a href="#cap">Sizing</a><a href="#safe">Safety</a>
+    </nav>
+    <button class="cta-btn" onclick="openSurveyModal('Escalators & Walkways')">Request a survey</button>
+  </div>
+</header>
+
+<main>
+
+<!-- ══════════ HERO ══════════ -->
+<section id="hero" data-rise="0">
+  <div class="wrap">
+    <p class="eyebrow" style="opacity:0;animation:fade .9s var(--ease) .5s forwards">Continuous Motion · Moving Walkways &amp; Escalators</p>
+    <h1>
+      <span class="h-line"><span style="animation-delay:.05s">The</span></span>
+      <span class="h-line"><span class="am" style="animation-delay:.2s">Incline</span></span>
+    </h1>
+    <p class="h-sub" style="margin-top:1.8rem">Continuous passenger flow engineered to EN 115 standard. We supply, install and maintain high-traffic escalator systems and autowalks across Abu Dhabi.</p>
+    <div class="h-meta">
+      <span>30° &amp; 35° Inclines</span><span>Moving Walkways</span><span>OEM Certified</span><span>24/7 Response</span>
+      <span class="ar" style="letter-spacing:0">الحركة المستمرة</span>
+    </div>
+
+    <!-- Motion Control Bar -->
+    <div class="incline-ctrls">
+      <label>Speed Engine:</label>
+      <button id="sp05" class="active">0.50 m/s</button>
+      <button id="sp065">0.65 m/s</button>
+      <button id="sp075">0.75 m/s</button>
+      <label style="margin-left:.6rem">Direction:</label>
+      <button id="btnDir">Ascending ↗</button>
+    </div>
+  </div>
+
+  <div id="ribbon"><div class="band" id="rband"></div></div>
+</section>
+
+<!-- ══════════ TYPES ══════════ -->
+<section id="types" class="pad ride" data-rise="1.2">
+  <div class="wrap">
+    <p class="eyebrow rv">01 — Geometry</p>
+    <h2 class="big rv">Three configurations.<br>Zero compromise.</h2>
+    <p class="lede rv">Whether connecting retail levels or moving thousands of passengers through a transit hub, we engineer the precise angle and truss length for your space.</p>
+    
+    <div class="types">
+      <article class="rv">
+        <svg viewBox="0 0 260 120" role="img" aria-label="Standard 30 degree escalator">
+          <line x1="14" y1="106" x2="246" y2="106" stroke="#2B333D" stroke-width="1" stroke-dasharray="4 4"/>
+          <path d="M22 100 L80 100 L180 40 L238 40" stroke="#E08A1E" stroke-width="4" fill="none"/>
+          <text x="120" y="85" font-family="IBM Plex Mono, monospace" font-size="11" fill="#9AA3B0">30°</text>
+        </svg>
+        <h3>Standard Escalator</h3>
+        <p>The global benchmark for comfort and safety. Optimal step leveling at landings and smooth travel for high-density public spaces.</p>
+        <dl><dt>Incline</dt><dd>30°</dd><dt>Max Rise</dt><dd>25 m</dd><dt>Standard</dt><dd>EN 115-1</dd></dl>
+      </article>
+
+      <article class="rv" data-d="1">
+        <svg viewBox="0 0 260 120" role="img" aria-label="Steep 35 degree escalator">
+          <line x1="14" y1="106" x2="246" y2="106" stroke="#2B333D" stroke-width="1" stroke-dasharray="4 4"/>
+          <path d="M22 100 L70 100 L160 30 L238 30" stroke="#E08A1E" stroke-width="4" fill="none"/>
+          <text x="110" y="80" font-family="IBM Plex Mono, monospace" font-size="11" fill="#9AA3B0">35°</text>
+        </svg>
+        <h3>Steep Incline</h3>
+        <p>Compact footprint solution where floor area is restricted. Ideal for retail stores and department buildings up to 6m rise.</p>
+        <dl><dt>Incline</dt><dd>35°</dd><dt>Max Rise</dt><dd>6 m</dd><dt>Footprint</dt><dd>Compact</dd></dl>
+      </article>
+
+      <article class="rv" data-d="2">
+        <svg viewBox="0 0 260 120" role="img" aria-label="Moving walkway at 12 degrees">
+          <line x1="14" y1="106" x2="246" y2="106" stroke="#2B333D" stroke-width="1" stroke-dasharray="4 4"/>
+          <path d="M22 100 L238 54" stroke="#E08A1E" stroke-width="4" fill="none"/>
+          <text x="54" y="94" font-family="IBM Plex Mono, monospace" font-size="11" fill="#9AA3B0">0–12°</text>
+        </svg>
+        <h3>Moving Walkway</h3>
+        <p>Horizontal and inclined pallet autowalks. Designed for airport concourses, hypermarkets, and trolley accessibility.</p>
+        <dl><dt>Incline</dt><dd>0–12°</dd><dt>Length</dt><dd>to 100 m</dd><dt>Pallet</dt><dd>800–1400 mm</dd></dl>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ ANATOMY (pinned, diagonal explode) ══════════ -->
+<section id="anat" class="pinwrap" style="height:340svh" data-rise="2.6">
+  <div class="pin">
+    <div class="wrap">
+      <div class="an">
+        <figure class="real-3d-wrap">
+          <div class="img-3d-container">
+            <img src="escalator_3d_assembled.jpg" alt="Photorealistic 3D Assembled Escalator" id="imgEscAssembled" class="img-3d-layer" style="opacity:1;z-index:1">
+            <img src="escalator_3d_exploded.jpg" alt="Photorealistic 3D Exploded Escalator Truss Cutaway" id="imgEscExploded" class="img-3d-layer" style="opacity:0;z-index:2">
+            
+            <svg id="anSvg" viewBox="0 0 960 960" class="overlay-3d-svg" style="z-index:3">
+              <g class="ex-g" data-dx="-50" data-dy="-30" data-ix="1" id="ex-1">
+                <rect x="160" y="240" width="340" height="340" rx="8" fill="rgba(245,169,60,.12)" stroke="#F5A93C" stroke-width="2"/>
+              </g>
+              <g class="ex-g" data-dx="40" data-dy="40" data-ix="2" id="ex-2">
+                <rect x="360" y="440" width="410" height="350" rx="8" fill="rgba(224,138,30,.14)" stroke="#E08A1E" stroke-width="2"/>
+              </g>
+              <g class="ex-g" data-dx="0" data-dy="-40" data-ix="3" id="ex-3">
+                <rect x="350" y="230" width="530" height="410" rx="8" fill="none" stroke="#E08A1E" stroke-width="2.5" stroke-dasharray="8 5"/>
+              </g>
+              <g class="ex-g" data-dx="50" data-dy="-50" data-ix="4" id="ex-4">
+                <rect x="620" y="70" width="280" height="130" rx="8" fill="rgba(224,138,30,.16)" stroke="#E08A1E" stroke-width="2"/>
+              </g>
+              <g class="ex-g" data-dx="-60" data-dy="40" data-ix="5" id="ex-5">
+                <rect x="140" y="720" width="240" height="200" rx="8" fill="rgba(224,138,30,.18)" stroke="#E08A1E" stroke-width="2"/>
+              </g>
+              <g class="ex-g" data-dx="0" data-dy="30" data-ix="6" id="ex-6">
+                <rect x="180" y="520" width="120" height="80" rx="8" fill="rgba(245,169,60,.15)" stroke="#F5A93C" stroke-width="2"/>
+              </g>
+            </svg>
+          </div>
+        </figure>
+
+        <div>
+          <p class="eyebrow">02 — Anatomy</p>
+          <h2 style="font-size:clamp(1.9rem,4vw,2.9rem);color:var(--white)">Photorealistic 3D<br>Truss Disassembly</h2>
+          <p style="font-size:.92rem;color:var(--steel-lt);margin:.8rem 0 0">Scroll to separate the assembly. Every component is certified to EN 115 standards.</p>
+          
+          <ul id="anParts">
+            <li data-p="1"><span class="ix">01</span><span>Balustrade &amp; handrail drive profile</span></li>
+            <li data-p="2"><span class="ix">02</span><span>Stainless step band &amp; drive chain</span></li>
+            <li data-p="3"><span class="ix">03</span><span>Structural truss &amp; support angles</span></li>
+            <li data-p="4"><span class="ix">04</span><span>Geared drive machine &amp; upper landing</span></li>
+            <li data-p="5"><span class="ix">05</span><span>Tension station &amp; lower landing track</span></li>
+            <li data-p="6"><span class="ix">06</span><span>Skirt panels &amp; comb plate LED lighting</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ STEP CIRCUIT ══════════ -->
+<section id="circ" class="pad ride" data-rise="4.0">
+  <div class="wrap">
+    <p class="eyebrow rv">03 — Continuous Circuit</p>
+    <h2 class="big rv" style="font-size:clamp(2rem,5vw,3.4rem)">Steps don't end.<br>They return.</h2>
+    <p class="lede rv" style="margin-bottom:2.4rem">Steps flatten, turn under the comb plate, and travel back along the underside of the truss on the same continuous chain. We inspect both carrying and return paths on every PM visit.</p>
+    
+    <div class="circ rv">
+      <div class="stagewrap">
+        <div class="stage" id="stage">
+          <svg viewBox="0 0 660 430" width="660" height="430" aria-hidden="true">
+            <path d="M120,330 L500,110 A24,24 0 0 1 524,151.6 L144,371.6 A24,24 0 0 1 120,330 Z"
+                  fill="none" stroke="#2B333D" stroke-width="1.4" stroke-dasharray="5 6"/>
+            <line x1="96" y1="344" x2="548" y2="82" stroke="#3A4550" stroke-width="2"/>
+            <circle cx="512" cy="131" r="17" fill="none" stroke="#E08A1E" stroke-width="2"/>
+            <circle cx="132" cy="351" r="17" fill="none" stroke="#4A5560" stroke-width="2"/>
+            <text x="520" y="72" font-family="IBM Plex Mono, monospace" font-size="10" fill="#E08A1E" letter-spacing="1.5">UPPER DRIVE</text>
+            <text x="42" y="404" font-family="IBM Plex Mono, monospace" font-size="10" fill="#6E7885" letter-spacing="1.5">TENSION STATION</text>
+            <text x="230" y="196" font-family="IBM Plex Mono, monospace" font-size="10" fill="#F5A93C" letter-spacing="1.5">CARRYING RUN (30°)</text>
+            <text x="250" y="330" font-family="IBM Plex Mono, monospace" font-size="10" fill="#4E5864" letter-spacing="1.5">RETURN RUN (INVERTED)</text>
+          </svg>
+        </div>
+      </div>
+      <div>
+        <div class="legend">
+          <div><i style="background:linear-gradient(180deg,#F5A93C,#8A5A14)"></i><span><strong style="color:var(--paper)">Carrying run:</strong> Steps under passenger load climbing at 30°.</span></div>
+          <div><i style="background:linear-gradient(180deg,#5C6874,#39424D)"></i><span><strong style="color:var(--paper)">Return run:</strong> Inverted return path beneath the truss where roller wear accumulates.</span></div>
+        </div>
+        <div style="margin-top:1.8rem;border-top:1px solid var(--line);padding-top:1.2rem">
+          <p style="font-size:.86rem;color:var(--steel-lt);margin:0">On a planned maintenance visit we lift comb plates and inspect step rollers, chain tension, and missing step safety switches to prevent unscheduled shutdowns.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CAPACITY CALCULATOR ══════════ -->
+<section id="cap" class="pad ride" data-rise="5.0">
+  <div class="wrap">
+    <p class="eyebrow rv">04 — Sizing &amp; Capacity</p>
+    <h2 class="big rv" style="font-size:clamp(2rem,5vw,3.4rem)">Passenger Capacity<br>Calculator</h2>
+    <p class="lede rv" style="margin-bottom:2.6rem">Calculate theoretical and realistic passenger throughput per hour based on EN 115-1 standards.</p>
+    
+    <div class="calc rv">
+      <div>
+        <div class="ctrl">
+          <span>Step Width</span>
+          <div class="seg" id="segW">
+            <button data-v="1" aria-pressed="false">600 mm</button>
+            <button data-v="1.5" aria-pressed="true">800 mm</button>
+            <button data-v="2" aria-pressed="false">1000 mm</button>
+          </div>
+        </div>
+        <div class="ctrl">
+          <span>Rated Speed</span>
+          <div class="seg" id="segV">
+            <button data-v="0.5" aria-pressed="true">0.50 m/s</button>
+            <button data-v="0.65" aria-pressed="false">0.65 m/s</button>
+            <button data-v="0.75" aria-pressed="false">0.75 m/s</button>
+          </div>
+        </div>
+        <div class="ctrl">
+          <span>Vertical Rise</span>
+          <div class="seg" id="segR">
+            <button data-v="3.5" aria-pressed="true">3.5 m</button>
+            <button data-v="4.5" aria-pressed="false">4.5 m</button>
+            <button data-v="6" aria-pressed="false">6.0 m</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="readout">
+        <div class="num" id="capNum">6,750</div>
+        <div class="cap">Theoretical Persons / Hour (EN 115)</div>
+        <hr>
+        <dl>
+          <dt>Realistic Throughput</dt><dd id="capReal">5,060</dd>
+          <dt>Steps / Minute</dt><dd id="capSpm">75</dd>
+          <dt>Transit Time</dt><dd id="capTime">14 s</dd>
+          <dt>Approx. Truss Length</dt><dd id="capLen">12.4 m</dd>
+          <dt>Drive Motor Power</dt><dd id="capKw">7.5 kW</dd>
+        </dl>
+
+        <div class="spec-box">
+          <div class="t">Calculator Export</div>
+          <code id="escSpecCode">System: Al Dirayah 30° Escalator
+Step Width: 800 mm | Speed: 0.50 m/s
+Theoretical Capacity: 6,750 pers/hr
+Drive Power: 7.5 kW | Standard: EN 115-1</code>
+          <button id="btnCopyEscSpec" onclick="copyEscSpec()">📋 Copy Spec to Clipboard</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SAFETY ══════════ -->
+<section id="safe" class="pad ride" data-rise="5.6">
+  <div class="wrap">
+    <p class="eyebrow rv">05 — Safety Matrix</p>
+    <h2 class="big rv" style="font-size:clamp(2rem,5vw,3.4rem)">EN 115 Mandated Devices</h2>
+    <p class="lede rv">Every safety circuit is tested and logged on every preventive service visit.</p>
+    
+    <div class="safe">
+      <div class="rv"><b>/ 01</b><h3>Comb impact switch</h3><p>Stops drive machine if objects get trapped between comb plate and step tread.</p></div>
+      <div class="rv" data-d="1"><b>/ 02</b><h3>Step sag sensor</h3><p>Detects steps dropping below tread line prior to reaching the landing comb.</p></div>
+      <div class="rv" data-d="2"><b>/ 03</b><h3>Handrail entry guard</h3><p>Halts operation if hands or clothing enter the handrail newel inlet.</p></div>
+      <div class="rv" data-d="3"><b>/ 04</b><h3>Step chain monitor</h3><p>Monitors chain elongation to prevent rollback before brake engagement.</p></div>
+      <div class="rv"><b>/ 05</b><h3>Missing step detector</h3><p>Halts travel immediately if a step is absent from the return run.</p></div>
+      <div class="rv" data-d="1"><b>/ 06</b><h3>Overspeed &amp; reversal</h3><p>Trips main safety circuit at >1.2× speed or unexpected direction reversal.</p></div>
+      <div class="rv" data-d="2"><b>/ 07</b><h3>Skirt switch</h3><p>Detects entrapment between step sides and inner skirt panel.</p></div>
+      <div class="rv" data-d="3"><b>/ 08</b><h3>Emergency stop</h3><p>Controlled-deceleration emergency push buttons at upper and lower landings.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CTA ══════════ -->
+<section id="cta" class="pad ride" data-rise="6.0">
+  <div class="wrap">
+    <div class="ctarow">
+      <div>
+        <p class="eyebrow rv">Get in touch</p>
+        <h2 class="big rv" data-d="1">Book an Incline Survey</h2>
+        <p class="lede rv" style="margin-bottom:2rem">Provide your rise, step width, and site details. We measure, test existing systems, and deliver a comprehensive report.</p>
+        <button class="big-cta rv" data-d="3" onclick="openSurveyModal('Escalators & Walkways')">Request a survey →</button>
+      </div>
+      <div class="dl rv" data-d="2">
+        <div><b>Office</b>Mussafah Industrial Area, Abu Dhabi, UAE</div>
+        <div><b>Service desk</b>+971 2 555 0192 · 24/7 Support</div>
+        <div><b>Email</b>service@aldirayah.ae</div>
+        <div><b>Web</b>aldirayah.ae</div>
+        <div class="ar" style="font-size:1.15rem;color:var(--steel-lt);margin-top:.5rem">الدراية للمقاولات الكهروميكانيكية</div>
+      </div>
+    </div>
+    <footer>
+      <span>© 2026 Al Dirayah Electromechanical Contracting LLC</span>
+      <span>Keep it moving · الحركة لا تتوقف</span>
+    </footer>
+  </div>
+</section>
+
+</main>
+
+<!-- Survey Request Modal -->
+<div class="modal-overlay" id="surveyModal">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeSurveyModal()">×</button>
+    <h3>Request Site Survey</h3>
+    <p>Submit project details to schedule an on-site technical audit by an Al Dirayah engineer.</p>
+    <form onsubmit="handleSurveySubmit(event)">
+      <label>Equipment Type
+        <select id="mEquip">
+          <option value="Escalators & Walkways">Escalators &amp; Moving Walkways</option>
+          <option value="Vertical Lifts / Elevators">Vertical Lifts / Elevators</option>
+          <option value="Full MEP & Low Current">Full MEP &amp; Low Current Package</option>
+        </select>
+      </label>
+      <label>Project / Building Name
+        <input type="text" placeholder="e.g. Marina Mall, Abu Dhabi" required>
+      </label>
+      <label>Contact Name &amp; Designation
+        <input type="text" placeholder="Your Name" required>
+      </label>
+      <label>Email Address / Phone
+        <input type="email" placeholder="name@company.ae" required>
+      </label>
+      <label>Project Scope / Description
+        <textarea rows="3" placeholder="Rise height, step width, footfall requirements..."></textarea>
+      </label>
+      <button type="submit" class="big-cta" style="justify-content:center;margin-top:.5rem">Submit Survey Request →</button>
+    </form>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var clamp = function(v,a,b){ return v<a?a:v>b?b:v; };
+  var fmt = function(n){ return n.toLocaleString("en-US"); };
+
+  /* Bind step ride animation to ride elements */
+  document.querySelectorAll(".ride").forEach(function(sec){
+    sec.querySelectorAll(
+      ":scope > .wrap > .eyebrow, :scope > .wrap > h2, :scope > .wrap > .lede," +
+      " .types > article, .safe > div," +
+      " .calc > div, .ctarow > div, .circ > div:not(.stagewrap)"
+    ).forEach(function(el){ el.classList.add("step"); });
+  });
+
+  /* hero step ribbon */
+  var rb = document.getElementById("rband");
+  if(rb){ for(var i=0;i<28;i++){ var d=document.createElement("div"); d.className="rstep"; rb.appendChild(d); } }
+
+  /* Speed & Motion controls */
+  var hatch = document.getElementById("hatch"), railMarks = document.getElementById("railMarks");
+  var sp05 = document.getElementById("sp05"), sp065 = document.getElementById("sp065"), sp075 = document.getElementById("sp075");
+  var btnDir = document.getElementById("btnDir");
+  var currentDir = "normal";
+
+  function setSpeed(durHatch, durRail){
+    if(hatch) hatch.style.animationDuration = durHatch + "s";
+    if(railMarks) railMarks.style.animationDuration = durRail + "s";
+  }
+
+  if(sp05 && sp065 && sp075){
+    sp05.addEventListener("click", function(){
+      [sp05,sp065,sp075].forEach(function(b){ b.classList.remove("active"); });
+      sp05.classList.add("active"); setSpeed(8, 6.07);
+    });
+    sp065.addEventListener("click", function(){
+      [sp05,sp065,sp075].forEach(function(b){ b.classList.remove("active"); });
+      sp065.classList.add("active"); setSpeed(6.15, 4.67);
+    });
+    sp075.addEventListener("click", function(){
+      [sp05,sp065,sp075].forEach(function(b){ b.classList.remove("active"); });
+      sp075.classList.add("active"); setSpeed(5.33, 4.05);
+    });
+  }
+
+  if(btnDir){
+    btnDir.addEventListener("click", function(){
+      currentDir = currentDir === "normal" ? "reverse" : "normal";
+      if(hatch) hatch.style.animationDirection = currentDir;
+      if(railMarks) railMarks.style.animationDirection = currentDir;
+      btnDir.textContent = currentDir === "normal" ? "Ascending ↗" : "Descending ↙";
+    });
+  }
+
+  /* scroll engine */
+  var hdr = document.getElementById("hdr");
+  var rgVal = document.getElementById("rgVal"), rgBar = document.getElementById("rgBar"), rgAng = document.getElementById("rgAng");
+  var anat = document.getElementById("anat");
+  var exG = [].slice.call(document.querySelectorAll(".ex-g"));
+  var anParts = document.getElementById("anParts");
+  var secs = [].slice.call(document.querySelectorAll("[data-rise]"));
+  var ticking = false;
+
+  function frame(){
+    ticking = false;
+    var y = pageYOffset, vh = innerHeight;
+    if(hdr) hdr.classList.toggle("stuck", y > 40);
+
+    var total = document.documentElement.scrollHeight - vh;
+    var prog = clamp(y / (total||1), 0, 1);
+
+    /* rise gauge */
+    if(rgVal) rgVal.textContent = (prog * 6).toFixed(1);
+    if(rgBar) rgBar.style.height = (prog * 100) + "%";
+
+    var act = secs[0];
+    for(var i=0;i<secs.length;i++){
+      if(secs[i].getBoundingClientRect().top <= vh * 0.45) act = secs[i];
+    }
+    if(rgAng) rgAng.textContent = (act.id === "types") ? "0–35°" : "30°";
+
+    /* anatomy scroll mapping - REAL-TIME PHOTOREALISTIC 3D DISASSEMBLY */
+    if(anat && !RM){
+      var r = anat.getBoundingClientRect();
+      var p = clamp((-r.top) / (anat.offsetHeight - vh), 0, 1);
+      var e = p < .5 ? 4*p*p*p : 1 - Math.pow(-2*p+2,3)/2;
+
+      var imgAssembled = document.getElementById("imgEscAssembled");
+      var imgExploded = document.getElementById("imgEscExploded");
+      if(imgAssembled && imgExploded){
+        imgAssembled.style.opacity = (1 - e).toFixed(3);
+        imgExploded.style.opacity = e.toFixed(3);
+        imgExploded.style.transform = "scale(" + (1 + e*0.04).toFixed(3) + ")";
+      }
+
+      for(var k=0;k<exG.length;k++){
+        var g = exG[k];
+        g.setAttribute("transform","translate(" + ((+g.dataset.dx||0)*e).toFixed(2) + "," + ((+g.dataset.dy||0)*e).toFixed(2) + ")");
+        g.style.opacity = (e > 0.1 ? 1 : e * 10).toFixed(2);
+      }
+      if(anParts){
+        var idx = clamp(Math.floor(e*6)+1, 1, 6);
+        for(var j=0;j<anParts.children.length;j++){
+          var li = anParts.children[j];
+          if(e > .04 && (+li.dataset.p) <= idx) li.setAttribute("data-on",""); else li.removeAttribute("data-on");
+        }
+      }
+    }
+  }
+  addEventListener("scroll", function(){ if(!ticking){ ticking = true; requestAnimationFrame(frame); } }, {passive:true});
+  addEventListener("resize", frame, {passive:true});
+
+  /* Hotspot interaction */
+  if(anParts){
+    [].forEach.call(anParts.children, function(li){
+      li.addEventListener("mouseenter", function(){
+        var ix = this.dataset.p;
+        exG.forEach(function(g){ if(g.dataset.ix === ix) g.classList.add("active"); else g.classList.remove("active"); });
+      });
+      li.addEventListener("mouseleave", function(){ exG.forEach(function(g){ g.classList.remove("active"); }); });
+    });
+  }
+  exG.forEach(function(g){
+    g.addEventListener("click", function(){
+      var ix = this.dataset.ix;
+      if(anParts){
+        [].forEach.call(anParts.children, function(li){
+          if(li.dataset.p === ix) li.setAttribute("data-on",""); else li.removeAttribute("data-on");
+        });
+      }
+    });
+  });
+
+  /* reveals */
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); } });
+  }, {threshold:.16, rootMargin:"0px 0px -8% 0px"});
+  document.querySelectorAll(".rv").forEach(function(el){ io.observe(el); });
+
+  /* capacity calculator */
+  var W = 1.5, V = 0.5, R = 3.5;
+  var capNum=document.getElementById("capNum"), capReal=document.getElementById("capReal"),
+      capSpm=document.getElementById("capSpm"), capTime=document.getElementById("capTime"),
+      capLen=document.getElementById("capLen"), capKw=document.getElementById("capKw"),
+      escSpecCode=document.getElementById("escSpecCode");
+
+  function recalc(){
+    var stepsPerHour = V * 3600 / 0.4;
+    var cap = Math.round(stepsPerHour * W);
+    var inclLen = R / Math.sin(30 * Math.PI/180);
+    var lenVal = (R / Math.tan(30 * Math.PI/180) + 5.2).toFixed(1);
+    var kwVal = (R * 1.8 + W * 2.2).toFixed(1);
+
+    if(capNum) capNum.textContent = fmt(cap);
+    if(capReal) capReal.textContent = fmt(Math.round(cap * 0.75));
+    if(capSpm) capSpm.textContent = Math.round(stepsPerHour / 60);
+    if(capTime) capTime.textContent = Math.round(inclLen / V) + " s";
+    if(capLen) capLen.textContent = lenVal + " m";
+    if(capKw) capKw.textContent = kwVal + " kW";
+
+    if(escSpecCode){
+      var wMm = W === 1 ? "600 mm" : W === 1.5 ? "800 mm" : "1000 mm";
+      escSpecCode.textContent = "System: Al Dirayah 30° Escalator\nStep Width: " + wMm + " | Speed: " + V + " m/s\nTheoretical Capacity: " + fmt(cap) + " pers/hr\nDrive Power: " + kwVal + " kW | Standard: EN 115-1";
+    }
+  }
+  function wire(id, set){
+    var box = document.getElementById(id); if(!box) return;
+    box.addEventListener("click", function(ev){
+      var b = ev.target.closest("button"); if(!b) return;
+      [].forEach.call(box.children, function(x){ x.setAttribute("aria-pressed","false"); });
+      b.setAttribute("aria-pressed","true");
+      set(parseFloat(b.dataset.v)); recalc();
+    });
+  }
+  wire("segW", function(v){ W = v; });
+  wire("segV", function(v){ V = v; });
+  wire("segR", function(v){ R = v; });
+  recalc();
+
+  window.copyEscSpec = function(){
+    if(!escSpecCode) return;
+    navigator.clipboard.writeText(escSpecCode.textContent).then(function(){
+      var btn = document.getElementById("btnCopyEscSpec");
+      if(btn){ btn.textContent = "✓ Copied to Clipboard!"; setTimeout(function(){ btn.textContent = "📋 Copy Spec to Clipboard"; },2500); }
+    });
+  };
+
+  /* Modal helpers */
+  window.openSurveyModal = function(type){
+    var m = document.getElementById("surveyModal");
+    var sel = document.getElementById("mEquip");
+    if(sel && type) sel.value = type;
+    if(m) m.classList.add("active");
+  };
+  window.closeSurveyModal = function(){
+    var m = document.getElementById("surveyModal");
+    if(m) m.classList.remove("active");
+  };
+  window.handleSurveySubmit = function(e){
+    e.preventDefault();
+    alert("Thank you. Your survey request has been received. An Al Dirayah engineering specialist will contact you within 24 hours.");
+    closeSurveyModal();
+  };
+
+  frame();
+})();
+</script>
+</body>
+</html>

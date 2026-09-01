@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Al Dirayah — Unified Motion Systems Portal</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap">
+
+<style>
+:root{
+  --ink:#0E1115; --ink-2:#151A20; --surface:#1B2128; --surface-2:#232A33;
+  --line:#2B333D; --line-2:#3A4550;
+  --amber:#E08A1E; --amber-lt:#F5A93C; --amber-dim:#8A5A14;
+  --steel:#6E7885; --steel-lt:#9AA3B0; --paper:#E9E7E2; --white:#fff;
+  --f-d:"Barlow Condensed","Arial Narrow",sans-serif;
+  --f-b:"IBM Plex Sans",system-ui,sans-serif;
+  --f-m:"IBM Plex Mono",ui-monospace,monospace;
+  --f-a:"IBM Plex Sans Arabic",serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0; background:var(--ink); color:var(--paper); font-family:var(--f-b); font-size:16px; line-height:1.6; overflow-x:hidden}
+h1,h2,h3{margin:0; text-wrap:balance; font-family:var(--f-d); font-weight:600; text-transform:uppercase; line-height:.95; letter-spacing:.01em}
+p{margin:0 0 1rem; max-width:62ch}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1200px; margin:0 auto; padding:0 clamp(1.1rem,4vw,2.5rem)}
+
+/* Header */
+header{position:fixed; top:0; left:0; right:0; z-index:50; padding:.9rem 0; background:rgba(14,17,21,.92); backdrop-filter:blur(16px); border-bottom:1px solid var(--line)}
+header .wrap{display:flex; align-items:center; justify-content:space-between; gap:1rem}
+.brand{display:flex; align-items:center; gap:.7rem}
+.brand svg{width:34px;height:34px;flex:none}
+.brand .nm{font-family:var(--f-d); font-size:1.4rem; letter-spacing:.045em; text-transform:uppercase; font-weight:600; color:var(--white)}
+
+/* Master Tab Switcher */
+.tab-switcher{display:flex; background:rgba(21,26,32,0.9); padding:4px; border-radius:8px; border:1px solid var(--amber)}
+.tab-btn{font-family:var(--f-m); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--steel-lt); padding:.5rem 1.1rem; border-radius:6px; border:none; background:transparent; cursor:pointer; transition:all .25s ease; display:inline-flex; align-items:center; gap:.5rem}
+.tab-btn:hover{color:var(--white)}
+.tab-btn.active{background:var(--amber); color:var(--ink); font-weight:600; box-shadow:0 0 14px rgba(224,138,30,.4)}
+
+.frame-container{width:100%; height:calc(100vh - 65px); margin-top:65px; border:none}
+iframe{width:100%; height:100%; border:none; display:block}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg viewBox="0 0 120 120" aria-hidden="true">
+        <rect width="120" height="120" rx="20" fill="#E08A1E"/>
+        <path d="M35 49 L60 29 L85 49" fill="none" stroke="#0E1115" stroke-width="10"/>
+        <path d="M35 70 L60 50 L85 70" fill="none" stroke="#0E1115" stroke-width="10" opacity=".62"/>
+        <path d="M35 91 L60 71 L85 91" fill="none" stroke="#0E1115" stroke-width="10" opacity=".34"/>
+      </svg>
+      <span class="nm">Al Dirayah</span>
+    </a>
+
+    <!-- Unified Division Switcher Bar -->
+    <div class="tab-switcher">
+      <button class="tab-btn active" id="tabLifts" onclick="switchTab('lifts')"><span class="icon">↕</span> Vertical Lifts</button>
+      <button class="tab-btn" id="tabEscalators" onclick="switchTab('escalators')"><span class="icon">↗</span> Escalators &amp; Walkways</button>
+    </div>
+
+    <a href="index.html" style="font-family:var(--f-m);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);border:1px solid var(--amber);padding:.45rem .8rem;border-radius:3px">Hub Home</a>
+  </div>
+</header>
+
+<div class="frame-container">
+  <iframe id="mainFrame" src="lifts.html" title="Al Dirayah Motion Systems View"></iframe>
+</div>
+
+<script>
+function switchTab(view){
+  var frame = document.getElementById("mainFrame");
+  var bLifts = document.getElementById("tabLifts");
+  var bEsc = document.getElementById("tabEscalators");
+
+  if(view === 'lifts'){
+    frame.src = "lifts.html";
+    bLifts.classList.add("active");
+    bEsc.classList.remove("active");
+  } else {
+    frame.src = "escalators.html";
+    bEsc.classList.add("active");
+    bLifts.classList.remove("active");
+  }
+}
+</script>
+</body>
+</html>

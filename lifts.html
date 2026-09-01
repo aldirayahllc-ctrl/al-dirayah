@@ -1,0 +1,823 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Al Dirayah — Vertical Transport & Lifts</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap">
+
+<style>
+:root{
+  --ink:#0E1115; --ink-2:#151A20; --surface:#1B2128; --surface-2:#232A33;
+  --line:#2B333D; --line-2:#3A4550;
+  --amber:#E08A1E; --amber-lt:#F5A93C; --amber-dim:#8A5A14;
+  --steel:#6E7885; --steel-lt:#9AA3B0; --paper:#E9E7E2; --white:#fff;
+  --f-d:"Barlow Condensed","Arial Narrow",sans-serif;
+  --f-b:"IBM Plex Sans",system-ui,sans-serif;
+  --f-m:"IBM Plex Mono",ui-monospace,monospace;
+  --f-a:"IBM Plex Sans Arabic",serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--ink); color:var(--paper);
+  font-family:var(--f-b); font-size:16px; line-height:1.6;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+h1,h2,h3{margin:0; text-wrap:balance; font-family:var(--f-d); font-weight:600; text-transform:uppercase; line-height:.95; letter-spacing:.01em}
+p{margin:0 0 1rem; max-width:62ch}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--amber); outline-offset:3px; border-radius:2px}
+.wrap{max-width:1180px; margin:0 auto; padding:0 clamp(1.1rem,4vw,2.5rem)}
+#hero > .wrap, .pin > .wrap{width:100%}
+.eyebrow{font-family:var(--f-m); font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; color:var(--amber); margin:0 0 1rem}
+.mono{font-family:var(--f-m); font-variant-numeric:tabular-nums}
+.ar{font-family:var(--f-a); direction:rtl; unicode-bidi:isolate}
+
+/* ── shaft backdrop (parallax) ─────────────────────────────── */
+#shaft{position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden}
+#dust{position:absolute; inset:0; width:100%; height:100%}
+.rail{position:absolute; top:-20vh; height:160vh; width:10px; background:
+  linear-gradient(90deg,#20272F 0%,#39424D 42%,#4A5560 50%,#39424D 58%,#20272F 100%);
+  box-shadow:0 0 30px rgba(0,0,0,.6)}
+.rail.l{left:7vw} .rail.r{right:7vw}
+#ticks{position:absolute; inset:0}
+.tick{position:absolute; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,#2A323B 12%,#2A323B 88%,transparent)}
+.tick b{position:absolute; left:calc(7vw + 22px); top:-9px; font-family:var(--f-m); font-size:.6rem; letter-spacing:.18em; color:#39434E}
+#glow{position:absolute; left:50%; top:0; width:min(1100px,120vw); height:60vh; transform:translateX(-50%);
+  background:radial-gradient(60% 60% at 50% 0%, rgba(224,138,30,.18), transparent 70%)}
+
+/* ── floor indicator ──────────────────────────────────────── */
+#fi{
+  position:fixed; right:clamp(.8rem,2.5vw,2rem); top:50%; transform:translateY(-50%);
+  z-index:40; background:#0A0D10; border:1px solid var(--line-2); border-radius:8px;
+  padding:.75rem .6rem; display:flex; flex-direction:column; align-items:center; gap:.5rem;
+  box-shadow:0 12px 40px rgba(0,0,0,.7);
+}
+#fi .arrow{font-size:.9rem; color:var(--amber); line-height:1; transition:transform .4s var(--ease), opacity .3s}
+#fi .read{
+  font-family:var(--f-m); font-weight:600; font-size:1.45rem; color:var(--amber-lt);
+  min-width:2.1ch; text-align:center; line-height:1;
+  text-shadow:0 0 14px rgba(245,169,60,.55);
+}
+#fi .bar{width:3px; height:120px; background:#1A2027; border-radius:2px; overflow:hidden; position:relative}
+#fi .bar i{position:absolute; left:0; right:0; top:0; background:linear-gradient(180deg,var(--amber-lt),var(--amber-dim)); height:0%}
+#fi ol{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.34rem}
+#fi ol li{font-family:var(--f-m); font-size:.62rem; color:#39434E; letter-spacing:.06em; cursor:pointer; transition:color .3s, transform .2s}
+#fi ol li:hover{color:var(--steel-lt)}
+#fi ol li[data-on]{color:var(--amber); font-weight:600; transform:scale(1.15)}
+@media(max-width:700px){ #fi{padding:.5rem .4rem} #fi .bar{height:70px} #fi ol{display:none} }
+
+/* ── header ───────────────────────────────────────────────── */
+header{position:fixed; top:0; left:0; right:0; z-index:50; padding:.9rem 0;
+  transition:background .4s, backdrop-filter .4s, border-color .4s;
+  border-bottom:1px solid transparent}
+header.stuck{background:rgba(14,17,21,.92); backdrop-filter:blur(16px); border-bottom-color:var(--line)}
+header .wrap{display:flex; align-items:center; justify-content:space-between; gap:1rem}
+.brand{display:flex; align-items:center; gap:.7rem}
+.brand svg{width:34px;height:34px;flex:none}
+.brand .nm{font-family:var(--f-d); font-size:1.4rem; letter-spacing:.045em; text-transform:uppercase; font-weight:600; color:var(--white)}
+
+/* Switcher pills */
+.div-switcher{display:flex; background:rgba(21,26,32,0.85); padding:3px; border-radius:6px; border:1px solid var(--line-2)}
+.sw-pill{font-family:var(--f-m); font-size:.64rem; letter-spacing:.12em; text-transform:uppercase; color:var(--steel-lt); padding:.35rem .75rem; border-radius:4px; transition:all .25s ease; display:inline-flex; align-items:center; gap:.4rem; text-decoration:none}
+.sw-pill:hover{color:var(--white); background:rgba(255,255,255,0.06)}
+.sw-pill.active{background:var(--amber); color:var(--ink); font-weight:600; box-shadow:0 0 12px rgba(224,138,30,0.35)}
+.sw-pill .icon{font-size:.75rem}
+
+nav{display:flex; gap:1.4rem}
+nav a{font-family:var(--f-m); font-size:.67rem; letter-spacing:.16em; text-transform:uppercase; color:var(--steel-lt); transition:color .25s}
+nav a:hover{color:var(--amber)}
+.cta-btn{font-family:var(--f-m); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase;
+  border:1px solid var(--amber); color:var(--amber); padding:.5rem .95rem; border-radius:3px; background:transparent; cursor:pointer;
+  transition:background .25s,color .25s,box-shadow .25s}
+.cta-btn:hover{background:var(--amber); color:var(--ink); box-shadow:0 0 14px rgba(224,138,30,.4)}
+@media(max-width:920px){ nav{display:none} }
+
+/* ── sections ─────────────────────────────────────────────── */
+main{position:relative; z-index:2}
+section{position:relative}
+.pad{padding:clamp(5rem,13vh,9rem) 0}
+
+/* hero */
+#hero{min-height:100svh; display:grid; align-content:center; padding-top:5rem}
+.h-line{overflow:hidden}
+.h-line span{display:block; transform:translateY(105%); opacity:0;
+  animation:rise 1.15s var(--ease) forwards}
+@keyframes rise{to{transform:translateY(0);opacity:1}}
+#hero h1{font-size:clamp(3.4rem,14vw,10rem); color:var(--white); letter-spacing:.005em}
+#hero h1 .am{color:var(--amber)}
+.h-sub{max-width:48ch; color:var(--steel-lt); font-size:clamp(1rem,1.7vw,1.18rem);
+  opacity:0; animation:fade 1s var(--ease) .75s forwards}
+@keyframes fade{to{opacity:1}}
+.h-meta{display:flex; flex-wrap:wrap; gap:.6rem 2rem; margin-top:2.2rem; font-family:var(--f-m);
+  font-size:.66rem; letter-spacing:.15em; text-transform:uppercase; color:var(--steel);
+  opacity:0; animation:fade 1s var(--ease) 1s forwards}
+.h-meta b{color:var(--paper); font-weight:500}
+
+/* Interactive Motion Controls Bar */
+.shaft-ctrls{display:flex; align-items:center; gap:1rem; margin-top:2.2rem; background:rgba(21,26,32,.85); border:1px solid var(--line); border-radius:6px; padding:.6rem 1rem; width:fit-content; backdrop-filter:blur(8px); opacity:0; animation:fade 1s var(--ease) 1.2s forwards}
+.shaft-ctrls label{font-family:var(--f-m); font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; color:var(--steel-lt); display:flex; align-items:center; gap:.5rem}
+.shaft-ctrls button{background:var(--surface-2); border:1px solid var(--line-2); color:var(--paper); font-family:var(--f-m); font-size:.62rem; padding:.25rem .6rem; border-radius:3px; cursor:pointer; transition:all .2s}
+.shaft-ctrls button:hover,.shaft-ctrls button.active{background:var(--amber); color:var(--ink); border-color:var(--amber)}
+
+.cue{margin-top:2.6rem; display:flex; align-items:center; gap:.6rem; font-family:var(--f-m);
+  font-size:.62rem; letter-spacing:.2em; text-transform:uppercase; color:var(--steel);
+  opacity:0; animation:fade 1s var(--ease) 1.4s forwards}
+.cue i{display:block; width:1px; height:44px; background:linear-gradient(180deg,var(--amber),transparent);
+  animation:drop 1.9s ease-in-out infinite}
+@keyframes drop{0%,100%{transform:scaleY(.35);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}}
+
+/* reveal */
+.rv{opacity:0; transform:translateY(34px); transition:opacity .9s var(--ease), transform .9s var(--ease)}
+.rv.in{opacity:1; transform:none}
+.rv[data-d="1"]{transition-delay:.09s} .rv[data-d="2"]{transition-delay:.18s}
+.rv[data-d="3"]{transition-delay:.27s} .rv[data-d="4"]{transition-delay:.36s}
+
+h2.big{font-size:clamp(2.3rem,6.5vw,4.6rem); color:var(--white); margin-bottom:1.2rem}
+.lede{font-size:clamp(1.02rem,1.6vw,1.2rem); color:var(--steel-lt); max-width:56ch}
+
+/* system cards */
+.sys{display:grid; gap:1px; background:var(--line); border:1px solid var(--line);
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); margin-top:3rem}
+.sys article{background:var(--ink-2); padding:1.8rem 1.5rem 2rem; position:relative; overflow:hidden;
+  transition:background .4s}
+.sys article:hover{background:var(--surface)}
+.sys article::after{content:""; position:absolute; left:0; right:0; top:0; height:2px;
+  background:var(--amber); transform:scaleX(0); transform-origin:left; transition:transform .55s var(--ease)}
+.sys article:hover::after{transform:scaleX(1)}
+.sys h3{font-size:1.9rem; color:var(--white); margin-bottom:.5rem}
+.sys p{font-size:.9rem; color:var(--steel-lt); margin:0}
+.sys .n{font-family:var(--f-m); font-size:.62rem; color:var(--amber); letter-spacing:.16em; display:block; margin-bottom:1.1rem}
+
+/* stats */
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1px;
+  background:var(--line); border:1px solid var(--line); margin-top:3rem}
+.stats div{background:var(--ink-2); padding:1.6rem 1.3rem}
+.stats .v{font-family:var(--f-d); font-size:clamp(2.4rem,5vw,3.4rem); color:var(--amber); line-height:1}
+.stats .k{font-family:var(--f-m); font-size:.63rem; letter-spacing:.15em; text-transform:uppercase; color:var(--steel); margin-top:.4rem}
+
+/* pinned sections */
+.pinwrap{position:relative}
+.pin{position:sticky; top:0; height:100svh; display:grid; align-content:center; overflow:hidden}
+
+/* exploded view */
+.ex{display:grid; gap:2rem; align-items:center; grid-template-columns:1fr}
+@media(min-width:940px){ .ex{grid-template-columns:minmax(0,1fr) 340px} }
+.ex figure{margin:0; position:relative}
+.ex svg{display:block; width:100%; max-width:620px; margin:0 auto; height:auto; max-height:62svh}
+@media(max-width:939px){
+  .ex svg{max-height:38svh}
+  .ex .parts li{padding:.3rem .1rem; font-size:.78rem}
+  .ex .parts li .ix{font-size:.6rem}
+  .ex > div > h2{font-size:1.7rem !important}
+  .ex > div > p{display:none}
+  .ex{gap:1.1rem}
+}
+.ex .parts{display:flex; flex-direction:column; gap:.15rem; margin-top:1rem}
+.ex .parts li{list-style:none; display:grid; grid-template-columns:26px 1fr; gap:.7rem;
+  padding:.55rem .4rem; border-bottom:1px solid var(--line); font-size:.88rem; color:#4E5864;
+  cursor:pointer; border-radius:4px; transition:color .35s, border-color .35s, background .35s}
+.ex .parts li .ix{font-family:var(--f-m); font-size:.66rem}
+.ex .parts li:hover{background:rgba(224,138,30,.06); color:var(--paper)}
+.ex .parts li[data-on]{color:var(--white); background:rgba(224,138,30,.12); border-color:var(--amber)}
+.ex .parts li[data-on] .ix{color:var(--amber); font-weight:600}
+
+/* 3D Photorealistic Render Anatomy Styles */
+.real-3d-wrap{margin:0; position:relative; width:100%; max-width:640px; margin:0 auto}
+.img-3d-container{position:relative; width:100%; height:540px; border-radius:8px; overflow:hidden; border:1px solid var(--amber-dim); background:#07090B; box-shadow:0 15px 50px rgba(0,0,0,0.8)}
+.img-3d-layer{position:absolute; inset:0; width:100%; height:100%; object-fit:contain; transition:opacity .15s ease-out, transform .15s ease-out}
+.overlay-3d-svg{position:absolute; inset:0; width:100%; height:100%; pointer-events:auto}
+
+/* SVG expl-g element: transform handled via JS requestAnimationFrame for performance */
+.expl-g{will-change:transform; cursor:pointer; transition:filter .3s, opacity .3s}
+.expl-g:hover,.expl-g.active{filter:drop-shadow(0 0 14px rgba(245,169,60,.95))}
+
+/* horizontal process */
+.htrack{display:flex; gap:clamp(1rem,3vw,2.4rem); padding:0 clamp(1.1rem,6vw,7rem); will-change:transform}
+.step{flex:0 0 min(78vw,440px); background:var(--ink-2); border:1px solid var(--line);
+  padding:2rem 1.7rem; display:flex; flex-direction:column; gap:.7rem; position:relative}
+.step .num{font-family:var(--f-d); font-size:4.4rem; color:var(--surface-2); line-height:.8; position:absolute; right:1.2rem; top:1rem}
+.step h3{font-size:1.6rem; color:var(--white); position:relative}
+.step p{font-size:.9rem; color:var(--steel-lt); margin:0; position:relative}
+.step .tag{font-family:var(--f-m); font-size:.6rem; letter-spacing:.16em; text-transform:uppercase; color:var(--amber)}
+
+/* meters */
+.meters{display:grid; gap:1.3rem; margin-top:2.4rem; max-width:520px}
+.meter .top{display:flex; justify-content:space-between; font-family:var(--f-m); font-size:.68rem;
+  letter-spacing:.11em; text-transform:uppercase; color:var(--steel); margin-bottom:.45rem}
+.meter .top b{color:var(--amber-lt); font-weight:500}
+.meter .track{height:4px; background:var(--surface-2); border-radius:2px; overflow:hidden}
+.meter .track i{display:block; height:100%; width:0;
+  background:linear-gradient(90deg,var(--amber-dim),var(--amber-lt));
+  transition:width 1.5s var(--ease)}
+
+/* configurator */
+.cfg{display:grid; gap:2.4rem; grid-template-columns:1fr}
+@media(min-width:940px){ .cfg{grid-template-columns:1fr 340px; align-items:center} }
+.cfg figure{margin:0}
+.cfg svg{display:block; width:100%; max-width:420px; margin:0 auto; height:auto; max-height:60svh}
+.swatches{display:grid; gap:.55rem}
+.sw{display:grid; grid-template-columns:34px 1fr; gap:.85rem; align-items:center; width:100%;
+  background:transparent; border:1px solid var(--line); color:var(--steel-lt);
+  padding:.6rem .7rem; cursor:pointer; text-align:left; font-family:var(--f-b); font-size:.85rem;
+  border-radius:4px; transition:border-color .3s,color .3s,background .3s}
+.sw:hover{border-color:var(--line-2); color:var(--paper)}
+.sw[aria-pressed="true"]{border-color:var(--amber); color:var(--white); background:rgba(224,138,30,.09); box-shadow:0 0 10px rgba(224,138,30,.2)}
+.sw .chip{width:34px; height:24px; border-radius:2px; border:1px solid rgba(255,255,255,.14)}
+.sw .lbl b{display:block; font-family:var(--f-m); font-size:.58rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--steel); font-weight:500}
+
+/* Spec export box */
+.spec-box{margin-top:1.8rem; background:var(--ink-2); border:1px solid var(--line); border-radius:6px; padding:1.2rem}
+.spec-box .t{font-family:var(--f-m); font-size:.65rem; letter-spacing:.14em; text-transform:uppercase; color:var(--amber); margin-bottom:.6rem}
+.spec-box code{display:block; font-family:var(--f-m); font-size:.72rem; color:var(--steel-lt); line-height:1.6; white-space:pre-wrap}
+.spec-box button{margin-top:.9rem; width:100%; background:rgba(224,138,30,.15); border:1px solid var(--amber); color:var(--amber); font-family:var(--f-m); font-size:.65rem; letter-spacing:.12em; text-transform:uppercase; padding:.5rem; border-radius:3px; cursor:pointer; transition:all .2s}
+.spec-box button:hover{background:var(--amber); color:var(--ink)}
+
+/* contact */
+#ph{background:var(--ink-2); border-top:1px solid var(--line)}
+.ctarow{display:grid; gap:2rem; grid-template-columns:1fr}
+@media(min-width:860px){ .ctarow{grid-template-columns:1.3fr 1fr; align-items:end} }
+.big-cta{display:inline-flex; align-items:center; gap:.8rem; background:var(--amber); color:var(--ink);
+  font-family:var(--f-d); text-transform:uppercase; font-size:1.5rem; letter-spacing:.03em;
+  padding:.75rem 1.6rem; border-radius:3px; cursor:pointer; border:none; transition:transform .3s var(--ease), background .3s}
+.big-cta:hover{background:var(--amber-lt); transform:translateX(6px)}
+.dl{display:grid; gap:.5rem; font-family:var(--f-m); font-size:.82rem; color:var(--steel-lt)}
+.dl b{color:var(--steel); font-weight:400; letter-spacing:.12em; font-size:.62rem; text-transform:uppercase; display:block}
+footer{border-top:1px solid var(--line); padding:2.2rem 0; font-family:var(--f-m); font-size:.68rem;
+  letter-spacing:.09em; color:#49535E; display:flex; flex-wrap:wrap; gap:.7rem 2rem; justify-content:space-between}
+
+/* Modal */
+.modal-overlay{position:fixed; inset:0; z-index:100; background:rgba(10,13,16,.85); backdrop-filter:blur(10px); display:none; place-items:center; padding:1.5rem}
+.modal-overlay.active{display:grid}
+.modal-card{background:var(--ink-2); border:1px solid var(--amber); border-radius:8px; max-width:540px; width:100%; padding:2rem; box-shadow:0 20px 60px rgba(0,0,0,.8); position:relative}
+.modal-card h3{font-size:2rem; color:var(--white); margin-bottom:.5rem}
+.modal-card p{font-size:.88rem; color:var(--steel-lt); margin-bottom:1.4rem}
+.modal-card form{display:grid; gap:1rem}
+.modal-card label{font-family:var(--f-m); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:var(--steel); display:grid; gap:.3rem}
+.modal-card input,.modal-card select,.modal-card textarea{background:var(--surface); border:1px solid var(--line-2); color:var(--paper); padding:.6rem .8rem; font-family:var(--f-b); font-size:.88rem; border-radius:4px}
+.modal-card input:focus,.modal-card select:focus,.modal-card textarea:focus{border-color:var(--amber); outline:none}
+.modal-close{position:absolute; right:1.2rem; top:1.2rem; background:transparent; border:none; color:var(--steel); font-size:1.4rem; cursor:pointer}
+.modal-close:hover{color:var(--amber)}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important}
+  .h-line span,.h-sub,.h-meta,.cue{transform:none !important; opacity:1 !important; animation:none !important}
+  .rv{opacity:1 !important; transform:none !important}
+  .pin{position:relative; height:auto; padding:4rem 0}
+  #dust{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ shaft backdrop ══════════ -->
+<div id="shaft" aria-hidden="true">
+  <div id="glow"></div>
+  <div class="rail l"></div>
+  <div class="rail r"></div>
+  <div id="ticks"></div>
+  <canvas id="dust"></canvas>
+</div>
+
+<!-- ══════════ floor indicator ══════════ -->
+<aside id="fi" aria-label="Floor indicator">
+  <span class="arrow" id="fiArrow">▲</span>
+  <span class="read" id="fiRead">L</span>
+  <div class="bar"><i id="fiBar"></i></div>
+  <ol id="fiList"></ol>
+</aside>
+
+<header id="hdr">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg viewBox="0 0 120 120" aria-hidden="true">
+        <rect width="120" height="120" rx="20" fill="#E08A1E"/>
+        <path d="M35 49 L60 29 L85 49" fill="none" stroke="#0E1115" stroke-width="10"/>
+        <path d="M35 70 L60 50 L85 70" fill="none" stroke="#0E1115" stroke-width="10" opacity=".62"/>
+        <path d="M35 91 L60 71 L85 91" fill="none" stroke="#0E1115" stroke-width="10" opacity=".34"/>
+      </svg>
+      <span class="nm">Al Dirayah</span>
+    </a>
+
+    <div class="div-switcher">
+      <a href="index.html" class="sw-pill"><span class="icon">🏠</span> Hub</a>
+      <a href="lifts.html" class="sw-pill active"><span class="icon">↕</span> Lifts</a>
+      <a href="escalators.html" class="sw-pill"><span class="icon">↗</span> Escalators</a>
+    </div>
+
+    <nav>
+      <a href="#l">Systems</a><a href="#f2">Anatomy</a><a href="#f3">Process</a><a href="#f4">Configure</a>
+    </nav>
+    <button class="cta-btn" onclick="openSurveyModal('Vertical Lifts')">Request a survey</button>
+  </div>
+</header>
+
+<main>
+
+<!-- ══════════ HERO ══════════ -->
+<section id="hero" data-floor="L" data-label="Lobby">
+  <div class="wrap">
+    <p class="eyebrow" style="opacity:0;animation:fade .9s var(--ease) .5s forwards">Abu Dhabi · Electromechanical Contracting</p>
+    <h1>
+      <span class="h-line"><span style="animation-delay:.05s">Keep</span></span>
+      <span class="h-line"><span style="animation-delay:.17s">it</span></span>
+      <span class="h-line"><span class="am" style="animation-delay:.29s">Moving</span></span>
+    </h1>
+    <p class="h-sub" style="margin-top:1.8rem">We supply, install and maintain the systems that move, power, connect and protect Abu Dhabi's buildings — with certified know-how across TKE, OTIS and KONE infrastructure.</p>
+    <div class="h-meta">
+      <span>Lifts &amp; escalators</span><span>MEP</span><span>Power networks</span><span>Low current</span>
+      <span class="ar" style="letter-spacing:0">الدراية</span>
+    </div>
+
+    <!-- Motion Engine Control Bar -->
+    <div class="shaft-ctrls">
+      <label>Shaft Motion:</label>
+      <button id="btnDirUp" class="active">▲ Ascend</button>
+      <button id="btnDirDown">▼ Descend</button>
+      <button id="btnSpeed">Speed: 1x</button>
+    </div>
+
+    <div class="cue"><i></i> Scroll to ascend</div>
+  </div>
+</section>
+
+<!-- ══════════ L — SYSTEMS ══════════ -->
+<section id="l" class="pad" data-floor="1" data-label="Systems">
+  <div class="wrap">
+    <p class="eyebrow rv">01 — What we do</p>
+    <h2 class="big rv" data-d="1">Four systems.<br>One contractor.</h2>
+    <p class="lede rv" data-d="2">A building needs things that move it, power it, connect it and protect it. Most owners buy those from four different companies. We are the single number.</p>
+    <div class="sys">
+      <article class="rv"><span class="n">/ 01</span><h3>Move</h3><p>Lifts, escalators and moving walkways. Installation, repair, modernisation and annual maintenance — as approved subcontractor to TKE, OTIS and KONE.</p></article>
+      <article class="rv" data-d="1"><span class="n">/ 02</span><h3>Power</h3><p>Electromechanical plant, power distribution networks, substations and transmission line contracting.</p></article>
+      <article class="rv" data-d="2"><span class="n">/ 03</span><h3>Connect</h3><p>Structured cabling and network infrastructure, commissioned and certified to standard.</p></article>
+      <article class="rv" data-d="3"><span class="n">/ 04</span><h3>Protect</h3><p>CCTV, surveillance and access control, delivered by ADMCC-registered technicians.</p></article>
+    </div>
+    <div class="stats">
+      <div class="rv"><div class="v"><span class="cnt" data-to="24">0</span>/7</div><div class="k">Callout response</div></div>
+      <div class="rv" data-d="1"><div class="v"><span class="cnt" data-to="8">0</span></div><div class="k">Licensed activities</div></div>
+      <div class="rv" data-d="2"><div class="v"><span class="cnt" data-to="3">0</span></div><div class="k">OEM principals</div></div>
+      <div class="rv" data-d="3"><div class="v"><span class="cnt" data-to="100">0</span>%</div><div class="k">Genuine parts</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 2 — EXPLODED ANATOMY (pinned) ══════════ -->
+<section id="f2" class="pinwrap" style="height:340svh" data-floor="2" data-label="Anatomy">
+  <div class="pin">
+    <div class="wrap">
+      <div class="ex">
+        <figure class="real-3d-wrap">
+          <div class="img-3d-container">
+            <img src="lift_3d_assembled.jpg" alt="Photorealistic 3D Assembled Traction Lift" id="imgLiftAssembled" class="img-3d-layer" style="opacity:1;z-index:1">
+            <img src="lift_3d_exploded.jpg" alt="Photorealistic 3D Exploded Traction Lift Cutaway" id="imgLiftExploded" class="img-3d-layer" style="opacity:0;z-index:2">
+            
+            <!-- Interactive 3D Callout Hotspots Overlay -->
+            <svg id="exSvg" viewBox="0 0 960 960" class="overlay-3d-svg" style="z-index:3">
+              <g class="expl-g" data-dx="0" data-dy="-40" data-ix="1" id="expl-1">
+                <rect x="390" y="45" width="280" height="150" rx="8" fill="rgba(224,138,30,.14)" stroke="#E08A1E" stroke-width="2"/>
+              </g>
+              <g class="expl-g" data-dx="-50" data-dy="0" data-ix="2" id="expl-2">
+                <rect x="290" y="190" width="30" height="620" rx="4" fill="rgba(224,138,30,.14)" stroke="#E08A1E" stroke-width="2"/>
+                <rect x="660" y="190" width="30" height="620" rx="4" fill="rgba(224,138,30,.14)" stroke="#E08A1E" stroke-width="2"/>
+              </g>
+              <g class="expl-g" data-dx="60" data-dy="0" data-ix="3" id="expl-3">
+                <rect x="740" y="320" width="180" height="380" rx="8" fill="rgba(224,138,30,.14)" stroke="#E08A1E" stroke-width="2"/>
+              </g>
+              <g class="expl-g" data-dx="0" data-dy="0" data-ix="4" id="expl-4">
+                <rect x="390" y="340" width="260" height="340" rx="8" fill="none" stroke="#E08A1E" stroke-width="2.5" stroke-dasharray="8 5"/>
+              </g>
+              <g class="expl-g" data-dx="-80" data-dy="0" data-ix="5" id="expl-5">
+                <rect x="110" y="400" width="260" height="310" rx="8" fill="rgba(245,169,60,.14)" stroke="#F5A93C" stroke-width="2.5"/>
+              </g>
+              <g class="expl-g" data-dx="0" data-dy="40" data-ix="6" id="expl-6">
+                <rect x="390" y="800" width="220" height="110" rx="8" fill="rgba(224,138,30,.18)" stroke="#E08A1E" stroke-width="2"/>
+              </g>
+            </svg>
+          </div>
+        </figure>
+        <div>
+          <p class="eyebrow">02 — Anatomy</p>
+          <h2 class="big" style="font-size:clamp(2rem,4.4vw,3.2rem)">Photorealistic 3D<br>Shaft Disassembly</h2>
+          <p style="font-size:.94rem;color:var(--steel-lt)">Scroll to dissemble the high-precision 3D assembly. Every component is certified to EN 81-20/50 standards.</p>
+
+          <ul class="parts" id="parts">
+            <li data-p="1"><span class="ix">01</span><span>Compact gearless traction machine (15kW)</span></li>
+            <li data-p="2"><span class="ix">02</span><span>Structural steel guide rails (T-profile)</span></li>
+            <li data-p="3"><span class="ix">03</span><span>Counterweight frame &amp; filler blocks (2400kg)</span></li>
+            <li data-p="4"><span class="ix">04</span><span>Steel car frame &amp; progressive safety gear</span></li>
+            <li data-p="5"><span class="ix">05</span><span>Luxury glass &amp; metal cabin enclosure</span></li>
+            <li data-p="6"><span class="ix">06</span><span>Heavy-duty hydraulic oil pit buffer</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 3 — PROCESS (pinned horizontal) ══════════ -->
+<section id="f3" class="pinwrap" style="height:400svh" data-floor="3" data-label="Process">
+  <div class="pin">
+    <div class="wrap" style="margin-bottom:2.4rem">
+      <p class="eyebrow">03 — How it runs</p>
+      <h2 class="big" style="font-size:clamp(2rem,5vw,3.6rem)">From survey to handover</h2>
+    </div>
+    <div class="htrack" id="htrack">
+      <article class="step"><span class="num">01</span><span class="tag">Week 1</span><h3>Survey</h3><p>Site attendance, shaft and machine-room measurement, load assessment, and condition reporting.</p></article>
+      <article class="step"><span class="num">02</span><span class="tag">Weeks 2–3</span><h3>Design &amp; approvals</h3><p>Shop drawings, method statement, DMT submissions, and OEM coordination under master subcontractor agreements.</p></article>
+      <article class="step"><span class="num">03</span><span class="tag">Weeks 4–10</span><h3>Installation</h3><p>Rail alignment, machine setting, car assembly, and roping executed under an OSHAD-compliant plan.</p></article>
+      <article class="step"><span class="num">04</span><span class="tag">Week 11</span><h3>Test &amp; commission</h3><p>Load testing, overspeed brake verification, door timing, and third-party inspection to EN 81-20/50.</p></article>
+      <article class="step"><span class="num">05</span><span class="tag">Ongoing</span><h3>Maintain</h3><p>Planned preventive visits, 24/7 callout, genuine spare parts held locally, and digital service logs.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 4 — CONFIGURATOR ══════════ -->
+<section id="f4" class="pad" data-floor="4" data-label="Configure">
+  <div class="wrap">
+    <p class="eyebrow rv">04 — Specify</p>
+    <h2 class="big rv" data-d="1" style="font-size:clamp(2rem,5vw,3.6rem)">Cabin Configurator</h2>
+    <p class="lede rv" data-d="2" style="margin-bottom:2.6rem">Select interior finishes to preview real-time materials, illumination profiles, and engineering specifications for your consultant package.</p>
+    <div class="cfg rv" data-d="3">
+      <figure>
+        <svg id="cabSvg" viewBox="0 0 320 400" width="320" height="400" role="img" aria-label="Lift cabin interior preview">
+          <rect width="320" height="400" fill="#141A20"/>
+          <!-- back wall -->
+          <polygon id="cWallB" points="80,80 240,80 240,330 80,330" fill="#4A5560"/>
+          <!-- side walls -->
+          <polygon id="cWallL" points="20,32 80,80 80,330 20,378" fill="#3A434D"/>
+          <polygon id="cWallR" points="300,32 240,80 240,330 300,378" fill="#333C46"/>
+          <!-- ceiling + floor -->
+          <polygon points="20,32 300,32 240,80 80,80" fill="#232A33"/>
+          <polygon id="cFloor" points="20,378 300,378 240,330 80,330" fill="#2A313A"/>
+          <!-- ceiling light -->
+          <rect id="cLight" x="112" y="48" width="96" height="9" rx="4" fill="#F5E6C8" opacity=".92"/>
+          <ellipse id="cGlow" cx="160" cy="120" rx="130" ry="52" fill="#F5E6C8" opacity=".08"/>
+          <!-- handrail -->
+          <rect id="cRail" x="88" y="228" width="144" height="5" rx="2.5" fill="#98A3B0"/>
+          <!-- COP panel -->
+          <rect x="250" y="150" width="20" height="96" rx="3" fill="#1B2128" stroke="#4A5560"/>
+          <g fill="#E08A1E">
+            <circle cx="260" cy="166" r="3.4"/><circle cx="260" cy="182" r="3.4"/>
+            <circle cx="260" cy="198" r="3.4"/><circle cx="260" cy="214" r="3.4"/>
+          </g>
+          <rect x="252" y="228" width="16" height="10" rx="2" fill="#0E1115"/>
+          <text x="260" y="236" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" fill="#F5A93C">12</text>
+          <!-- mirror -->
+          <rect id="cMirror" x="104" y="112" width="112" height="104" fill="#5E6975" opacity=".4"/>
+        </svg>
+      </figure>
+      <div>
+        <div class="swatches" id="swatches">
+          <button class="sw" aria-pressed="true" data-name="Brushed Stainless ST-01" data-b="#4A5560" data-l="#3A434D" data-r="#333C46" data-f="#2A313A" data-rail="#98A3B0">
+            <span class="chip" style="background:#4A5560"></span><span class="lbl"><b>ST-01</b>Brushed stainless steel</span></button>
+          <button class="sw" aria-pressed="false" data-name="Graphite & Brass GR-04" data-b="#2A313A" data-l="#222831" data-r="#1C222A" data-f="#171C23" data-rail="#E08A1E">
+            <span class="chip" style="background:#2A313A"></span><span class="lbl"><b>GR-04</b>Graphite with brass rail</span></button>
+          <button class="sw" aria-pressed="false" data-name="Walnut Veneer WD-02" data-b="#6B5636" data-l="#57452B" data-r="#4A3B25" data-f="#33291A" data-rail="#D9C08A">
+            <span class="chip" style="background:#6B5636"></span><span class="lbl"><b>WD-02</b>Walnut wood veneer</span></button>
+          <button class="sw" aria-pressed="false" data-name="Marble Composite MB-06" data-b="#D8D4CC" data-l="#C2BEB5" data-r="#B0ACA3" data-f="#8E8A82" data-rail="#5A6672">
+            <span class="chip" style="background:#D8D4CC"></span><span class="lbl"><b>MB-06</b>Italian marble composite</span></button>
+        </div>
+
+        <div class="spec-box">
+          <div class="t">Specification Summary</div>
+          <code id="specCode">Model: Al Dirayah AD-T1600
+Finish: Brushed Stainless ST-01
+Speed: 1.75 m/s | Load: 1600 kg (21 Persons)
+Standard: EN 81-20/50 | ISO 25745 Class A+++</code>
+          <button id="btnCopySpec" onclick="copySpec()">📋 Copy Spec to Clipboard</button>
+        </div>
+
+        <div class="meters" id="meters">
+          <div class="meter"><div class="top"><span>Rated load</span><b>1600 kg</b></div><div class="track"><i data-w="80"></i></div></div>
+          <div class="meter"><div class="top"><span>Rated speed</span><b>1.75 m/s</b></div><div class="track"><i data-w="62"></i></div></div>
+          <div class="meter"><div class="top"><span>Capacity</span><b>21 persons</b></div><div class="track"><i data-w="70"></i></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ PH — CONTACT ══════════ -->
+<section id="ph" class="pad" data-floor="PH" data-label="Contact">
+  <div class="wrap">
+    <div class="ctarow">
+      <div>
+        <p class="eyebrow rv">Penthouse — Get in touch</p>
+        <h2 class="big rv" data-d="1">Book a site survey</h2>
+        <p class="lede rv" data-d="2" style="margin-bottom:2rem">Tell us the building height, number of stops and equipment status. We attend, measure, and issue a written technical report with a fixed proposal.</p>
+        <button class="big-cta rv" data-d="3" onclick="openSurveyModal('Vertical Lifts')">Request a survey →</button>
+      </div>
+      <div class="dl rv" data-d="2">
+        <div><b>Office</b>Mussafah Industrial Area, Abu Dhabi, UAE</div>
+        <div><b>Service desk</b>+971 2 555 0192 · 24/7 Support</div>
+        <div><b>Email</b>service@aldirayah.ae</div>
+        <div><b>Web</b>aldirayah.ae</div>
+        <div class="ar" style="font-size:1.15rem;color:var(--steel-lt);margin-top:.5rem">الدراية للمقاولات الكهروميكانيكية</div>
+      </div>
+    </div>
+    <footer>
+      <span>© 2026 Al Dirayah Electromechanical Contracting LLC</span>
+      <span>Keep it moving · الحركة لا تتوقف</span>
+    </footer>
+  </div>
+</section>
+
+</main>
+
+<!-- Survey Request Modal -->
+<div class="modal-overlay" id="surveyModal">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeSurveyModal()">×</button>
+    <h3 id="modalTitle">Request Site Survey</h3>
+    <p>Submit project details to schedule an on-site technical audit by an Al Dirayah engineer.</p>
+    <form onsubmit="handleSurveySubmit(event)">
+      <label>Equipment Type
+        <select id="mEquip">
+          <option value="Vertical Lifts / Elevators">Vertical Lifts / Elevators</option>
+          <option value="Escalators & Walkways">Escalators &amp; Moving Walkways</option>
+          <option value="Full MEP & Low Current">Full MEP &amp; Low Current Package</option>
+        </select>
+      </label>
+      <label>Project / Building Name
+        <input type="text" placeholder="e.g. Al Dirayah Tower, Abu Dhabi" required>
+      </label>
+      <label>Contact Name &amp; Designation
+        <input type="text" placeholder="Your Name" required>
+      </label>
+      <label>Email Address / Phone
+        <input type="email" placeholder="name@company.ae" required>
+      </label>
+      <label>Project Scope / Description
+        <textarea rows="3" placeholder="Number of floors, existing OEM brand, service required..."></textarea>
+      </label>
+      <button type="submit" class="big-cta" style="justify-content:center;margin-top:.5rem">Submit Survey Request →</button>
+    </form>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var RM = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var clamp = function(v,a,b){ return v<a?a:v>b?b:v; };
+
+  /* ── floor indicator + ticks ─────────────────────────── */
+  var secs = Array.prototype.slice.call(document.querySelectorAll("[data-floor]"));
+  var fiRead=document.getElementById("fiRead"), fiBar=document.getElementById("fiBar"),
+      fiArrow=document.getElementById("fiArrow"), fiList=document.getElementById("fiList"),
+      hdr=document.getElementById("hdr");
+
+  secs.forEach(function(s){
+    var li=document.createElement("li"); li.textContent=s.dataset.floor;
+    li.title = s.dataset.label || s.dataset.floor;
+    li.addEventListener("click", function(){ s.scrollIntoView({behavior:"smooth"}); });
+    fiList.appendChild(li);
+  });
+  var lis=fiList.children;
+
+  var ticks=document.getElementById("ticks");
+  if(!RM && ticks){
+    for(var i=0;i<26;i++){
+      var t=document.createElement("div"); t.className="tick";
+      t.style.top=(i*140)+"px";
+      t.innerHTML="<b>"+String(i*3+2).padStart(2,"0")+"</b>";
+      ticks.appendChild(t);
+    }
+  }
+
+  /* ── dust particles & shaft motion engine ──────────────── */
+  var cv=document.getElementById("dust"), ctx=cv&&cv.getContext("2d"), P=[], W=0, H=0;
+  var motionSpeed = 0.35, motionDir = -1;
+
+  function sizeCv(){ if(!cv) return; W=cv.width=innerWidth; H=cv.height=innerHeight; }
+  function seed(){
+    P=[]; var n=Math.min(75,Math.round(innerWidth/20));
+    for(var i=0;i<n;i++) P.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.5+.35,
+      v:(Math.random()*.35+.1)*motionSpeed,o:Math.random()*.45+.1});
+  }
+  function dust(){
+    if(!ctx) return;
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<P.length;i++){
+      var p=P[i]; p.y += p.v * motionDir;
+      if(p.y < -4){ p.y = H+4; p.x = Math.random()*W; }
+      else if(p.y > H+4){ p.y = -4; p.x = Math.random()*W; }
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,6.283);
+      ctx.fillStyle="rgba(224,152,60,"+p.o+")"; ctx.fill();
+    }
+    requestAnimationFrame(dust);
+  }
+  if(!RM && cv){ sizeCv(); seed(); dust(); addEventListener("resize",function(){ sizeCv(); seed(); },{passive:true}); }
+
+  /* Motion Controls */
+  var btnDirUp = document.getElementById("btnDirUp"), btnDirDown = document.getElementById("btnDirDown"), btnSpeed = document.getElementById("btnSpeed");
+  if(btnDirUp && btnDirDown){
+    btnDirUp.addEventListener("click", function(){
+      motionDir = -1; btnDirUp.classList.add("active"); btnDirDown.classList.remove("active");
+    });
+    btnDirDown.addEventListener("click", function(){
+      motionDir = 1; btnDirDown.classList.add("active"); btnDirUp.classList.remove("active");
+    });
+  }
+  if(btnSpeed){
+    btnSpeed.addEventListener("click", function(){
+      if(motionSpeed === 0.35){ motionSpeed = 0.8; btnSpeed.textContent = "Speed: 2x"; }
+      else if(motionSpeed === 0.8){ motionSpeed = 1.5; btnSpeed.textContent = "Speed: 3x"; }
+      else{ motionSpeed = 0.35; btnSpeed.textContent = "Speed: 1x"; }
+      seed();
+    });
+  }
+
+  /* ── scroll engine ───────────────────────────────────── */
+  var explG = Array.prototype.slice.call(document.querySelectorAll(".expl-g"));
+  var parts = document.getElementById("parts");
+  var htrack = document.getElementById("htrack");
+  var f2 = document.getElementById("f2"), f3 = document.getElementById("f3");
+  var lastY = 0, ticking = false;
+
+  function frame(){
+    ticking = false;
+    var y = scrollY, vh = innerHeight, doc = document.documentElement;
+
+    hdr.classList.toggle("stuck", y > 40);
+
+    /* progress bar */
+    var total = doc.scrollHeight - vh;
+    if(fiBar) fiBar.style.height = clamp(y/(total||1)*100,0,100) + "%";
+
+    /* direction arrow */
+    if(Math.abs(y-lastY) > 1){
+      if(fiArrow) fiArrow.style.transform = (y > lastY) ? "rotate(180deg)" : "rotate(0deg)";
+      lastY = y;
+    }
+
+    /* active floor */
+    var act = 0;
+    for(var i=0;i<secs.length;i++){
+      if(secs[i].getBoundingClientRect().top <= vh*0.45) act = i;
+    }
+    if(fiRead && fiRead.textContent !== secs[act].dataset.floor){
+      fiRead.textContent = secs[act].dataset.floor;
+    }
+    for(var j=0;j<lis.length;j++){
+      if(j===act) lis[j].setAttribute("data-on",""); else lis[j].removeAttribute("data-on");
+    }
+
+    /* shaft parallax */
+    if(!RM && ticks){
+      ticks.style.transform = "translate3d(0," + (-(y*0.32) % 140) + "px,0)";
+      var rL = document.querySelector(".rail.l"), rR = document.querySelector(".rail.r");
+      if(rL) rL.style.transform = "translate3d(0," + (-(y*0.12) % 200) + "px,0)";
+      if(rR) rR.style.transform = "translate3d(0," + (-(y*0.18) % 200) + "px,0)";
+    }
+
+    /* exploded view scroll mapping - REAL-TIME PHOTOREALISTIC 3D DISASSEMBLY */
+    if(f2 && !RM){
+      var r2 = f2.getBoundingClientRect();
+      var p2 = clamp((-r2.top) / (f2.offsetHeight - vh), 0, 1);
+      var e = p2 < .5 ? 4*p2*p2*p2 : 1-Math.pow(-2*p2+2,3)/2;   /* easeInOutCubic */
+
+      var imgAssembled = document.getElementById("imgLiftAssembled");
+      var imgExploded = document.getElementById("imgLiftExploded");
+      if(imgAssembled && imgExploded){
+        imgAssembled.style.opacity = (1 - e).toFixed(3);
+        imgExploded.style.opacity = e.toFixed(3);
+        imgExploded.style.transform = "scale(" + (1 + e*0.04).toFixed(3) + ")";
+      }
+
+      explG.forEach(function(g){
+        var dx = (+g.dataset.dx||0)*e, dy = (+g.dataset.dy||0)*e;
+        g.setAttribute("transform","translate("+dx.toFixed(2)+","+dy.toFixed(2)+")");
+        g.style.opacity = (e > 0.1 ? 1 : e * 10).toFixed(2);
+      });
+      if(parts){
+        var idx = clamp(Math.floor(e*6)+1,1,6);
+        for(var k=0;k<parts.children.length;k++){
+          var li=parts.children[k];
+          if(e>0.04 && (+li.dataset.p)<=idx) li.setAttribute("data-on",""); else li.removeAttribute("data-on");
+        }
+      }
+    }
+
+    /* horizontal process */
+    if(f3 && htrack){
+      if(RM){ htrack.style.transform="none"; }
+      else{
+        var r3 = f3.getBoundingClientRect();
+        var p3 = clamp((-r3.top) / (f3.offsetHeight - vh), 0, 1);
+        var span = htrack.scrollWidth - innerWidth;
+        htrack.style.transform = "translate3d(" + (-(span>0?span:0) * p3).toFixed(2) + "px,0,0)";
+      }
+    }
+  }
+  addEventListener("scroll", function(){ if(!ticking){ ticking=true; requestAnimationFrame(frame); } },{passive:true});
+  addEventListener("resize", frame, {passive:true});
+
+  /* ── Hotspot interactions on Anatomy ────────────────────── */
+  if(parts){
+    Array.prototype.forEach.call(parts.children, function(li){
+      li.addEventListener("mouseenter", function(){
+        var ix = this.dataset.p;
+        explG.forEach(function(g){
+          if(g.dataset.ix === ix) g.classList.add("active"); else g.classList.remove("active");
+        });
+      });
+      li.addEventListener("mouseleave", function(){
+        explG.forEach(function(g){ g.classList.remove("active"); });
+      });
+    });
+  }
+
+  explG.forEach(function(g){
+    g.addEventListener("click", function(){
+      var ix = this.dataset.ix;
+      if(parts){
+        Array.prototype.forEach.call(parts.children, function(li){
+          if(li.dataset.p === ix) li.setAttribute("data-on",""); else li.removeAttribute("data-on");
+        });
+      }
+    });
+  });
+
+  /* ── reveals, counters, meters ───────────────────────── */
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(en){
+      if(!en.isIntersecting) return;
+      var el = en.target;
+      el.classList.add("in");
+      el.querySelectorAll && Array.prototype.forEach.call(el.querySelectorAll(".cnt"), function(c){
+        if(c.dataset.done) return; c.dataset.done="1";
+        var to = +c.dataset.to, t0 = performance.now(), dur = 1100;
+        (function step(t){
+          var p = clamp((t-t0)/dur,0,1), e = 1-Math.pow(1-p,3);
+          c.textContent = Math.round(to*e);
+          if(p<1) requestAnimationFrame(step);
+        })(t0);
+      });
+      io.unobserve(el);
+    });
+  },{threshold:.18, rootMargin:"0px 0px -8% 0px"});
+  document.querySelectorAll(".rv").forEach(function(el){ io.observe(el); });
+
+  var mio = new IntersectionObserver(function(es){
+    es.forEach(function(en){
+      if(!en.isIntersecting) return;
+      en.target.querySelectorAll(".track i").forEach(function(b){ b.style.width = b.dataset.w + "%"; });
+      mio.unobserve(en.target);
+    });
+  },{threshold:.35});
+  var mtr = document.getElementById("meters"); if(mtr) mio.observe(mtr);
+
+  /* ── configurator ────────────────────────────────────── */
+  var sw = document.getElementById("swatches");
+  var specCode = document.getElementById("specCode");
+  if(sw){
+    sw.addEventListener("click", function(ev){
+      var b = ev.target.closest(".sw"); if(!b) return;
+      Array.prototype.forEach.call(sw.children, function(x){ x.setAttribute("aria-pressed","false"); });
+      b.setAttribute("aria-pressed","true");
+      var set = function(id,v){ var n=document.getElementById(id); if(n) n.style.transition="fill .55s cubic-bezier(.16,1,.3,1)", n.setAttribute("fill",v); };
+      set("cWallB", b.dataset.b); set("cWallL", b.dataset.l);
+      set("cWallR", b.dataset.r); set("cFloor", b.dataset.f);
+      var rail=document.getElementById("cRail"); if(rail){ rail.style.transition="fill .55s"; rail.setAttribute("fill", b.dataset.rail); }
+      if(specCode && b.dataset.name){
+        specCode.textContent = "Model: Al Dirayah AD-T1600\nFinish: " + b.dataset.name + "\nSpeed: 1.75 m/s | Load: 1600 kg (21 Persons)\nStandard: EN 81-20/50 | ISO 25745 Class A+++";
+      }
+    });
+  }
+
+  window.copySpec = function(){
+    if(!specCode) return;
+    navigator.clipboard.writeText(specCode.textContent).then(function(){
+      var btn = document.getElementById("btnCopySpec");
+      if(btn){ btn.textContent = "✓ Copied to Clipboard!"; setTimeout(function(){ btn.textContent = "📋 Copy Spec to Clipboard"; },2500); }
+    });
+  };
+
+  /* ── Modal helpers ────────────────────────────────────── */
+  window.openSurveyModal = function(type){
+    var m = document.getElementById("surveyModal");
+    var sel = document.getElementById("mEquip");
+    if(sel && type) sel.value = type;
+    if(m) m.classList.add("active");
+  };
+  window.closeSurveyModal = function(){
+    var m = document.getElementById("surveyModal");
+    if(m) m.classList.remove("active");
+  };
+  window.handleSurveySubmit = function(e){
+    e.preventDefault();
+    alert("Thank you. Your survey request has been received. An Al Dirayah engineering specialist will contact you within 24 hours.");
+    closeSurveyModal();
+  };
+
+  frame();
+})();
+</script>
+</body>
+</html>

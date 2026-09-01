@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Al Dirayah Electromechanical Contracting LLC — Abu Dhabi</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap">
+
+<style>
+:root{
+  --ink:#0E1115; --ink-2:#151A20; --surface:#1B2128; --surface-2:#232A33;
+  --line:#2B333D; --line-2:#3A4550;
+  --amber:#E08A1E; --amber-lt:#F5A93C; --amber-dim:#8A5A14;
+  --steel:#6E7885; --steel-lt:#9AA3B0; --paper:#E9E7E2; --white:#fff;
+  --f-d:"Barlow Condensed","Arial Narrow",sans-serif;
+  --f-b:"IBM Plex Sans",system-ui,sans-serif;
+  --f-m:"IBM Plex Mono",ui-monospace,monospace;
+  --f-a:"IBM Plex Sans Arabic",serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--ink); color:var(--paper);
+  font-family:var(--f-b); font-size:16px; line-height:1.6;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  background-image:repeating-linear-gradient(60deg,transparent 0 21px,rgba(122,136,152,.04) 21px 23px,transparent 23px 27px);
+}
+h1,h2,h3{margin:0; text-wrap:balance; font-family:var(--f-d); font-weight:600; text-transform:uppercase; line-height:.95; letter-spacing:.01em}
+p{margin:0 0 1rem; max-width:62ch}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1200px; margin:0 auto; padding:0 clamp(1.2rem,4vw,2.5rem)}
+
+/* Header */
+header{position:fixed; top:0; left:0; right:0; z-index:50; padding:1rem 0;
+  background:rgba(14,17,21,.88); backdrop-filter:blur(16px); border-bottom:1px solid var(--line)}
+header .wrap{display:flex; align-items:center; justify-content:space-between; gap:1rem}
+.brand{display:flex; align-items:center; gap:.8rem}
+.brand svg{width:36px;height:36px;flex:none}
+.brand .nm{font-family:var(--f-d); font-size:1.5rem; letter-spacing:.045em; text-transform:uppercase; font-weight:600; color:var(--white)}
+.brand .sub-nm{font-family:var(--f-m); font-size:.6rem; letter-spacing:.16em; color:var(--amber); display:block; text-transform:uppercase}
+
+.div-switcher{display:flex; background:rgba(21,26,32,0.85); padding:3px; border-radius:6px; border:1px solid var(--line-2)}
+.sw-pill{font-family:var(--f-m); font-size:.64rem; letter-spacing:.12em; text-transform:uppercase; color:var(--steel-lt); padding:.35rem .75rem; border-radius:4px; transition:all .25s ease; display:inline-flex; align-items:center; gap:.4rem; text-decoration:none}
+.sw-pill:hover{color:var(--white); background:rgba(255,255,255,0.06)}
+.sw-pill.active{background:var(--amber); color:var(--ink); font-weight:600; box-shadow:0 0 12px rgba(224,138,30,0.35)}
+
+.cta-btn{font-family:var(--f-m); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase;
+  border:1px solid var(--amber); color:var(--amber); padding:.5rem .95rem; border-radius:3px; background:transparent; cursor:pointer;
+  transition:background .25s,color .25s,box-shadow .25s}
+.cta-btn:hover{background:var(--amber); color:var(--ink); box-shadow:0 0 14px rgba(224,138,30,.4)}
+
+/* Hero */
+.hero{padding:9rem 0 5rem; position:relative; overflow:hidden}
+.hero-tag{font-family:var(--f-m); font-size:.7rem; letter-spacing:.22em; text-transform:uppercase; color:var(--amber); margin-bottom:1.2rem; display:flex; align-items:center; gap:.6rem}
+.hero-tag::before{content:""; width:24px; height:2px; background:var(--amber)}
+.hero h1{font-size:clamp(3.4rem,8vw,6.5rem); color:var(--white); margin-bottom:1.4rem}
+.hero h1 span{color:var(--amber)}
+.hero-sub{font-size:clamp(1.1rem,1.8vw,1.3rem); color:var(--steel-lt); max-width:68ch; margin-bottom:3rem}
+
+/* Divisions Grid */
+.divisions-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:2rem; margin-top:2rem}
+.div-card{background:var(--ink-2); border:1px solid var(--line); border-radius:8px; padding:2.4rem 2rem; position:relative; overflow:hidden; transition:all .35s var(--ease); display:flex; flex-direction:column; justify-content:space-between}
+.div-card:hover{border-color:var(--amber); transform:translateY(-4px); box-shadow:0 20px 40px rgba(0,0,0,.6); background:var(--surface)}
+.div-card::before{content:""; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--amber),transparent); opacity:0; transition:opacity .35s}
+.div-card:hover::before{opacity:1}
+
+.div-card .badge{font-family:var(--f-m); font-size:.62rem; letter-spacing:.16em; text-transform:uppercase; color:var(--amber); background:rgba(224,138,30,.1); border:1px solid var(--amber-dim); padding:.25rem .6rem; border-radius:3px; width:fit-content; margin-bottom:1.4rem}
+.div-card h2{font-size:2.4rem; color:var(--white); margin-bottom:.8rem}
+.div-card p{font-size:.92rem; color:var(--steel-lt); margin-bottom:2rem; flex:1}
+.div-card .btn-go{font-family:var(--f-d); font-size:1.3rem; letter-spacing:.04em; text-transform:uppercase; color:var(--amber); display:inline-flex; align-items:center; gap:.6rem; transition:gap .25s}
+.div-card:hover .btn-go{gap:1rem; color:var(--amber-lt)}
+
+.card-img-wrap{width:100%; height:200px; border-radius:6px; overflow:hidden; margin-bottom:1.4rem; border:1px solid var(--line)}
+.card-img{width:100%; height:100%; object-fit:cover; transition:transform .5s var(--ease)}
+.div-card:hover .card-img{transform:scale(1.06)}
+
+/* Credentials bar */
+.cred-bar{margin-top:5rem; background:var(--ink-2); border:1px solid var(--line); border-radius:8px; padding:2rem; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1.6rem}
+.cred-item b{display:block; font-family:var(--f-d); font-size:2.2rem; color:var(--amber); line-height:1}
+.cred-item span{font-family:var(--f-m); font-size:.64rem; letter-spacing:.14em; text-transform:uppercase; color:var(--steel); margin-top:.4rem; display:block}
+
+/* Unified Hub Banner */
+.portal-banner{margin-top:4rem; background:linear-gradient(135deg,rgba(224,138,30,.12),rgba(21,26,32,.9)); border:1px solid var(--amber); border-radius:8px; padding:2.5rem; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:1.5rem}
+.portal-banner h3{font-size:2.2rem; color:var(--white)}
+.portal-banner p{font-size:.94rem; color:var(--steel-lt); margin:0}
+.portal-banner a{background:var(--amber); color:var(--ink); font-family:var(--f-d); font-size:1.3rem; letter-spacing:.04em; text-transform:uppercase; padding:.75rem 1.6rem; border-radius:4px; font-weight:600; transition:all .25s}
+.portal-banner a:hover{background:var(--amber-lt); transform:scale(1.03)}
+
+/* Footer */
+footer{margin-top:6rem; border-top:1px solid var(--line); padding:2.5rem 0; font-family:var(--f-m); font-size:.7rem; color:var(--steel); display:flex; flex-wrap:wrap; justify-content:space-between; gap:1rem}
+
+/* Modal */
+.modal-overlay{position:fixed; inset:0; z-index:100; background:rgba(10,13,16,.85); backdrop-filter:blur(10px); display:none; place-items:center; padding:1.5rem}
+.modal-overlay.active{display:grid}
+.modal-card{background:var(--ink-2); border:1px solid var(--amber); border-radius:8px; max-width:540px; width:100%; padding:2rem; box-shadow:0 20px 60px rgba(0,0,0,.8); position:relative}
+.modal-card h3{font-size:2rem; color:var(--white); margin-bottom:.5rem}
+.modal-card p{font-size:.88rem; color:var(--steel-lt); margin-bottom:1.4rem}
+.modal-card form{display:grid; gap:1rem}
+.modal-card label{font-family:var(--f-m); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:var(--steel); display:grid; gap:.3rem}
+.modal-card input,.modal-card select,.modal-card textarea{background:var(--surface); border:1px solid var(--line-2); color:var(--paper); padding:.6rem .8rem; font-family:var(--f-b); font-size:.88rem; border-radius:4px}
+.modal-card input:focus,.modal-card select:focus,.modal-card textarea:focus{border-color:var(--amber); outline:none}
+.modal-close{position:absolute; right:1.2rem; top:1.2rem; background:transparent; border:none; color:var(--steel); font-size:1.4rem; cursor:pointer}
+.modal-close:hover{color:var(--amber)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg viewBox="0 0 120 120" aria-hidden="true">
+        <rect width="120" height="120" rx="20" fill="#E08A1E"/>
+        <path d="M35 49 L60 29 L85 49" fill="none" stroke="#0E1115" stroke-width="10"/>
+        <path d="M35 70 L60 50 L85 70" fill="none" stroke="#0E1115" stroke-width="10" opacity=".62"/>
+        <path d="M35 91 L60 71 L85 91" fill="none" stroke="#0E1115" stroke-width="10" opacity=".34"/>
+      </svg>
+      <div>
+        <span class="nm">Al Dirayah</span>
+        <span class="sub-nm">Electromechanical</span>
+      </div>
+    </a>
+
+    <div class="div-switcher">
+      <a href="index.html" class="sw-pill active"><span class="icon">🏠</span> Hub</a>
+      <a href="lifts.html" class="sw-pill"><span class="icon">↕</span> Lifts</a>
+      <a href="escalators.html" class="sw-pill"><span class="icon">↗</span> Escalators</a>
+    </div>
+
+    <button class="cta-btn" onclick="openSurveyModal('General Inquiries')">Request Site Survey</button>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="hero-tag">Electromechanical Contracting · Abu Dhabi</div>
+    <h1>Motion Systems &amp;<br><span>Building Infrastructure</span></h1>
+    <p class="hero-sub">We supply, install, commission and maintain the electromechanical systems that move, power, connect and protect buildings across Abu Dhabi — with OEM subcontractor certifications across TKE, OTIS and KONE.</p>
+
+    <div class="divisions-grid">
+      <!-- Card 1: Lifts -->
+      <a class="div-card" href="lifts.html">
+        <div class="card-img-wrap">
+          <img src="lift_real.png" alt="Realistic 3D Lift Render" class="card-img">
+        </div>
+        <div>
+          <span class="badge">Vertical Transport</span>
+          <h2>Lifts &amp; Elevators</h2>
+          <p>Traction passenger elevators, heavy freight lifts, panoramic cabs, smart destination dispatch, gearless machines, and EN 81-20/50 certified maintenance.</p>
+        </div>
+        <span class="btn-go">Explore Lifts Division &rarr;</span>
+      </a>
+
+      <!-- Card 2: Escalators -->
+      <a class="div-card" href="escalators.html">
+        <div class="card-img-wrap">
+          <img src="escalator_real.png" alt="Realistic 3D Escalator Render" class="card-img">
+        </div>
+        <div>
+          <span class="badge">Incline &amp; Continuous Flow</span>
+          <h2>Escalators &amp; Walkways</h2>
+          <p>30° &amp; 35° incline commercial escalators, heavy transit units, moving autowalks up to 100m, EN 115 safety matrix compliance, and continuous step circuit rigging.</p>
+        </div>
+        <span class="btn-go">Explore Escalators Division &rarr;</span>
+      </a>
+    </div>
+
+    <!-- Credentials -->
+    <div class="cred-bar">
+      <div class="cred-item"><b>TKE · OTIS · KONE</b><span>Approved OEM Subcontractor</span></div>
+      <div class="cred-item"><b>24 / 7</b><span>Service Desk &amp; Rapid Callout</span></div>
+      <div class="cred-item"><b>ADMCC &amp; OSHAD</b><span>Certified Engineers &amp; Technicians</span></div>
+      <div class="cred-item"><b>100%</b><span>Genuine Factory Spare Parts</span></div>
+    </div>
+
+    <!-- Portal Banner -->
+    <div class="portal-banner">
+      <div>
+        <h3>All-In-One Interactive Portal</h3>
+        <p>Experience both Vertical Lifts and Incline Escalators with live 3D exploded anatomy and real-time configurators.</p>
+      </div>
+      <a href="al-dirayah-unified.html">Open Single-Portal View &rarr;</a>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Al Dirayah Electromechanical Contracting LLC · Abu Dhabi, UAE</span>
+    <span>Keep it moving · الحركة لا تتوقف</span>
+  </footer>
+</main>
+
+<!-- Survey Request Modal -->
+<div class="modal-overlay" id="surveyModal">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeSurveyModal()">×</button>
+    <h3>Request Site Survey</h3>
+    <p>Submit project details to schedule an on-site technical audit by an Al Dirayah engineer.</p>
+    <form onsubmit="handleSurveySubmit(event)">
+      <label>Equipment Type
+        <select id="mEquip">
+          <option value="Vertical Lifts / Elevators">Vertical Lifts / Elevators</option>
+          <option value="Escalators & Walkways">Escalators &amp; Moving Walkways</option>
+          <option value="Full MEP & Low Current">Full MEP &amp; Low Current Package</option>
+        </select>
+      </label>
+      <label>Project / Building Name
+        <input type="text" placeholder="e.g. Al Dirayah Tower, Abu Dhabi" required>
+      </label>
+      <label>Contact Name &amp; Designation
+        <input type="text" placeholder="Your Name" required>
+      </label>
+      <label>Email Address / Phone
+        <input type="email" placeholder="name@company.ae" required>
+      </label>
+      <label>Project Scope / Description
+        <textarea rows="3" placeholder="Number of units, building height, service requirements..."></textarea>
+      </label>
+      <button type="submit" class="cta-btn" style="background:var(--amber);color:var(--ink);justify-content:center;padding:.8rem;font-size:1.1rem">Submit Survey Request →</button>
+    </form>
+  </div>
+</div>
+
+<script>
+window.openSurveyModal = function(type){
+  var m = document.getElementById("surveyModal");
+  var sel = document.getElementById("mEquip");
+  if(sel && type) sel.value = type;
+  if(m) m.classList.add("active");
+};
+window.closeSurveyModal = function(){
+  var m = document.getElementById("surveyModal");
+  if(m) m.classList.remove("active");
+};
+window.handleSurveySubmit = function(e){
+  e.preventDefault();
+  alert("Thank you. Your survey request has been received. An Al Dirayah engineering specialist will contact you within 24 hours.");
+  closeSurveyModal();
+};
+</script>
+</body>
+</html>
