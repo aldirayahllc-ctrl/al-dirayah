@@ -247,37 +247,111 @@
   </footer>
 
   <!-- Survey Request Modal -->
-  <div class="modal-overlay" id="surveyModal">
-    <div class="modal-card">
-      <button class="modal-close" onclick="closeSurveyModal()">×</button>
-      <h3>Request Site Technical Audit</h3>
-      <p>Submit project requirements to schedule an on-site survey by an Al Dirayah engineer.</p>
-      <form onsubmit="handleSurveySubmit(event)">
-        <label>Service Category
-          <select id="mEquip">
-            <option value="Residential Villa Elevators">Residential Villa Elevators</option>
-            <option value="Commercial High-Rise Lifts">Commercial High-Rise Lifts</option>
-            <option value="Escalators & Moving Walkways">Escalators &amp; Moving Walkways</option>
-            <option value="24/7 Maintenance AMC & Modernization">24/7 Maintenance AMC &amp; Modernization</option>
-            <option value="EN 81 Engineering Safety Audit">EN 81 Engineering Safety Audit</option>
+  <!-- Integrated Request Survey Modal -->
+<div class="modal-overlay" id="surveyModal">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeSurveyModal()">×</button>
+    <div style="font-family:var(--f-m);font-size:.75rem;color:var(--amber-lt);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:.3rem">TECHNICAL CONSULTATION</div>
+    <h3>Request Site Survey &amp; Audit</h3>
+    <p>Select your required product or service below to schedule an on-site technical inspection by an Al Dirayah senior engineer.</p>
+    <form onsubmit="handleSurveySubmit(event)">
+      
+      <!-- Grouped Products & Services Select -->
+      <label>Product or Service Required *
+        <select id="mEquip" required>
+          <option value="" disabled selected>-- Select Product or Service --</option>
+          <optgroup label="VERTICAL LIFTS & ELEVATORS">
+            <option value="MRL Gearless Passenger Elevators (EN 81-20/50)">MRL Gearless Passenger Elevators (EN 81-20/50)</option>
+            <option value="High-Speed Commercial Skyscraper Lifts (4.0 m/s)">High-Speed Commercial Skyscraper Lifts (4.0 m/s)</option>
+            <option value="Heavy-Duty Freight & Logistics Elevators (5,000 kg)">Heavy-Duty Freight &amp; Logistics Elevators (5,000 kg)</option>
+            <option value="Medical & Hospital Stretcher Elevators (EN 81-70)">Medical &amp; Hospital Stretcher Elevators (EN 81-70)</option>
+          </optgroup>
+          <optgroup label="PRIVATE VILLA ESTATES">
+            <option value="Custom Luxury Villa Elevators (MRL Traction)">Custom Luxury Villa Elevators (MRL Traction)</option>
+            <option value="Low-Pit Hydraulic Villa Lifts (200mm Pit)">Low-Pit Hydraulic Villa Lifts (200mm Pit)</option>
+            <option value="360° Circular Panoramic Glass Elevators">360° Circular Panoramic Glass Elevators</option>
+            <option value="Pitless Pneumatic Vacuum Villa Elevators">Pitless Pneumatic Vacuum Villa Elevators</option>
+          </optgroup>
+          <optgroup label="INCLINE & CONTINUOUS FLOW">
+            <option value="30° & 35° Commercial Escalators (EN 115)">30° &amp; 35° Commercial Escalators (EN 115)</option>
+            <option value="Heavy Transit Metro & Airport Escalators">Heavy Transit Metro &amp; Airport Escalators</option>
+            <option value="Horizontal & Inclined Moving Autowalks (Up to 100m)">Horizontal &amp; Inclined Moving Autowalks (Up to 100m)</option>
+          </optgroup>
+          <optgroup label="MAINTENANCE & REFURBISHMENT">
+            <option value="24/7 Rapid Emergency Response AMC Contract">24/7 Rapid Emergency Response AMC Contract</option>
+            <option value="Microprocessor & VVVF Control Modernization">Microprocessor &amp; VVVF Control Modernization</option>
+            <option value="Luxury Elevator Cabin Fit-Out & Refurbishment">Luxury Elevator Cabin Fit-Out &amp; Refurbishment</option>
+            <option value="Shaft Pit Waterproofing & Sump Pump Installation">Shaft Pit Waterproofing &amp; Sump Pump Installation</option>
+          </optgroup>
+          <optgroup label="ENGINEERING & SAFETY AUDITS">
+            <option value="CIBSE Guide D Passenger Traffic Simulation">CIBSE Guide D Passenger Traffic Simulation</option>
+            <option value="Third-Party EN 81 Compliance Safety Audit">Third-Party EN 81 Compliance Safety Audit</option>
+            <option value="3D BIM Revit Shaft Reaction Load Analysis">3D BIM Revit Shaft Reaction Load Analysis</option>
+            <option value="Abu Dhabi Civil Defence Operational Clearance Filing">Abu Dhabi Civil Defence Operational Clearance Filing</option>
+          </optgroup>
+        </select>
+      </label>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;">
+        <label>Property Type *
+          <select required>
+            <option value="Luxury Private Villa">Luxury Private Villa</option>
+            <option value="Commercial High-Rise Tower">Commercial High-Rise Tower</option>
+            <option value="Shopping Mall / Retail Center">Shopping Mall / Retail Center</option>
+            <option value="Hospital / Healthcare Facility">Hospital / Healthcare Facility</option>
+            <option value="Hotel & Hospitality Resort">Hotel &amp; Hospitality Resort</option>
+            <option value="Industrial Logistics Warehouse">Industrial Logistics Warehouse</option>
           </select>
         </label>
-        <label>Project / Building Name
-          <input type="text" placeholder="e.g. Al Dirayah Tower, Abu Dhabi" required>
+        <label>Project Stage *
+          <select required>
+            <option value="New Building Construction">New Building Construction</option>
+            <option value="Existing Elevator Modernization">Existing Elevator Modernization</option>
+            <option value="Emergency Repair & AMC Change">Emergency Repair &amp; AMC Change</option>
+            <option value="Architectural Planning / Concept">Architectural Planning / Concept</option>
+          </select>
         </label>
-        <label>Contact Name &amp; Phone
-          <input type="text" placeholder="Your Name & Phone" required>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;">
+        <label>Contact Name *
+          <input type="text" placeholder="e.g. Eng. Ahmed Al Mansoori" required>
         </label>
-        <label>Email Address
+        <label>Designation / Role
+          <input type="text" placeholder="e.g. Project Manager / Owner">
+        </label>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;">
+        <label>Phone (+971) *
+          <input type="tel" placeholder="+971 50 123 4567" required>
+        </label>
+        <label>Official Email *
           <input type="email" placeholder="name@company.ae" required>
         </label>
-        <label>Scope / Details
-          <textarea rows="3" placeholder="Number of floors, capacity, unit count..."></textarea>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;">
+        <label>Number of Units
+          <input type="text" placeholder="e.g. 2 Lifts / 4 Escalators">
         </label>
-        <button type="submit" class="btn-survey" style="width:100%;padding:.85rem;font-size:1rem;margin-top:.5rem;">SUBMIT REQUEST →</button>
-      </form>
-    </div>
+        <label>Emirate / Location *
+          <select required>
+            <option value="Abu Dhabi City & Offshores">Abu Dhabi City &amp; Offshores</option>
+            <option value="Al Ain & Western Region">Al Ain &amp; Western Region</option>
+            <option value="Dubai & Northern Emirates">Dubai &amp; Northern Emirates</option>
+          </select>
+        </label>
+      </div>
+
+      <label>Specific Requirements / Notes
+        <textarea rows="2" placeholder="Mention building height, floors, existing OEM brand (OTIS, TKE, KONE), or urgency..."></textarea>
+      </label>
+
+      <button type="submit" class="btn-survey" style="width:100%;padding:.85rem;font-size:1rem;margin-top:.4rem;cursor:pointer">SUBMIT SITE SURVEY REQUEST →</button>
+    </form>
   </div>
+</div>
 
   <script>
     function openSurveyModal(cat) { document.getElementById('surveyModal').classList.add('active'); }
