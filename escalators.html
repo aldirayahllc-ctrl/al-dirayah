@@ -186,7 +186,7 @@ section{position:relative}
 .types dd{color:var(--amber); margin:0; text-align:right; font-weight:600}
 
 /* pinned anatomy */
-.pinwrap{position:relative}
+
 .pin{position:sticky; top:0; height:100svh; display:grid; align-content:center; overflow:hidden}
 .an{display:grid; gap:2rem; align-items:center; grid-template-columns:1fr}
 @media(min-width:940px){ .an{grid-template-columns:minmax(0,1fr) 340px} }
@@ -278,7 +278,7 @@ footer{border-top:1px solid var(--line); padding:2.2rem 0; font-family:var(--f-m
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important}
   .rv{opacity:1 !important; transform:none !important}
-  .pin{position:relative; height:auto; padding:4rem 0}
+  
 }
 
 /* ══════════ REQUEST SURVEY MODAL STYLING ══════════ */
@@ -536,6 +536,16 @@ footer{border-top:1px solid var(--line); padding:2.2rem 0; font-family:var(--f-m
             </svg>
           </div>
         </figure>
+
+            <div class="mobile-3d-controls">
+              <div style="display:flex;justify-content:space-between;font-family:var(--f-m);font-size:.65rem;color:var(--amber-lt);letter-spacing:1px;text-transform:uppercase">
+                <span>01 · ASSEMBLED</span>
+                <span>DRAG 3D SLIDER &rarr;</span>
+                <span>06 · EXPLODED</span>
+              </div>
+              <input type="range" id="disassemblySlider" min="0" max="100" value="0" aria-label="3D Disassembly Control Slider">
+            </div>
+
 
         <div>
           <p class="eyebrow">02 — Anatomy</p>
@@ -1078,6 +1088,71 @@ Drive Power: 7.5 kW | Standard: EN 115-1</code>
   };
 
   frame();
+
+  /* ══════════ ENHANCED 3D DISASSEMBLY ENGINE & MOBILE SLIDER ══════════ */
+  var imgAssembled = document.getElementById("imgEscAssembled");
+  var imgExploded = document.getElementById("imgEscExploded");
+  var disSlider = document.getElementById("disassemblySlider");
+  var explG = Array.prototype.slice.call(document.querySelectorAll(".expl-g"));
+  var parts = document.getElementById("parts");
+  var f2 = document.getElementById("f2");
+
+  function setDisassemblyProgress(p) {
+    var pClamped = Math.max(0, Math.min(1, p));
+    var e = pClamped < .5 ? 4*pClamped*pClamped*pClamped : 1 - Math.pow(-2*pClamped+2, 3)/2;
+
+    if (imgAssembled && imgExploded) {
+      imgAssembled.style.opacity = (1 - e).toFixed(3);
+      imgExploded.style.opacity = e.toFixed(3);
+      imgExploded.style.transform = "scale(" + (1 + e*0.04).toFixed(3) + ")";
+    }
+
+    explG.forEach(function(g){
+      var dx = (+g.dataset.dx||0)*e, dy = (+g.dataset.dy||0)*e;
+      g.setAttribute("transform", "translate("+dx.toFixed(2)+","+dy.toFixed(2)+")");
+      g.style.opacity = (e > 0.08 ? 1 : e * 12).toFixed(2);
+    });
+
+    if (parts) {
+      var idx = Math.max(1, Math.min(6, Math.floor(e*6)+1));
+      for (var k=0; k<parts.children.length; k++) {
+        var li = parts.children[k];
+        if (e > 0.03 && (+li.dataset.p) <= idx) {
+          li.setAttribute("data-on", "");
+        } else {
+          li.removeAttribute("data-on");
+        }
+      }
+    }
+
+    if (disSlider && document.activeElement !== disSlider) {
+      disSlider.value = Math.round(pClamped * 100);
+    }
+  }
+
+  // Connect Slider Input Event for Touch Screens (iPhone / Mobile)
+  if (disSlider) {
+    disSlider.addEventListener("input", function(e) {
+      setDisassemblyProgress(parseInt(this.value, 10) / 100);
+    });
+    disSlider.addEventListener("touchmove", function(e) {
+      setDisassemblyProgress(parseInt(this.value, 10) / 100);
+    }, {passive:true});
+  }
+
+  // Connect Clickable Part Items (01 - 06)
+  if (parts) {
+    for (var m=0; m<parts.children.length; m++) {
+      (function(item, index) {
+        item.style.cursor = "pointer";
+        item.addEventListener("click", function() {
+          var targetP = (index + 1) / 6;
+          setDisassemblyProgress(targetP);
+        });
+      })(parts.children[m], m);
+    }
+  }
+
 })();
 </script>
 </body>
