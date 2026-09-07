@@ -537,31 +537,7 @@ footer{border-top:1px solid var(--line); padding:2.2rem 0; font-family:var(--f-m
           </div>
         </figure>
 
-            <div class="mobile-3d-controls">
-              <div style="display:flex;justify-content:space-between;font-family:var(--f-m);font-size:.65rem;color:var(--amber-lt);letter-spacing:1px;text-transform:uppercase">
-                <span>01 · ASSEMBLED</span>
-                <span>DRAG 3D SLIDER &rarr;</span>
-                <span>06 · EXPLODED</span>
-              </div>
-              <input type="range" id="disassemblySlider" min="0" max="100" value="0" aria-label="3D Disassembly Control Slider">
             </div>
-
-
-        <div>
-          <p class="eyebrow">02 — Anatomy</p>
-          <h2 style="font-size:clamp(1.9rem,4vw,2.9rem);color:var(--white)">Photorealistic 3D<br>Truss Disassembly</h2>
-          <p style="font-size:.92rem;color:var(--steel-lt);margin:.8rem 0 0">Scroll to separate the assembly. Every component is certified to EN 115 standards.</p>
-          
-          <ul id="anParts">
-            <li data-p="1"><span class="ix">01</span><span>Balustrade &amp; handrail drive profile</span></li>
-            <li data-p="2"><span class="ix">02</span><span>Stainless step band &amp; drive chain</span></li>
-            <li data-p="3"><span class="ix">03</span><span>Structural truss &amp; support angles</span></li>
-            <li data-p="4"><span class="ix">04</span><span>Geared drive machine &amp; upper landing</span></li>
-            <li data-p="5"><span class="ix">05</span><span>Tension station &amp; lower landing track</span></li>
-            <li data-p="6"><span class="ix">06</span><span>Skirt panels &amp; comb plate LED lighting</span></li>
-          </ul>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -1092,7 +1068,7 @@ Drive Power: 7.5 kW | Standard: EN 115-1</code>
   /* ══════════ ENHANCED 3D DISASSEMBLY ENGINE & MOBILE SLIDER ══════════ */
   var imgAssembled = document.getElementById("imgEscAssembled");
   var imgExploded = document.getElementById("imgEscExploded");
-  var disSlider = document.getElementById("disassemblySlider");
+  
   var explG = Array.prototype.slice.call(document.querySelectorAll(".expl-g"));
   var parts = document.getElementById("parts");
   var f2 = document.getElementById("f2");
@@ -1130,11 +1106,7 @@ Drive Power: 7.5 kW | Standard: EN 115-1</code>
     }
   }
 
-  // Connect Slider Input Event for Touch Screens (iPhone / Mobile)
-  if (disSlider) {
-    disSlider.addEventListener("input", function(e) {
-      setDisassemblyProgress(parseInt(this.value, 10) / 100);
-    });
+  ;
     disSlider.addEventListener("touchmove", function(e) {
       setDisassemblyProgress(parseInt(this.value, 10) / 100);
     }, {passive:true});
