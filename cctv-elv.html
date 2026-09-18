@@ -7,27 +7,54 @@
   <meta name="description" content="Enterprise CCTV surveillance, structured cabling (Cat6A/Cat7/Fiber), cable pulling, and network configuration solutions certified by SIRA & MCC in UAE.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;1,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;1,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
-      --ink: #07090e;
-      --ink-2: #0e131d;
-      --ink-3: #161d2c;
-      --paper: #f4f5f8;
-      --amber: #d4af37;
-      --amber-lt: #f3e5ab;
-      --gold-glow: rgba(212,175,55,0.25);
-      --slate: #8a99ad;
-      --border: rgba(252,252,253,0.08);
+      --ink: #0E1115;
+      --ink-2: #151A20;
+      --surface: #1B2128;
+      --surface-2: #232A33;
+      --line: #2B333D;
+      --line-2: #3A4550;
+      --amber: #E08A1E;
+      --amber-lt: #F5A93C;
+      --amber-dim: #8A5A14;
+      --steel: #6E7885;
+      --steel-lt: #9AA3B0;
+      --paper: #E9E7E2;
+      --white: #fff;
       --cyan-glow: #00f0ff;
-      --font-head: 'Barlow Condensed', sans-serif;
-      --font-body: 'IBM Plex Sans', sans-serif;
-      --font-mono: 'IBM Plex Mono', monospace;
+      --f-d: "Barlow Condensed", "Arial Narrow", sans-serif;
+      --f-b: "IBM Plex Sans", system-ui, sans-serif;
+      --f-m: "IBM Plex Mono", ui-monospace, monospace;
+      --f-a: "IBM Plex Sans Arabic", serif;
+      --ease: cubic-bezier(.16, 1, .3, 1);
     }
 
-    * { margin:0; padding:0; box-sizing:border-box; }
-    html { scroll-behavior: smooth; background: var(--ink); color: #e1e7ed; font-family: var(--font-body); }
-    body { overflow-x: hidden; position: relative; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; background: var(--ink); color: var(--paper); }
+    body {
+      margin: 0; background: var(--ink); color: var(--paper);
+      font-family: var(--f-b); font-size: 16px; line-height: 1.6;
+      -webkit-font-smoothing: antialiased; overflow-x: hidden; position: relative;
+    }
+
+    h1, h2, h3 {
+      margin: 0; text-wrap: balance; font-family: var(--f-d); font-weight: 600;
+      text-transform: uppercase; line-height: .95; letter-spacing: .01em;
+    }
+    p { margin: 0 0 1rem; max-width: 62ch; }
+    a { color: inherit; text-decoration: none; }
+    :focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; border-radius: 2px; }
+
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 clamp(1.1rem, 4vw, 2.5rem); }
+    #hero > .wrap, .pin > .wrap { width: 100%; }
+    .eyebrow {
+      font-family: var(--f-m); font-size: .68rem; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--amber); margin: 0 0 1rem; display: block;
+    }
+    .mono { font-family: var(--f-m); font-variant-numeric: tabular-nums; }
+    .pad { padding: clamp(4rem, 10vh, 8rem) 0; }
 
     /* --- FIXED SURVEILLANCE VIEWFINDER OVERLAY RETICLES --- */
     .cctv-viewport-hud {
@@ -36,8 +63,8 @@
     }
     .hud-corner-row { display: flex; justify-content: space-between; align-items: center; }
     .hud-reticle-box {
-      font-family: var(--font-mono); font-size: 0.7rem; color: rgba(212,175,55,0.7);
-      background: rgba(7, 9, 14, 0.4); border: 1px solid rgba(212,175,55,0.2);
+      font-family: var(--f-m); font-size: 0.7rem; color: rgba(245,169,60,0.7);
+      background: rgba(14, 17, 21, 0.5); border: 1px solid rgba(224,138,30,0.25);
       padding: 4px 10px; border-radius: 4px; backdrop-filter: blur(4px);
       letter-spacing: 1px; display: flex; align-items: center; gap: 8px;
     }
@@ -52,182 +79,170 @@
     }
     .hud-scanline-beam.active { opacity: 0.6; }
 
-    /* --- TOP NAV --- */
-    .hdr {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      background: rgba(7, 9, 14, 0.85); backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border); transition: all 0.3s ease;
+    /* --- HEADER (EXACT MATCH FOR LIFTS & ESCALATORS) --- */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: .9rem 0;
+      transition: background .4s, backdrop-filter .4s, border-color .4s;
+      border-bottom: 1px solid transparent; background: rgba(14,17,21,.6); backdrop-filter: blur(10px);
     }
-    .hdr-inner {
-      max-width: 1400px; margin: 0 auto; padding: 1rem 2rem;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: #fff; }
-    .brand-icon {
-      width: 42px; height: 42px; background: linear-gradient(135deg, var(--amber), #8a7322);
-      border-radius: 8px; display: grid; place-items: center; font-weight: 800; font-family: var(--font-head);
-      font-size: 1.4rem; color: var(--ink); box-shadow: 0 0 20px var(--gold-glow);
-    }
-    .brand-text h1 { font-family: var(--font-head); font-size: 1.25rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; line-height: 1; }
-    .brand-text p { font-size: 0.65rem; color: var(--amber); letter-spacing: 1.5px; font-family: var(--font-mono); margin-top: 2px; }
+    header.stuck { background: rgba(14,17,21,.92); backdrop-filter: blur(16px); border-bottom-color: var(--line); }
+    header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 
-    /* Pill Navigation */
-    .nav-pills { display: flex; background: rgba(22, 29, 44, 0.8); border: 1px solid var(--border); border-radius: 40px; padding: 4px; gap: 4px; }
-    .nav-pill {
-      padding: 0.5rem 1.25rem; border-radius: 30px; font-family: var(--font-head); font-size: 0.95rem; font-weight: 600;
-      letter-spacing: 0.5px; color: var(--slate); text-decoration: none; transition: all 0.25s ease; display: flex; align-items: center; gap: 6px;
-    }
-    .nav-pill:hover { color: #fff; background: rgba(255,255,255,0.05); }
-    .nav-pill.active { background: linear-gradient(135deg, var(--amber), #a3821a); color: var(--ink); font-weight: 700; box-shadow: 0 2px 12px var(--gold-glow); }
+    .brand { display: flex; align-items: center; gap: .7rem; }
+    .brand svg { width: 34px; height: 34px; flex: none; }
+    .brand .nm { font-family: var(--f-d); font-size: 1.4rem; letter-spacing: .045em; text-transform: uppercase; font-weight: 600; color: var(--white); }
 
-    .hdr-actions { display: flex; align-items: center; gap: 1rem; }
-    .btn-quote {
-      padding: 0.6rem 1.4rem; background: transparent; border: 1px solid var(--amber); color: var(--amber);
-      font-family: var(--font-head); font-size: 0.95rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
-      border-radius: 6px; text-decoration: none; transition: all 0.3s ease;
+    /* Switcher pills */
+    .div-switcher { display: flex; background: rgba(21,26,32,0.85); padding: 3px; border-radius: 6px; border: 1px solid var(--line-2); }
+    .sw-pill {
+      font-family: var(--f-m); font-size: .64rem; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--steel-lt); padding: .35rem .75rem; border-radius: 4px; transition: all .25s ease;
+      display: inline-flex; align-items: center; gap: .4rem; text-decoration: none;
     }
-    .btn-quote:hover { background: var(--amber); color: var(--ink); box-shadow: 0 0 20px var(--gold-glow); }
+    .sw-pill:hover { color: var(--white); background: rgba(255,255,255,0.06); }
+    .sw-pill.active { background: var(--amber); color: var(--ink); font-weight: 600; box-shadow: 0 0 12px rgba(224,138,30,0.35); }
+    .sw-pill .icon { font-size: .75rem; }
+
+    nav { display: flex; gap: 1.4rem; }
+    nav a { font-family: var(--f-m); font-size: .67rem; letter-spacing: .16em; text-transform: uppercase; color: var(--steel-lt); transition: color .25s; }
+    nav a:hover { color: var(--amber); }
+
+    .cta-btn {
+      font-family: var(--f-m); font-size: .66rem; letter-spacing: .14em; text-transform: uppercase;
+      border: 1px solid var(--amber); color: var(--amber); padding: .5rem .95rem; border-radius: 3px;
+      background: transparent; cursor: pointer; transition: background .25s, color .25s, box-shadow .25s;
+    }
+    .cta-btn:hover { background: var(--amber); color: var(--ink); box-shadow: 0 0 14px rgba(224,138,30,.4); }
+
+    .menu-toggle {
+      display: none; background: transparent; border: 1px solid var(--line-2); color: var(--paper);
+      padding: .4rem .7rem; border-radius: 4px; font-family: var(--f-m); font-size: .8rem; cursor: pointer;
+    }
 
     /* --- FLOATING CCTV CAMERA HUD CONSOLE (#camHud) --- */
     #camHud {
-      position: fixed; right: clamp(10px, 2.5vw, 24px); top: 50%; transform: translateY(-50%);
-      z-index: 999; background: rgba(10, 13, 16, 0.92); border: 1px solid rgba(212,175,55,0.3);
-      border-radius: 12px; padding: 14px 12px; display: flex; flex-direction: column; align-items: center; gap: 10px;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.8), 0 0 20px rgba(212,175,55,0.15); backdrop-filter: blur(16px);
-      width: 140px; transition: all 0.3s ease;
+      position: fixed; right: clamp(10px, 2vw, 24px); top: 50%; transform: translateY(-50%);
+      z-index: 999; background: rgba(14, 17, 21, 0.92); border: 1px solid var(--line-2);
+      border-radius: 8px; padding: 12px 10px; display: flex; flex-direction: column; align-items: center; gap: 8px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.8); backdrop-filter: blur(16px); width: 130px; transition: all 0.3s ease;
     }
     .cam-rec-head {
-      display: flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 0.65rem;
-      color: #ff3333; font-weight: 700; text-transform: uppercase; border-bottom: 1px solid var(--border);
-      padding-bottom: 6px; width: 100%; justify-content: center;
+      display: flex; align-items: center; gap: 6px; font-family: var(--f-m); font-size: 0.62rem;
+      color: #ff3333; font-weight: 700; text-transform: uppercase; border-bottom: 1px solid var(--line);
+      padding-bottom: 5px; width: 100%; justify-content: center;
     }
-    .cam-rec-head .dot { width: 7px; height: 7px; background: #ff3333; border-radius: 50%; animation: recBlink 1s infinite; }
+    .cam-rec-head .dot { width: 6px; height: 6px; background: #ff3333; border-radius: 50%; animation: recBlink 1s infinite; }
+    @keyframes recBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
 
     .cam-readout {
-      font-family: var(--font-head); font-size: 1.6rem; font-weight: 800; color: var(--amber-lt);
-      line-height: 1; text-align: center; text-shadow: 0 0 12px rgba(245,169,60,0.6); margin-top: 2px;
+      font-family: var(--f-m); font-size: 1.4rem; font-weight: 700; color: var(--amber-lt);
+      line-height: 1; text-align: center; text-shadow: 0 0 12px rgba(245,169,60,0.5); margin-top: 2px;
     }
     .cam-ptz-metrics {
-      font-family: var(--font-mono); font-size: 0.6rem; color: var(--cyan-glow); text-align: center;
+      font-family: var(--f-m); font-size: 0.58rem; color: var(--cyan-glow); text-align: center;
       line-height: 1.3; background: rgba(0,240,255,0.05); padding: 4px 6px; border-radius: 4px; border: 1px solid rgba(0,240,255,0.2); width: 100%;
     }
-
     .cam-rail {
-      width: 4px; height: 110px; background: rgba(255,255,255,0.08); border-radius: 2px;
+      width: 3px; height: 95px; background: rgba(255,255,255,0.08); border-radius: 2px;
       position: relative; overflow: hidden; margin: 4px 0;
     }
     .cam-rail-marker {
-      position: absolute; left: 0; right: 0; top: 0%; height: 18px;
-      background: linear-gradient(180deg, var(--cyan-glow), var(--amber));
-      border-radius: 2px; box-shadow: 0 0 10px var(--gold-glow); transition: top 0.25s ease;
+      position: absolute; left: 0; right: 0; top: 0%; height: 16px;
+      background: linear-gradient(180deg, var(--amber-lt), var(--amber));
+      border-radius: 2px; box-shadow: 0 0 10px rgba(224,138,30,0.4); transition: top 0.25s ease;
     }
-
-    .cam-node-list { list-style: none; padding: 0; margin: 0; width: 100%; display: flex; flex-direction: column; gap: 4px; }
+    .cam-node-list { list-style: none; padding: 0; margin: 0; width: 100%; display: flex; flex-direction: column; gap: 3px; }
     .cam-node-item {
-      font-family: var(--font-mono); font-size: 0.65rem; color: var(--slate); padding: 4px 6px;
-      border-radius: 4px; cursor: pointer; transition: all 0.2s ease; text-align: left;
+      font-family: var(--f-m); font-size: 0.6rem; color: var(--steel-lt); padding: 3px 5px;
+      border-radius: 3px; cursor: pointer; transition: all 0.2s ease; text-align: left;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; gap: 4px;
     }
     .cam-node-item:hover { color: #fff; background: rgba(255,255,255,0.06); }
     .cam-node-item.active {
       color: var(--ink); background: var(--amber); font-weight: 700;
-      box-shadow: 0 0 10px var(--gold-glow); transform: scale(1.04);
+      box-shadow: 0 0 10px rgba(224,138,30,0.35); transform: scale(1.03);
     }
 
     /* Target Lock Toast Overlay */
     #camLockToast {
       position: fixed; bottom: 30px; left: 30px; z-index: 995;
-      background: rgba(7, 9, 14, 0.9); border: 1px solid var(--amber);
-      padding: 10px 18px; border-radius: 8px; backdrop-filter: blur(12px);
+      background: rgba(14, 17, 21, 0.92); border: 1px solid var(--amber);
+      padding: 10px 18px; border-radius: 6px; backdrop-filter: blur(12px);
       display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
       opacity: 0; transform: translateY(20px); transition: all 0.35s ease; pointer-events: none;
     }
     #camLockToast.show { opacity: 1; transform: translateY(0); }
-    .toast-icon { width: 10px; height: 10px; background: #00ff66; border-radius: 50%; box-shadow: 0 0 10px #00ff66; }
-    .toast-text { font-family: var(--font-mono); font-size: 0.75rem; color: #fff; text-transform: uppercase; }
+    .toast-icon { width: 8px; height: 8px; background: #00ff66; border-radius: 50%; box-shadow: 0 0 8px #00ff66; }
+    .toast-text { font-family: var(--f-m); font-size: 0.72rem; color: #fff; text-transform: uppercase; }
     .toast-text span { color: var(--amber-lt); font-weight: 700; }
 
     /* --- HERO SECTION --- */
     #hero {
-      position: relative; min-height: 100vh; padding-top: 120px; display: flex; align-items: center;
-      background: radial-gradient(circle at 70% 30%, rgba(212,175,55,0.08) 0%, rgba(7,9,14,1) 70%);
-      overflow: hidden; border-bottom: 1px solid var(--border);
+      position: relative; min-height: 100svh; padding-top: 120px; display: flex; align-items: center;
+      background: radial-gradient(circle at 70% 30%, rgba(224,138,30,0.08) 0%, rgba(14,17,21,1) 70%);
+      overflow: hidden; border-bottom: 1px solid var(--line);
     }
     .hero-bg-grid {
       position: absolute; inset: 0;
-      background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
-      background-size: 50px 50px; opacity: 0.3; pointer-events: none;
+      background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 50px 50px; opacity: 0.25; pointer-events: none;
     }
-    .hero-wrap {
-      max-width: 1400px; margin: 0 auto; padding: 3rem 2rem; width: 100%; position: relative; z-index: 10;
-      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3rem; align-items: center;
+    .hero-grid-layout {
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3rem; align-items: center; width: 100%; position: relative; z-index: 10;
     }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; background: rgba(212,175,55,0.1);
-      border: 1px solid rgba(212,175,55,0.3); border-radius: 20px; color: var(--amber-lt);
-      font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 1.5rem;
-    }
-    .hero-badge .pulse { width: 8px; height: 8px; background: #00ff66; border-radius: 50%; box-shadow: 0 0 10px #00ff66; }
     .hero-title {
-      font-family: var(--font-head); font-size: 4rem; font-weight: 800; line-height: 1.05; text-transform: uppercase;
-      letter-spacing: -0.5px; margin-bottom: 1.5rem; background: linear-gradient(180deg, #ffffff 40%, var(--slate) 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      font-family: var(--f-d); font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 700; line-height: 0.98;
+      text-transform: uppercase; letter-spacing: -0.5px; margin-bottom: 1.5rem; color: var(--white);
     }
-    .hero-title span { background: linear-gradient(135deg, var(--amber-lt), var(--amber)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .hero-desc { font-size: 1.1rem; line-height: 1.6; color: var(--slate); margin-bottom: 2rem; max-width: 620px; }
+    .hero-title span { color: var(--amber); }
+    .hero-desc { font-size: clamp(1rem, 1.6vw, 1.15rem); line-height: 1.6; color: var(--steel-lt); margin-bottom: 2rem; max-width: 60ch; }
 
     /* CCTV Control Engine Toolbar */
     .cctv-ctrls {
-      display: flex; flex-wrap: wrap; gap: 8px; background: rgba(14,19,29,0.9); padding: 12px;
-      border: 1px solid var(--border); border-radius: 12px; margin-bottom: 2.5rem; backdrop-filter: blur(10px);
+      display: flex; flex-wrap: wrap; gap: 8px; background: rgba(27,33,40,0.9); padding: 10px;
+      border: 1px solid var(--line-2); border-radius: 8px; margin-bottom: 2rem; backdrop-filter: blur(10px);
     }
     .ctrl-btn {
-      background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--slate);
-      padding: 8px 16px; border-radius: 6px; font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600;
+      background: var(--surface-2); border: 1px solid var(--line); color: var(--steel-lt);
+      padding: 7px 14px; border-radius: 4px; font-family: var(--f-m); font-size: 0.75rem; font-weight: 600;
       cursor: pointer; transition: all 0.25s ease; display: flex; align-items: center; gap: 8px;
     }
-    .ctrl-btn:hover { background: rgba(212,175,55,0.1); color: var(--amber-lt); border-color: rgba(212,175,55,0.4); }
-    .ctrl-btn.active { background: var(--amber); color: var(--ink); border-color: var(--amber); font-weight: 700; box-shadow: 0 0 15px var(--gold-glow); }
+    .ctrl-btn:hover { background: rgba(224,138,30,0.15); color: var(--amber-lt); border-color: var(--amber); }
+    .ctrl-btn.active { background: var(--amber); color: var(--ink); border-color: var(--amber); font-weight: 700; box-shadow: 0 0 12px rgba(224,138,30,0.35); }
 
     /* Live Feed Simulation Frame */
     .hero-feed-preview {
-      position: relative; border-radius: 16px; overflow: hidden; border: 1px solid rgba(212,175,55,0.3);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(212,175,55,0.15); background: var(--ink-2);
+      position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--line-2);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(224,138,30,0.15); background: var(--ink-2);
     }
-    .hero-feed-preview img { width: 100%; height: 440px; object-fit: cover; display: block; filter: contrast(1.05) brightness(0.95); transition: filter 0.5s ease; }
+    .hero-feed-preview img { width: 100%; height: 420px; object-fit: cover; display: block; filter: contrast(1.05) brightness(0.95); transition: filter 0.5s ease; }
     .feed-hud {
-      position: absolute; inset: 0; padding: 20px; pointer-events: none;
+      position: absolute; inset: 0; padding: 18px; pointer-events: none;
       display: flex; flex-direction: column; justify-content: space-between;
       background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.8) 100%);
     }
-    .hud-top { display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 0.75rem; color: #00ff66; text-shadow: 0 0 6px rgba(0,255,102,0.6); }
-    .hud-bottom { display: flex; justify-content: space-between; align-items: flex-end; font-family: var(--font-mono); font-size: 0.75rem; color: var(--amber-lt); }
-    .rec-dot { display: inline-block; width: 10px; height: 10px; background: #ff3333; border-radius: 50%; margin-right: 6px; animation: recBlink 1s infinite; }
-    @keyframes recBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+    .hud-top { display: flex; justify-content: space-between; align-items: center; font-family: var(--f-m); font-size: 0.72rem; color: #00ff66; text-shadow: 0 0 6px rgba(0,255,102,0.6); }
+    .hud-bottom { display: flex; justify-content: space-between; align-items: flex-end; font-family: var(--f-m); font-size: 0.72rem; color: var(--amber-lt); }
 
     /* Key Stats Ribbon */
-    .stats-ribbon {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 2rem;
-    }
-    .stat-card {
-      background: rgba(22, 29, 44, 0.5); border: 1px solid var(--border); padding: 1.25rem; border-radius: 10px;
-    }
-    .stat-card .val { font-family: var(--font-head); font-size: 2rem; font-weight: 800; color: var(--amber); }
-    .stat-card .lbl { font-size: 0.8rem; color: var(--slate); text-transform: uppercase; font-family: var(--font-mono); margin-top: 4px; }
+    .stats-ribbon { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; margin-top: 2rem; }
+    .stat-card { background: rgba(27,33,40,0.6); border: 1px solid var(--line-2); padding: 1.1rem; border-radius: 8px; }
+    .stat-card .val { font-family: var(--f-d); font-size: 2rem; font-weight: 700; color: var(--amber); }
+    .stat-card .lbl { font-size: 0.75rem; color: var(--steel-lt); text-transform: uppercase; font-family: var(--f-m); margin-top: 4px; }
 
     /* --- 3D EXPLODED CAMERA DISASSEMBLY (#f2) --- */
-    #f2 { position: relative; height: 340svh; background: #05070a; }
+    #f2 { position: relative; height: 340svh; background: #080A0D; }
     #f2 .pin {
       position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; flex-direction: column; justify-content: center;
     }
     .f2-header {
-      position: absolute; top: 100px; left: 50%; transform: translateX(-50%); z-index: 20; text-align: center; width: 100%; max-width: 900px; padding: 0 1rem;
+      position: absolute; top: 90px; left: 50%; transform: translateX(-50%); z-index: 20; text-align: center; width: 100%; max-width: 900px; padding: 0 1rem;
     }
-    .f2-header h2 { font-family: var(--font-head); font-size: 3rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #fff; }
-    .f2-header p { font-family: var(--font-mono); color: var(--amber); font-size: 0.9rem; text-transform: uppercase; margin-top: 6px; }
+    .f2-header h2 { font-family: var(--f-d); font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 700; text-transform: uppercase; color: var(--white); }
+    .f2-header p { font-family: var(--f-m); color: var(--amber); font-size: 0.85rem; text-transform: uppercase; margin-top: 6px; }
 
     .viewport3d {
-      position: relative; width: 100%; max-width: 1200px; height: 600px; margin: 0 auto; display: flex; align-items: center; justify-content: center;
+      position: relative; width: 100%; max-width: 1100px; height: 560px; margin: 0 auto; display: flex; align-items: center; justify-content: center;
     }
     .img-3d-layer {
       position: absolute; width: 100%; height: 100%; object-fit: contain; transition: opacity 0.4s ease, transform 0.4s ease;
@@ -238,100 +253,131 @@
 
     /* Disassembly Callout Overlay */
     .parts-overlay {
-      position: absolute; inset: 0; z-index: 10; pointer-events: none; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding: 4rem; align-content: center;
+      position: absolute; inset: 0; z-index: 10; pointer-events: none; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding: 3rem; align-content: center;
     }
-    .parts-col { display: flex; flex-direction: column; gap: 1.5rem; }
+    .parts-col { display: flex; flex-direction: column; gap: 1.25rem; }
     .parts-col.right { align-items: flex-end; text-align: right; }
     .part-tag {
-      background: rgba(14, 19, 29, 0.9); border: 1px solid rgba(212,175,55,0.4); padding: 12px 20px; border-radius: 8px;
-      backdrop-filter: blur(12px); max-width: 320px; opacity: 0; transform: translateY(20px); transition: all 0.4s ease;
+      background: rgba(14, 17, 21, 0.92); border: 1px solid var(--line-2); padding: 10px 16px; border-radius: 6px;
+      backdrop-filter: blur(12px); max-width: 310px; opacity: 0; transform: translateY(20px); transition: all 0.4s ease;
     }
     .part-tag.visible { opacity: 1; transform: translateY(0); }
-    .part-num { font-family: var(--font-mono); font-size: 0.75rem; color: var(--amber); font-weight: 700; text-transform: uppercase; }
-    .part-name { font-family: var(--font-head); font-size: 1.2rem; font-weight: 700; color: #fff; margin: 2px 0; }
-    .part-desc { font-size: 0.8rem; color: var(--slate); line-height: 1.4; }
+    .part-num { font-family: var(--f-m); font-size: 0.7rem; color: var(--amber); font-weight: 700; text-transform: uppercase; }
+    .part-name { font-family: var(--f-d); font-size: 1.2rem; font-weight: 700; color: var(--white); margin: 2px 0; }
+    .part-desc { font-size: 0.8rem; color: var(--steel-lt); line-height: 1.4; }
 
     /* --- CABLING & NETWORK SPEC STUDIO (#cabling) --- */
-    #cabling { padding: 6rem 2rem; background: var(--ink-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .sec-wrap { max-width: 1400px; margin: 0 auto; }
-    .sec-head { text-align: center; max-width: 800px; margin: 0 auto 4rem; }
-    .sec-head .sub { font-family: var(--font-mono); color: var(--amber); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; }
-    .sec-head h2 { font-family: var(--font-head); font-size: 3.2rem; font-weight: 800; text-transform: uppercase; margin: 8px 0; color: #fff; }
-    .sec-head p { color: var(--slate); font-size: 1.05rem; }
-
-    .studio-grid { display: grid; grid-template-columns: 320px 1fr; gap: 2.5rem; background: rgba(7,9,14,0.6); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; backdrop-filter: blur(10px); }
+    #cabling { background: var(--ink-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .studio-grid { display: grid; grid-template-columns: 300px 1fr; gap: 2rem; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 2rem; }
     .spec-menu { display: flex; flex-direction: column; gap: 10px; }
     .spec-tab {
-      padding: 1rem 1.25rem; background: rgba(22, 29, 44, 0.6); border: 1px solid var(--border); border-radius: 10px;
-      color: var(--slate); font-family: var(--font-head); font-size: 1.1rem; font-weight: 700; cursor: pointer; text-align: left;
+      padding: .9rem 1.1rem; background: var(--surface-2); border: 1px solid var(--line-2); border-radius: 8px;
+      color: var(--steel-lt); font-family: var(--f-d); font-size: 1.1rem; font-weight: 700; cursor: pointer; text-align: left;
       transition: all 0.25s ease; display: flex; align-items: center; justify-content: space-between;
     }
-    .spec-tab:hover { background: rgba(212,175,55,0.1); color: var(--amber-lt); border-color: rgba(212,175,55,0.3); }
-    .spec-tab.active { background: linear-gradient(135deg, var(--amber), #9c7b19); color: var(--ink); border-color: var(--amber); box-shadow: 0 4px 20px var(--gold-glow); }
+    .spec-tab:hover { background: rgba(224,138,30,0.15); color: var(--amber-lt); border-color: var(--amber); }
+    .spec-tab.active { background: var(--amber); color: var(--ink); border-color: var(--amber); box-shadow: 0 4px 16px rgba(224,138,30,0.3); }
 
-    .spec-display { background: var(--ink); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 420px; }
-    .spec-header-box { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; }
-    .spec-title-group h3 { font-family: var(--font-head); font-size: 2.2rem; font-weight: 800; color: #fff; text-transform: uppercase; }
-    .spec-title-group p { font-family: var(--font-mono); font-size: 0.85rem; color: var(--amber); margin-top: 4px; }
-    .fluke-badge { padding: 8px 16px; background: rgba(0, 240, 255, 0.1); border: 1px solid var(--cyan-glow); color: var(--cyan-glow); font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; border-radius: 6px; }
+    .spec-display { background: var(--ink); border: 1px solid var(--line-2); border-radius: 10px; padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 400px; }
+    .spec-header-box { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; border-bottom: 1px solid var(--line); padding-bottom: 1.25rem; }
+    .spec-title-group h3 { font-family: var(--f-d); font-size: 2rem; font-weight: 700; color: var(--white); text-transform: uppercase; }
+    .spec-title-group p { font-family: var(--f-m); font-size: 0.8rem; color: var(--amber); margin-top: 4px; }
+    .fluke-badge { padding: 6px 14px; background: rgba(0, 240, 255, 0.1); border: 1px solid var(--cyan-glow); color: var(--cyan-glow); font-family: var(--f-m); font-size: 0.72rem; font-weight: 700; border-radius: 4px; }
 
-    .spec-metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
-    .metric-box { background: rgba(22, 29, 44, 0.5); border: 1px solid var(--border); padding: 1.25rem; border-radius: 8px; }
-    .metric-box .m-label { font-family: var(--font-mono); font-size: 0.75rem; color: var(--slate); text-transform: uppercase; }
-    .metric-box .m-val { font-family: var(--font-head); font-size: 1.8rem; font-weight: 700; color: #fff; margin-top: 6px; }
+    .spec-metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-bottom: 1.5rem; }
+    .metric-box { background: var(--surface-2); border: 1px solid var(--line-2); padding: 1.1rem; border-radius: 6px; }
+    .metric-box .m-label { font-family: var(--f-m); font-size: 0.72rem; color: var(--steel-lt); text-transform: uppercase; }
+    .metric-box .m-val { font-family: var(--f-d); font-size: 1.7rem; font-weight: 700; color: var(--white); margin-top: 4px; }
 
-    .gauge-bar-wrap { background: rgba(255,255,255,0.05); height: 12px; border-radius: 6px; overflow: hidden; margin-top: 1rem; position: relative; }
-    .gauge-bar-fill { height: 100%; background: linear-gradient(90deg, var(--amber), #00f0ff); width: 85%; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+    .gauge-bar-wrap { background: rgba(255,255,255,0.05); height: 10px; border-radius: 5px; overflow: hidden; margin-top: 1rem; position: relative; }
+    .gauge-bar-fill { height: 100%; background: linear-gradient(90deg, var(--amber), var(--cyan-glow)); width: 85%; transition: width 0.8s ease; }
 
     /* --- SOLUTIONS GRID --- */
-    #solutions { padding: 6rem 2rem; background: var(--ink); }
-    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem; }
+    #solutions { background: var(--ink); }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.75rem; margin-top: 2.5rem; }
     .sol-card {
-      background: var(--ink-2); border: 1px solid var(--border); border-radius: 14px; padding: 2rem;
+      background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 1.75rem;
       transition: all 0.3s ease; display: flex; flex-direction: column; justify-content: space-between;
     }
-    .sol-card:hover { transform: translateY(-8px); border-color: rgba(212,175,55,0.5); box-shadow: 0 12px 30px rgba(0,0,0,0.6); }
-    .sol-icon { width: 54px; height: 54px; background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); border-radius: 10px; display: grid; place-items: center; color: var(--amber); font-size: 1.5rem; margin-bottom: 1.5rem; }
-    .sol-card h3 { font-family: var(--font-head); font-size: 1.6rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem; text-transform: uppercase; }
-    .sol-card p { font-size: 0.95rem; color: var(--slate); line-height: 1.6; margin-bottom: 1.5rem; }
+    .sol-card:hover { transform: translateY(-6px); border-color: var(--amber); box-shadow: 0 12px 30px rgba(0,0,0,0.6); }
+    .sol-icon { width: 48px; height: 48px; background: rgba(224,138,30,0.1); border: 1px solid var(--line-2); border-radius: 8px; display: grid; place-items: center; color: var(--amber); font-size: 1.4rem; margin-bottom: 1.25rem; }
+    .sol-card h3 { font-family: var(--f-d); font-size: 1.5rem; font-weight: 700; color: var(--white); margin-bottom: 0.6rem; text-transform: uppercase; }
+    .sol-card p { font-size: 0.92rem; color: var(--steel-lt); line-height: 1.55; margin-bottom: 1.25rem; }
     .sol-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-    .sol-tag { background: rgba(255,255,255,0.04); border: 1px solid var(--border); padding: 4px 10px; border-radius: 4px; font-family: var(--font-mono); font-size: 0.7rem; color: var(--amber-lt); }
+    .sol-tag { background: var(--surface-2); border: 1px solid var(--line-2); padding: 3px 8px; border-radius: 3px; font-family: var(--f-m); font-size: 0.68rem; color: var(--amber-lt); }
 
     /* --- CONTROL ROOM SHOWCASE BANNER --- */
-    #control-room { padding: 4rem 2rem; background: var(--ink); }
+    #control-room { background: var(--ink); }
     .ctrl-banner {
-      position: relative; border-radius: 20px; overflow: hidden; border: 1px solid rgba(212,175,55,0.3);
-      min-height: 480px; display: flex; align-items: center; padding: 4rem; max-width: 1400px; margin: 0 auto;
+      position: relative; border-radius: 14px; overflow: hidden; border: 1px solid var(--line-2);
+      min-height: 440px; display: flex; align-items: center; padding: 3.5rem; max-width: 1180px; margin: 0 auto;
     }
     .ctrl-banner img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.4) contrast(1.1); z-index: 1; }
-    .ctrl-banner-content { position: relative; z-index: 2; max-width: 650px; }
-    .ctrl-banner-content h2 { font-family: var(--font-head); font-size: 3.5rem; font-weight: 800; color: #fff; text-transform: uppercase; line-height: 1.05; margin-bottom: 1rem; }
-    .ctrl-banner-content p { color: #d0d7de; font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem; }
+    .ctrl-banner-content { position: relative; z-index: 2; max-width: 600px; }
+    .ctrl-banner-content h2 { font-family: var(--f-d); font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 700; color: var(--white); text-transform: uppercase; line-height: 0.98; margin-bottom: 1rem; }
+    .ctrl-banner-content p { color: var(--paper); font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.75rem; }
 
-    /* --- FOOTER / CONTACT --- */
-    footer { background: #040508; border-top: 1px solid var(--border); padding: 4rem 2rem 2rem; color: var(--slate); font-size: 0.9rem; }
-    .ft-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
-    .ft-brand h3 { font-family: var(--font-head); font-size: 1.5rem; color: #fff; margin-bottom: 1rem; text-transform: uppercase; }
-    .ft-brand p { max-width: 340px; line-height: 1.6; }
-    .ft-col h4 { font-family: var(--font-head); font-size: 1.1rem; color: var(--amber); margin-bottom: 1.25rem; text-transform: uppercase; letter-spacing: 1px; }
-    .ft-col ul { list-style: none; }
-    .ft-col ul li { margin-bottom: 0.75rem; }
-    .ft-col ul li a { color: var(--slate); text-decoration: none; transition: color 0.25s ease; }
-    .ft-col ul li a:hover { color: #fff; }
-    .ft-btm { max-width: 1400px; margin: 0 auto; padding-top: 2rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.8rem; }
+    /* --- FOOTER (EXACT 1:1 MATCH FOR LIFTS & ESCALATORS) --- */
+    footer { background: #080A0D; border-top: 1px solid var(--line); padding: 4rem 0 2rem; color: var(--steel-lt); font-size: .88rem; }
+    .ft-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2.5rem; margin-bottom: 3rem; }
+    .ft-brand .nm { font-family: var(--f-d); font-size: 1.4rem; color: var(--white); font-weight: 600; text-transform: uppercase; margin-bottom: .8rem; display: block; }
+    .ft-brand p { max-width: 32ch; line-height: 1.6; font-size: 0.9rem; }
+    .ft-col h4 { font-family: var(--f-m); font-size: .75rem; color: var(--amber); letter-spacing: .16em; text-transform: uppercase; margin-bottom: 1rem; }
+    .ft-col ul { list-style: none; margin: 0; padding: 0; }
+    .ft-col ul li { margin-bottom: .6rem; }
+    .ft-col ul li a { color: var(--steel-lt); transition: color .2s; text-decoration: none; }
+    .ft-col ul li a:hover { color: var(--amber); }
+    .ft-btm { border-top: 1px solid var(--line); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-family: var(--f-m); font-size: .72rem; color: var(--steel); }
 
+    /* --- SURVEY MODAL POPUP --- */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 2000; background: rgba(14,17,21,0.85); backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: center; padding: 1.5rem; opacity: 0; pointer-events: none; transition: opacity .3s ease;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: auto; }
+    .modal-card {
+      background: var(--surface); border: 1px solid var(--line-2); border-radius: 12px; max-width: 580px; width: 100%;
+      padding: 2.5rem; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.8); transform: translateY(20px); transition: transform .3s ease;
+    }
+    .modal-overlay.open .modal-card { transform: translateY(0); }
+    .modal-close { position: absolute; top: 1.25rem; right: 1.25rem; background: transparent; border: none; color: var(--steel-lt); font-size: 1.5rem; cursor: pointer; }
+    .modal-card h3 { font-family: var(--f-d); font-size: 2rem; color: var(--white); margin-bottom: .5rem; }
+    .modal-card p { font-size: .9rem; color: var(--steel-lt); margin-bottom: 1.5rem; }
+    .modal-card form { display: flex; flex-direction: column; gap: 1rem; }
+    .modal-card label { font-family: var(--f-m); font-size: .72rem; color: var(--paper); text-transform: uppercase; letter-spacing: 1px; display: flex; flex-direction: column; gap: .4rem; }
+    .modal-card input, .modal-card select, .modal-card textarea {
+      background: var(--ink-2); border: 1px solid var(--line-2); color: var(--white); padding: .75rem 1rem; border-radius: 6px;
+      font-family: var(--f-b); font-size: .95rem; outline: none; transition: border-color .2s;
+    }
+    .modal-card input:focus, .modal-card select:focus, .modal-card textarea:focus { border-color: var(--amber); }
+
+    /* --- RESPONSIVE MEDIA QUERIES --- */
     @media (max-width: 1024px) {
-      .hero-wrap { grid-template-columns: 1fr; }
+      .hero-grid-layout { grid-template-columns: 1fr; gap: 2.5rem; }
       .grid-3 { grid-template-columns: 1fr 1fr; }
       .studio-grid { grid-template-columns: 1fr; }
       .stats-ribbon { grid-template-columns: repeat(2, 1fr); }
-      #camHud { display: none; }
+      .ft-grid { grid-template-columns: 1fr 1fr; }
     }
+
+    @media (max-width: 920px) {
+      nav { display: none; }
+      .menu-toggle { display: block; }
+      #camHud { display: none; }
+      .cctv-viewport-hud { display: none; }
+      .ctrl-banner { padding: 2.5rem 1.5rem; }
+    }
+
     @media (max-width: 768px) {
       .grid-3 { grid-template-columns: 1fr; }
       .stats-ribbon { grid-template-columns: 1fr; }
       .hero-title { font-size: 2.8rem; }
-      .nav-pills { display: none; }
+      .spec-metrics-grid { grid-template-columns: 1fr; }
+      .parts-overlay { grid-template-columns: 1fr; padding: 1.5rem; }
+      .parts-col.right { align-items: flex-start; text-align: left; }
+      .ft-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .ft-btm { flex-direction: column; align-items: flex-start; gap: .5rem; }
+      .div-switcher { display: none; }
     }
   </style>
 </head>
@@ -376,7 +422,7 @@
     </div>
 
     <ol class="cam-node-list" id="camList">
-      <!-- Generated via JS for data-cam sections -->
+      <!-- Generated via JS -->
     </ol>
   </aside>
 
@@ -388,84 +434,93 @@
     </div>
   </div>
 
-  <!-- NAVIGATION HEADER -->
-  <header class="hdr">
-    <div class="hdr-inner">
-      <a href="index.html" class="brand">
-        <div class="brand-icon">AD</div>
-        <div class="brand-text">
-          <h1>AL DIRAYAH</h1>
-          <p>ELECTROMECHANICAL CONTRACTING</p>
-        </div>
+  <!-- HEADER (EXACT 1:1 MATCH FOR LIFTS & ESCALATORS) -->
+  <header id="hdr">
+    <div class="wrap">
+      <a class="brand" href="index.html">
+        <svg viewBox="0 0 120 120" aria-hidden="true">
+          <rect width="120" height="120" rx="20" fill="#E08A1E"/>
+          <path d="M35 49 L60 29 L85 49" fill="none" stroke="#0E1115" stroke-width="10"/>
+          <path d="M35 70 L60 50 L85 70" fill="none" stroke="#0E1115" stroke-width="10" opacity=".62"/>
+          <path d="M35 91 L60 71 L85 91" fill="none" stroke="#0E1115" stroke-width="10" opacity=".34"/>
+        </svg>
+        <span class="nm">Al Dirayah</span>
       </a>
 
-      <!-- Pill Navigation Menu -->
-      <nav class="nav-pills">
-        <a href="index.html" class="nav-pill">🏠 HUB</a>
-        <a href="lifts.html" class="nav-pill">↕ LIFTS</a>
-        <a href="escalators.html" class="nav-pill">↗ ESCALATORS</a>
-        <a href="cctv-elv.html" class="nav-pill active">📹 CCTV & ELV</a>
+      <!-- Switcher Pills (Matching lifts/escalators 1:1) -->
+      <div class="div-switcher">
+        <a href="index.html" class="sw-pill"><span class="icon">🏠</span> Hub</a>
+        <a href="lifts.html" class="sw-pill"><span class="icon">↕</span> Lifts</a>
+        <a href="escalators.html" class="sw-pill"><span class="icon">↗</span> Escalators</a>
+        <a href="cctv-elv.html" class="sw-pill active"><span class="icon">📹</span> CCTV</a>
+      </div>
+
+      <nav>
+        <a href="#hero">Overview</a>
+        <a href="#f2">Anatomy</a>
+        <a href="#cabling">Cabling</a>
+        <a href="#solutions">Services</a>
+        <a href="#control-room">Command</a>
       </nav>
 
-      <div class="hdr-actions">
-        <a href="#contact" class="btn-quote">Get Inspection</a>
-      </div>
+      <button class="cta-btn" onclick="openSurveyModal('CCTV & ELV Infrastructure')">Request a survey</button>
+      <button class="menu-toggle" onclick="openSurveyModal('CCTV & ELV Infrastructure')">Menu</button>
     </div>
   </header>
 
   <!-- HERO SECTION -->
   <section id="hero" data-cam="01" data-label="ENTRANCE" data-pan="0°" data-tilt="0°" data-zoom="1.0x" data-status="HERO STREAM">
     <div class="hero-bg-grid"></div>
-    <div class="hero-wrap">
-      <div class="hero-left">
-        <div class="hero-badge">
-          <span class="pulse"></span> SIRA & MCC CERTIFIED ELV ENGINEERS
-        </div>
-        <h1 class="hero-title">INTELLIGENT <span>CCTV & ELV</span> INFRASTRUCTURE</h1>
-        <p class="hero-desc">
-          High-definition IP surveillance systems, fiber-optic backbone trunking, structured cabling, and AI analytics command centers built for commercial towers, residential complexes, and mission-critical facilities across UAE.
-        </p>
+    <div class="wrap">
+      <div class="hero-grid-layout">
+        <div class="hero-left">
+          <span class="eyebrow">// SIRA & MCC CERTIFIED ELV ENGINEERS</span>
+          <h1 class="hero-title">INTELLIGENT <span>CCTV & ELV</span> INFRASTRUCTURE</h1>
+          <p class="hero-desc">
+            High-definition IP surveillance systems, fiber-optic backbone trunking, structured cabling, and AI analytics command centers built for commercial towers, residential complexes, and mission-critical facilities across UAE.
+          </p>
 
-        <!-- CCTV Interactive Toolbar -->
-        <div class="cctv-ctrls">
-          <button class="ctrl-btn active" onclick="switchCctvMode('4k')">📷 4K ULTRA-HD</button>
-          <button class="ctrl-btn" onclick="switchCctvMode('ir')">🌙 THERMAL IR</button>
-          <button class="ctrl-btn" onclick="switchCctvMode('grid')">🔲 LIVE GRID 2x2</button>
-          <button class="ctrl-btn" onclick="switchCctvMode('ai')">🧠 EDGE AI ANALYTICS</button>
-        </div>
+          <!-- CCTV Interactive Toolbar -->
+          <div class="cctv-ctrls">
+            <button class="ctrl-btn active" onclick="switchCctvMode('4k')">📷 4K ULTRA-HD</button>
+            <button class="ctrl-btn" onclick="switchCctvMode('ir')">🌙 THERMAL IR</button>
+            <button class="ctrl-btn" onclick="switchCctvMode('grid')">🔲 LIVE GRID 2x2</button>
+            <button class="ctrl-btn" onclick="switchCctvMode('ai')">🧠 EDGE AI ANALYTICS</button>
+          </div>
 
-        <div class="stats-ribbon">
-          <div class="stat-card">
-            <div class="val">99.99%</div>
-            <div class="lbl">NETWORK UP-TIME</div>
-          </div>
-          <div class="stat-card">
-            <div class="val">10 GbE</div>
-            <div class="lbl">FIBER BACKBONE</div>
-          </div>
-          <div class="stat-card">
-            <div class="val">EN 50132</div>
-            <div class="lbl">SIRA COMPLIANT</div>
-          </div>
-          <div class="stat-card">
-            <div class="val">&lt; 1ms</div>
-            <div class="lbl">STREAM LATENCY</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Live Feed Simulation Frame -->
-      <div class="hero-right">
-        <div class="hero-feed-preview">
-          <img id="cctvFeedImg" src="cctv_ip_camera_3d.jpg" alt="CCTV 4K Security Stream Preview">
-          <div class="feed-hud">
-            <div class="hud-top">
-              <div><span class="rec-dot"></span>LIVE :: CAM-01 (MAIN ENTRANCE)</div>
-              <div id="hudTime">2026-09-19 02:54:00</div>
+          <div class="stats-ribbon">
+            <div class="stat-card">
+              <div class="val">99.99%</div>
+              <div class="lbl">NETWORK UP-TIME</div>
             </div>
-            <div class="hud-bottom">
-              <div id="hudModeLabel">MODE: 4K ULTRA-HD (3840x2160 @ 60FPS)</div>
-              <div>BITRATE: 12.4 Mbps</div>
+            <div class="stat-card">
+              <div class="val">10 GbE</div>
+              <div class="lbl">FIBER BACKBONE</div>
+            </div>
+            <div class="stat-card">
+              <div class="val">EN 50132</div>
+              <div class="lbl">SIRA COMPLIANT</div>
+            </div>
+            <div class="stat-card">
+              <div class="val">&lt; 1ms</div>
+              <div class="lbl">STREAM LATENCY</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Feed Simulation Frame -->
+        <div class="hero-right">
+          <div class="hero-feed-preview">
+            <img id="cctvFeedImg" src="cctv_ip_camera_3d.jpg" alt="CCTV 4K Security Stream Preview">
+            <div class="feed-hud">
+              <div class="hud-top">
+                <div><span class="rec-dot"></span>LIVE :: CAM-01 (MAIN ENTRANCE)</div>
+                <div id="hudTime">2026-09-19 03:10:00</div>
+              </div>
+              <div class="hud-bottom">
+                <div id="hudModeLabel">MODE: 4K ULTRA-HD (3840x2160 @ 60FPS)</div>
+                <div>BITRATE: 12.4 Mbps</div>
+              </div>
             </div>
           </div>
         </div>
@@ -477,8 +532,9 @@
   <section id="f2" data-cam="02" data-label="3D ANATOMY" data-pan="+35°" data-tilt="-15°" data-zoom="2.5x" data-status="DISASSEMBLY SCAN">
     <div class="pin">
       <div class="f2-header">
-        <h2>3D HARDWARE ANATOMY</h2>
-        <p>SCROLL DOWN TO EXPLODE THE 4K DOME CAMERA ARCHITECTURE</p>
+        <span class="eyebrow">// 3D HARDWARE ANATOMY</span>
+        <h2>EXPLODED CAMERA ARCHITECTURE</h2>
+        <p>SCROLL DOWN TO EXPLODE THE 4K DOME CAMERA COMPONENTS</p>
       </div>
 
       <div class="viewport3d">
@@ -528,12 +584,12 @@
   </section>
 
   <!-- CABLING & NETWORK SPEC STUDIO (#cabling) -->
-  <section id="cabling" data-cam="03" data-label="CABLING" data-pan="-45°" data-tilt="+10°" data-zoom="1.8x" data-status="FLUKE DIAGNOSTIC">
-    <div class="sec-wrap">
-      <div class="sec-head">
-        <div class="sub">NETWORK BACKBONE & CABLING STUDIO</div>
+  <section id="cabling" class="pad" data-cam="03" data-label="CABLING" data-pan="-45°" data-tilt="+10°" data-zoom="1.8x" data-status="FLUKE DIAGNOSTIC">
+    <div class="wrap">
+      <div style="text-align: center; max-width: 800px; margin: 0 auto 3rem;">
+        <span class="eyebrow">// NETWORK BACKBONE & CABLING STUDIO</span>
         <h2>ENGINEERED CABLING SPECIFICATIONS</h2>
-        <p>Interactive testing studio demonstrating certified channel parameters verified by Fluke DSX-8000 CableAnalyzer™</p>
+        <p style="margin: 8px auto 0;">Interactive testing studio demonstrating certified channel parameters verified by Fluke DSX-8000 CableAnalyzer™</p>
       </div>
 
       <div class="studio-grid">
@@ -579,18 +635,18 @@
               </div>
               <div class="metric-box">
                 <div class="m-label">PoE SUPPORT</div>
-                <div class="m-label" style="font-size:0.6rem; color:var(--amber); margin-top:2px;">IEEE 802.3bt</div>
+                <div class="m-label" style="font-size:0.65rem; color:var(--amber); margin-top:2px;">IEEE 802.3bt</div>
                 <div class="m-val" id="specPoe">Type 4 (90W)</div>
               </div>
             </div>
 
-            <p id="specDesc" style="color: var(--slate); line-height: 1.6; font-size: 1rem;">
+            <p id="specDesc" style="color: var(--steel-lt); line-height: 1.6; font-size: 1rem;">
               Engineered for high-density 10 Gigabit Ethernet horizontal runs. Features foil shielding per pair plus an outer tinned copper braid to eliminate Alien Crosstalk (AXT) in complex industrial riser shafts.
             </p>
           </div>
 
           <div>
-            <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:0.8rem; color:var(--amber-lt); margin-top:1.5rem;">
+            <div style="display:flex; justify-content:space-between; font-family:var(--f-m); font-size:0.8rem; color:var(--amber-lt); margin-top:1.5rem;">
               <span>CHANNEL PERFORMANCE FREQUENCY</span>
               <span id="freqLabel">500 MHz MAX FREQ</span>
             </div>
@@ -604,12 +660,12 @@
   </section>
 
   <!-- COMPLETE ELV SOLUTIONS GRID -->
-  <section id="solutions" data-cam="04" data-label="SERVICES" data-pan="+12°" data-tilt="-5°" data-zoom="1.2x" data-status="MATRIX SCAN">
-    <div class="sec-wrap">
-      <div class="sec-head">
-        <div class="sub">END-TO-END CAPABILITIES</div>
-        <h2>OUR INTEGRATED SURVEILLANCE & NETWORK SERVICES</h2>
-        <p>From precision cable pulling to automated video analytics NVR setup, we deliver turnkey ELV infrastructure.</p>
+  <section id="solutions" class="pad" data-cam="04" data-label="SERVICES" data-pan="+12°" data-tilt="-5°" data-zoom="1.2x" data-status="MATRIX SCAN">
+    <div class="wrap">
+      <div style="text-align: center; max-width: 800px; margin: 0 auto 3rem;">
+        <span class="eyebrow">// END-TO-END CAPABILITIES</span>
+        <h2>SURVEILLANCE & NETWORK SERVICES</h2>
+        <p style="margin: 8px auto 0;">From precision cable pulling to automated video analytics NVR setup, we deliver turnkey ELV infrastructure.</p>
       </div>
 
       <div class="grid-3">
@@ -701,63 +757,122 @@
   </section>
 
   <!-- CONTROL ROOM BANNER SHOWCASE -->
-  <section id="control-room" data-cam="05" data-label="COMMAND" data-pan="-90°" data-tilt="0°" data-zoom="3.0x" data-status="FULL DUPLEX">
+  <section id="control-room" class="pad" data-cam="05" data-label="COMMAND" data-pan="-90°" data-tilt="0°" data-zoom="3.0x" data-status="FULL DUPLEX">
     <div class="ctrl-banner">
       <img src="cctv_control_room_3d.jpg" alt="Al Dirayah Modern Command Center & Control Room">
       <div class="ctrl-banner-content">
         <h2>ENTERPRISE SECURITY COMMAND CENTERS</h2>
         <p>We build mission-critical control rooms equipped with video wall matrices, redundant fiber links, and automated incident alarm response systems.</p>
-        <a href="#contact" class="btn-quote" style="background:var(--amber); color:var(--ink);">Schedule Technical Audit</a>
+        <button class="cta-btn" onclick="openSurveyModal('CCTV & ELV Infrastructure')" style="background:var(--amber); color:var(--ink); font-weight:700;">Schedule Technical Audit</button>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER / AUDIT COMPLIANCE -->
+  <!-- FOOTER (EXACT 1:1 MATCH FOR LIFTS & ESCALATORS) -->
   <footer id="contact" data-cam="06" data-label="AUDIT" data-pan="180°" data-tilt="-30°" data-zoom="1.0x" data-status="ENCRYPTED">
-    <div class="ft-inner">
-      <div class="ft-brand">
-        <h3>AL DIRAYAH ELECTROMECHANICAL</h3>
-        <p>Specialized Vertical Transportation, Escalator Engineering, Structured Cabling, and Enterprise CCTV Infrastructure across Abu Dhabi and Dubai, UAE.</p>
+    <div class="wrap">
+      <div class="ft-grid">
+        <div class="ft-brand">
+          <a class="brand" href="index.html" style="margin-bottom:1rem; display:inline-flex;">
+            <svg viewBox="0 0 120 120" aria-hidden="true">
+              <rect width="120" height="120" rx="20" fill="#E08A1E"/>
+              <path d="M35 49 L60 29 L85 49" fill="none" stroke="#0E1115" stroke-width="10"/>
+              <path d="M35 70 L60 50 L85 70" fill="none" stroke="#0E1115" stroke-width="10" opacity=".62"/>
+              <path d="M35 91 L60 71 L85 91" fill="none" stroke="#0E1115" stroke-width="10" opacity=".34"/>
+            </svg>
+            <span class="nm">Al Dirayah</span>
+          </a>
+          <p>Specialized Vertical Transportation, Escalator Engineering, Structured Cabling, and Enterprise CCTV Infrastructure across Abu Dhabi and Dubai, UAE.</p>
+        </div>
+        <div class="ft-col">
+          <h4>DIVISIONS &amp; SERVICES</h4>
+          <ul>
+            <li><a href="lifts.html">Passenger Lifts (EN 81-20/50)</a></li>
+            <li><a href="escalators.html">Commercial Escalators (EN 115-1)</a></li>
+            <li><a href="accessibility-elevators.html">Accessibility Lifts (EN 81-70)</a></li>
+            <li><a href="cctv-elv.html">CCTV &amp; ELV Infrastructure</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h4>ABU DHABI HEADQUARTERS</h4>
+          <ul>
+            <li>Electromechanical Contracting LLC</li>
+            <li>Abu Dhabi, United Arab Emirates</li>
+            <li>Email: info@aldirayahllc.ae</li>
+            <li>24/7 Hotline: +971 2 678 9123</li>
+          </ul>
+        </div>
       </div>
-      <div class="ft-col">
-        <h4>PORTFOLIO</h4>
-        <ul>
-          <li><a href="lifts.html">Passenger Lifts</a></li>
-          <li><a href="escalators.html">Commercial Escalators</a></li>
-          <li><a href="accessibility-elevators.html">Accessibility Lifts</a></li>
-          <li><a href="cctv-elv.html">CCTV & ELV Systems</a></li>
-        </ul>
+      <div class="ft-btm">
+        <div>© 2026 AL DIRAYAH ELECTROMECHANICAL CONTRACTING LLC. ALL RIGHTS RESERVED.</div>
+        <div style="font-family:var(--f-a);">الدراية للمقاولات الكهروميكانيكية - Keep it moving</div>
       </div>
-      <div class="ft-col">
-        <h4>SOLUTIONS</h4>
-        <ul>
-          <li><a href="#">Structured Cabling</a></li>
-          <li><a href="#">Fiber Optic Trunking</a></li>
-          <li><a href="#">4K IP Surveillance</a></li>
-          <li><a href="#">SIRA Compliance</a></li>
-        </ul>
-      </div>
-      <div class="ft-col">
-        <h4>CONTACT</h4>
-        <ul>
-          <li>Abu Dhabi, United Arab Emirates</li>
-          <li>Email: info@aldirayahllc.ae</li>
-          <li>Phone: +971 2 678 9123</li>
-          <li>Emergency 24/7 Hotline</li>
-        </ul>
-      </div>
-    </div>
-    <div class="ft-btm">
-      <div>© 2026 AL DIRAYAH ELECTROMECHANICAL CONTRACTING LLC. ALL RIGHTS RESERVED.</div>
-      <div>EN 81-20 / EN 81-70 / TIA-568-D / SIRA / MCC CERTIFIED</div>
     </div>
   </footer>
 
+  <!-- SURVEY MODAL OVERLAY -->
+  <div class="modal-overlay" id="surveyModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeSurveyModal()">×</button>
+      <div style="font-family:var(--f-m);font-size:.75rem;color:var(--amber-lt);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:.3rem">TECHNICAL CONSULTATION</div>
+      <h3>Request Site Survey &amp; Audit</h3>
+      <p>Select your required product or service below to schedule an on-site technical inspection by an Al Dirayah senior engineer.</p>
+      <form onsubmit="handleSurveySubmit(event)">
+        <label>Product or Service Required *
+          <select id="mEquip" required>
+            <option value="CCTV & ELV Systems" selected>Enterprise CCTV & Structured Cabling (SIRA/MCC)</option>
+            <option value="MRL Gearless Passenger Elevators">MRL Gearless Passenger Elevators (EN 81-20/50)</option>
+            <option value="Commercial Escalators & Moving Walks">Commercial Escalators & Moving Walks (EN 115-1)</option>
+            <option value="Accessibility Lifts">Accessibility Lifts (EN 81-70)</option>
+          </select>
+        </label>
+        <label>Full Name *
+          <input type="text" placeholder="Eng. John Smith" required>
+        </label>
+        <label>Company / Project Name *
+          <input type="text" placeholder="Al Dirayah Commercial Tower" required>
+        </label>
+        <label>Phone / WhatsApp *
+          <input type="tel" placeholder="+971 50 123 4567" required>
+        </label>
+        <label>Project Details / Requirements
+          <textarea rows="3" placeholder="Specify number of cameras, cabling distance, or site location..."></textarea>
+        </label>
+        <button type="submit" class="cta-btn" style="background:var(--amber); color:var(--ink); font-weight:700; padding:1rem; margin-top:.5rem;">Submit Survey Request</button>
+      </form>
+    </div>
+  </div>
+
   <!-- INTERACTIVE SCRIPTS -->
   <script>
-    // -------------------------------------------------------------
-    // CCTV SCROLL GESTURES ENGINE & CAMERA HUD CONTROLLER (#camHud)
-    // -------------------------------------------------------------
+    // Header Stuck State on Scroll
+    window.addEventListener('scroll', () => {
+      const hdr = document.getElementById('hdr');
+      if (hdr) {
+        if (window.scrollY > 20) {
+          hdr.classList.add('stuck');
+        } else {
+          hdr.classList.remove('stuck');
+        }
+      }
+    }, { passive: true });
+
+    // Survey Modal Functions
+    function openSurveyModal(serviceName) {
+      const modal = document.getElementById('surveyModal');
+      if (modal) modal.classList.add('open');
+    }
+    function closeSurveyModal() {
+      const modal = document.getElementById('surveyModal');
+      if (modal) modal.classList.remove('open');
+    }
+    function handleSurveySubmit(e) {
+      e.preventDefault();
+      alert('Thank you! Your site survey request has been received. An Al Dirayah engineer will contact you shortly.');
+      closeSurveyModal();
+    }
+
+    // CCTV Scroll Gestures Engine & Camera HUD Controller (#camHud)
     (function() {
       const camSections = Array.from(document.querySelectorAll('[data-cam]'));
       const hudCamRead = document.getElementById('hudCamRead');
@@ -771,7 +886,6 @@
       let currentCamId = null;
       let toastTimer = null;
 
-      // 1. Generate Camera Node Items in Sidebar HUD
       camSections.forEach((sec, idx) => {
         const camId = sec.dataset.cam || ('0' + (idx + 1));
         const label = sec.dataset.label || ('CAM ' + camId);
@@ -790,13 +904,11 @@
 
       const lis = Array.from(camList.children);
 
-      // 2. Scroll Surveillance Tracking Engine
       function onScrollSurveillance() {
         const scrollY = window.scrollY;
         const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
         const progress = Math.max(0, Math.min(1, scrollY / (totalHeight || 1)));
 
-        // Update Scanline Beam Effect on Scroll
         if (scanlineBeam) {
           scanlineBeam.style.top = (progress * 98) + '%';
           scanlineBeam.classList.add('active');
@@ -804,12 +916,10 @@
           scanlineBeam._timer = setTimeout(() => scanlineBeam.classList.remove('active'), 400);
         }
 
-        // Update Camera HUD Marker Position
         if (camMarker) {
           camMarker.style.top = (progress * 82) + '%';
         }
 
-        // Determine Active Camera Section based on Viewport Midpoint
         const viewMid = scrollY + (window.innerHeight / 2);
         let activeSec = camSections[0];
 
@@ -830,11 +940,9 @@
           const tilt = activeSec.dataset.tilt || '0°';
           const zoom = activeSec.dataset.zoom || '1.0x';
 
-          // Update HUD Text Displays
           if (hudCamRead) hudCamRead.textContent = 'CAM-' + camId;
           if (hudPtz) hudPtz.innerHTML = `P: ${pan} | T: ${tilt}<br>ZOOM: ${zoom}`;
 
-          // Highlight active camera node in list
           lis.forEach(li => {
             if (li.dataset.camTarget === camId) {
               li.classList.add('active');
@@ -843,7 +951,6 @@
             }
           });
 
-          // Trigger Target Lock Toast on Camera Transition
           if (currentCamId !== camId) {
             currentCamId = camId;
             showTargetLockToast(camId, label);
@@ -866,9 +973,7 @@
       onScrollSurveillance();
     })();
 
-    // -------------------------------------------------------------
     // HUD Real-time Clock
-    // -------------------------------------------------------------
     function updateClock() {
       const now = new Date();
       const str = now.toISOString().replace('T', ' ').substring(0, 19);
@@ -878,9 +983,7 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // -------------------------------------------------------------
     // Hero CCTV Mode Switcher
-    // -------------------------------------------------------------
     function switchCctvMode(mode) {
       const btns = document.querySelectorAll('.ctrl-btn');
       btns.forEach(b => b.classList.remove('active'));
@@ -904,9 +1007,7 @@
       }
     }
 
-    // -------------------------------------------------------------
     // Scroll-driven 3D Exploded Disassembly Engine (#f2)
-    // -------------------------------------------------------------
     window.addEventListener('scroll', () => {
       const f2 = document.getElementById('f2');
       if (!f2) return;
@@ -950,9 +1051,7 @@
       }
     });
 
-    // -------------------------------------------------------------
     // Cabling Spec Studio Interactive Data
-    // -------------------------------------------------------------
     const specData = {
       cat6a: {
         title: 'Cat6A S/FTP Shielded Copper System',
