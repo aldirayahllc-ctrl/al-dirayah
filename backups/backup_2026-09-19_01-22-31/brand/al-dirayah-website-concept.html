@@ -1,0 +1,670 @@
+<title>Al Dirayah Motion Site</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap">
+
+<style>
+/* ─────────────────────────────────────────────────────────────
+   AL DIRAYAH — motion site concept
+   Deliberately single-theme: a dark shaft interior lit by amber.
+   Every colour painted explicitly; no theme inheritance.
+   ───────────────────────────────────────────────────────────── */
+:root{
+  --ink:#0E1115; --ink-2:#151A20; --surface:#1B2128; --surface-2:#232A33;
+  --line:#2B333D; --line-2:#3A4550;
+  --amber:#E08A1E; --amber-lt:#F5A93C; --amber-dim:#8A5A14;
+  --steel:#6E7885; --steel-lt:#9AA3B0; --paper:#E9E7E2; --white:#fff;
+  --f-d:"Barlow Condensed","Arial Narrow",sans-serif;
+  --f-b:"IBM Plex Sans",system-ui,sans-serif;
+  --f-m:"IBM Plex Mono",ui-monospace,monospace;
+  --f-a:"IBM Plex Sans Arabic",serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--ink); color:var(--paper);
+  font-family:var(--f-b); font-size:16px; line-height:1.6;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+h1,h2,h3{margin:0; text-wrap:balance; font-family:var(--f-d); font-weight:600; text-transform:uppercase; line-height:.95; letter-spacing:.01em}
+p{margin:0 0 1rem; max-width:62ch}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--amber); outline-offset:3px; border-radius:2px}
+.wrap{max-width:1180px; margin:0 auto; padding:0 clamp(1.1rem,4vw,2.5rem)}
+/* auto margins on a grid item defeat stretch — force full width inside grid parents */
+#hero > .wrap, .pin > .wrap{width:100%}
+.eyebrow{font-family:var(--f-m); font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; color:var(--amber); margin:0 0 1rem}
+.mono{font-family:var(--f-m); font-variant-numeric:tabular-nums}
+.ar{font-family:var(--f-a); direction:rtl; unicode-bidi:isolate}
+
+/* ── shaft backdrop (parallax) ─────────────────────────────── */
+#shaft{position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden}
+#dust{position:absolute; inset:0; width:100%; height:100%}
+.rail{position:absolute; top:-20vh; height:160vh; width:10px; background:
+  linear-gradient(90deg,#20272F 0%,#39424D 42%,#4A5560 50%,#39424D 58%,#20272F 100%);
+  box-shadow:0 0 30px rgba(0,0,0,.6)}
+.rail.l{left:7vw} .rail.r{right:7vw}
+#ticks{position:absolute; inset:0}
+.tick{position:absolute; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,#2A323B 12%,#2A323B 88%,transparent)}
+.tick b{position:absolute; left:calc(7vw + 22px); top:-9px; font-family:var(--f-m); font-size:.6rem; letter-spacing:.18em; color:#39434E}
+#glow{position:absolute; left:50%; top:0; width:min(1100px,120vw); height:60vh; transform:translateX(-50%);
+  background:radial-gradient(60% 60% at 50% 0%, rgba(224,138,30,.16), transparent 70%)}
+
+/* ── floor indicator ──────────────────────────────────────── */
+#fi{
+  position:fixed; right:clamp(.8rem,2.5vw,2rem); top:50%; transform:translateY(-50%);
+  z-index:40; background:#0A0D10; border:1px solid var(--line-2); border-radius:8px;
+  padding:.7rem .55rem; display:flex; flex-direction:column; align-items:center; gap:.5rem;
+  box-shadow:0 12px 40px rgba(0,0,0,.6);
+}
+#fi .arrow{font-size:.9rem; color:var(--amber); line-height:1; transition:transform .4s var(--ease), opacity .3s}
+#fi .read{
+  font-family:var(--f-m); font-weight:600; font-size:1.45rem; color:var(--amber-lt);
+  min-width:2.1ch; text-align:center; line-height:1;
+  text-shadow:0 0 14px rgba(245,169,60,.55);
+}
+#fi .bar{width:3px; height:120px; background:#1A2027; border-radius:2px; overflow:hidden; position:relative}
+#fi .bar i{position:absolute; left:0; right:0; top:0; background:linear-gradient(180deg,var(--amber-lt),var(--amber-dim)); height:0%}
+#fi ol{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.34rem}
+#fi ol li{font-family:var(--f-m); font-size:.6rem; color:#39434E; letter-spacing:.06em; transition:color .3s}
+#fi ol li[data-on]{color:var(--amber)}
+@media(max-width:700px){ #fi{padding:.5rem .4rem} #fi .bar{height:70px} #fi ol{display:none} }
+
+/* ── header ───────────────────────────────────────────────── */
+header{position:fixed; top:0; left:0; right:0; z-index:50; padding:1.1rem 0;
+  transition:background .4s, backdrop-filter .4s, border-color .4s;
+  border-bottom:1px solid transparent}
+header.stuck{background:rgba(14,17,21,.82); backdrop-filter:blur(14px); border-bottom-color:var(--line)}
+header .wrap{display:flex; align-items:center; justify-content:space-between; gap:1rem}
+.brand{display:flex; align-items:center; gap:.7rem}
+.brand svg{width:34px;height:34px;flex:none}
+.brand .nm{font-family:var(--f-d); font-size:1.4rem; letter-spacing:.045em; text-transform:uppercase; font-weight:600; color:var(--white)}
+nav{display:flex; gap:1.6rem}
+nav a{font-family:var(--f-m); font-size:.68rem; letter-spacing:.16em; text-transform:uppercase; color:var(--steel-lt); transition:color .25s}
+nav a:hover{color:var(--amber)}
+.cta{font-family:var(--f-m); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase;
+  border:1px solid var(--amber); color:var(--amber); padding:.5rem .9rem; border-radius:2px;
+  transition:background .25s,color .25s}
+.cta:hover{background:var(--amber); color:var(--ink)}
+@media(max-width:860px){ nav{display:none} }
+
+/* ── sections ─────────────────────────────────────────────── */
+main{position:relative; z-index:2}
+section{position:relative}
+.pad{padding:clamp(5rem,13vh,9rem) 0}
+
+/* hero */
+#hero{min-height:100svh; display:grid; align-content:center; padding-top:5rem}
+.h-line{overflow:hidden}
+.h-line span{display:block; transform:translateY(105%); opacity:0;
+  animation:rise 1.15s var(--ease) forwards}
+@keyframes rise{to{transform:translateY(0);opacity:1}}
+#hero h1{font-size:clamp(3.4rem,15vw,10.5rem); color:var(--white); letter-spacing:.005em}
+#hero h1 .am{color:var(--amber)}
+.h-sub{max-width:46ch; color:var(--steel-lt); font-size:clamp(1rem,1.7vw,1.18rem);
+  opacity:0; animation:fade 1s var(--ease) .75s forwards}
+@keyframes fade{to{opacity:1}}
+.h-meta{display:flex; flex-wrap:wrap; gap:.6rem 2rem; margin-top:2.4rem; font-family:var(--f-m);
+  font-size:.66rem; letter-spacing:.15em; text-transform:uppercase; color:var(--steel);
+  opacity:0; animation:fade 1s var(--ease) 1s forwards}
+.h-meta b{color:var(--paper); font-weight:500}
+.cue{margin-top:3.2rem; display:flex; align-items:center; gap:.6rem; font-family:var(--f-m);
+  font-size:.62rem; letter-spacing:.2em; text-transform:uppercase; color:var(--steel);
+  opacity:0; animation:fade 1s var(--ease) 1.3s forwards}
+.cue i{display:block; width:1px; height:44px; background:linear-gradient(180deg,var(--amber),transparent);
+  animation:drop 1.9s ease-in-out infinite}
+@keyframes drop{0%,100%{transform:scaleY(.35);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}}
+
+/* reveal */
+.rv{opacity:0; transform:translateY(34px); transition:opacity .9s var(--ease), transform .9s var(--ease)}
+.rv.in{opacity:1; transform:none}
+.rv[data-d="1"]{transition-delay:.09s} .rv[data-d="2"]{transition-delay:.18s}
+.rv[data-d="3"]{transition-delay:.27s} .rv[data-d="4"]{transition-delay:.36s}
+
+h2.big{font-size:clamp(2.3rem,6.5vw,4.6rem); color:var(--white); margin-bottom:1.2rem}
+.lede{font-size:clamp(1.02rem,1.6vw,1.2rem); color:var(--steel-lt); max-width:56ch}
+
+/* system cards */
+.sys{display:grid; gap:1px; background:var(--line); border:1px solid var(--line);
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); margin-top:3rem}
+.sys article{background:var(--ink-2); padding:1.8rem 1.5rem 2rem; position:relative; overflow:hidden;
+  transition:background .4s}
+.sys article:hover{background:var(--surface)}
+.sys article::after{content:""; position:absolute; left:0; right:0; top:0; height:2px;
+  background:var(--amber); transform:scaleX(0); transform-origin:left; transition:transform .55s var(--ease)}
+.sys article:hover::after{transform:scaleX(1)}
+.sys h3{font-size:1.9rem; color:var(--white); margin-bottom:.5rem}
+.sys p{font-size:.9rem; color:var(--steel-lt); margin:0}
+.sys .n{font-family:var(--f-m); font-size:.62rem; color:var(--amber); letter-spacing:.16em; display:block; margin-bottom:1.1rem}
+
+/* stats */
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1px;
+  background:var(--line); border:1px solid var(--line); margin-top:3rem}
+.stats div{background:var(--ink-2); padding:1.6rem 1.3rem}
+.stats .v{font-family:var(--f-d); font-size:clamp(2.4rem,5vw,3.4rem); color:var(--amber); line-height:1}
+.stats .k{font-family:var(--f-m); font-size:.63rem; letter-spacing:.15em; text-transform:uppercase; color:var(--steel); margin-top:.4rem}
+
+/* pinned sections */
+.pinwrap{position:relative}
+.pin{position:sticky; top:0; height:100svh; display:grid; align-content:center; overflow:hidden}
+
+/* exploded view */
+.ex{display:grid; gap:2rem; align-items:center; grid-template-columns:1fr}
+@media(min-width:940px){ .ex{grid-template-columns:minmax(0,1fr) 340px} }
+.ex figure{margin:0}
+.ex svg{display:block; width:100%; max-width:620px; margin:0 auto; height:auto; max-height:62svh}
+@media(max-width:939px){
+  .ex svg{max-height:38svh}
+  .ex .parts li{padding:.3rem .1rem; font-size:.78rem}
+  .ex .parts li .ix{font-size:.6rem}
+  .ex > div > h2{font-size:1.7rem !important}
+  .ex > div > p{display:none}
+  .ex{gap:1.1rem}
+}
+.ex .parts{display:flex; flex-direction:column; gap:.15rem}
+.ex .parts li{list-style:none; display:grid; grid-template-columns:26px 1fr; gap:.7rem;
+  padding:.5rem .1rem; border-bottom:1px solid var(--line); font-size:.88rem; color:#4E5864;
+  transition:color .35s, border-color .35s}
+.ex .parts li .ix{font-family:var(--f-m); font-size:.66rem}
+.ex .parts li[data-on]{color:var(--paper); border-color:var(--line-2)}
+.ex .parts li[data-on] .ix{color:var(--amber)}
+.expl-g{transition:transform .05s linear}
+
+/* horizontal process */
+.htrack{display:flex; gap:clamp(1rem,3vw,2.4rem); padding:0 clamp(1.1rem,6vw,7rem); will-change:transform}
+.step{flex:0 0 min(78vw,440px); background:var(--ink-2); border:1px solid var(--line);
+  padding:2rem 1.7rem; display:flex; flex-direction:column; gap:.7rem; position:relative}
+.step .num{font-family:var(--f-d); font-size:4.4rem; color:var(--surface-2); line-height:.8; position:absolute; right:1.2rem; top:1rem}
+.step h3{font-size:1.6rem; color:var(--white); position:relative}
+.step p{font-size:.9rem; color:var(--steel-lt); margin:0; position:relative}
+.step .tag{font-family:var(--f-m); font-size:.6rem; letter-spacing:.16em; text-transform:uppercase; color:var(--amber)}
+
+/* meters */
+.meters{display:grid; gap:1.3rem; margin-top:2.4rem; max-width:520px}
+.meter .top{display:flex; justify-content:space-between; font-family:var(--f-m); font-size:.68rem;
+  letter-spacing:.11em; text-transform:uppercase; color:var(--steel); margin-bottom:.45rem}
+.meter .top b{color:var(--amber-lt); font-weight:500}
+.meter .track{height:4px; background:var(--surface-2); border-radius:2px; overflow:hidden}
+.meter .track i{display:block; height:100%; width:0;
+  background:linear-gradient(90deg,var(--amber-dim),var(--amber-lt));
+  transition:width 1.5s var(--ease)}
+
+/* configurator */
+.cfg{display:grid; gap:2.4rem; grid-template-columns:1fr}
+@media(min-width:940px){ .cfg{grid-template-columns:1fr 300px; align-items:center} }
+.cfg figure{margin:0}
+.cfg svg{display:block; width:100%; max-width:420px; margin:0 auto; height:auto; max-height:60svh}
+.swatches{display:grid; gap:.55rem}
+.sw{display:grid; grid-template-columns:34px 1fr; gap:.85rem; align-items:center; width:100%;
+  background:transparent; border:1px solid var(--line); color:var(--steel-lt);
+  padding:.6rem .7rem; cursor:pointer; text-align:left; font-family:var(--f-b); font-size:.85rem;
+  transition:border-color .3s,color .3s,background .3s}
+.sw:hover{border-color:var(--line-2); color:var(--paper)}
+.sw[aria-pressed="true"]{border-color:var(--amber); color:var(--white); background:rgba(224,138,30,.07)}
+.sw .chip{width:34px; height:24px; border-radius:2px; border:1px solid rgba(255,255,255,.14)}
+.sw .lbl b{display:block; font-family:var(--f-m); font-size:.58rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--steel); font-weight:500}
+
+/* contact */
+#ph{background:var(--ink-2); border-top:1px solid var(--line)}
+.ctarow{display:grid; gap:2rem; grid-template-columns:1fr}
+@media(min-width:860px){ .ctarow{grid-template-columns:1.3fr 1fr; align-items:end} }
+.big-cta{display:inline-flex; align-items:center; gap:.8rem; background:var(--amber); color:var(--ink);
+  font-family:var(--f-d); text-transform:uppercase; font-size:1.5rem; letter-spacing:.03em;
+  padding:.75rem 1.6rem; border-radius:2px; transition:transform .3s var(--ease), background .3s}
+.big-cta:hover{background:var(--amber-lt); transform:translateX(6px)}
+.dl{display:grid; gap:.5rem; font-family:var(--f-m); font-size:.82rem; color:var(--steel-lt)}
+.dl b{color:var(--steel); font-weight:400; letter-spacing:.12em; font-size:.62rem; text-transform:uppercase; display:block}
+footer{border-top:1px solid var(--line); padding:2.2rem 0; font-family:var(--f-m); font-size:.68rem;
+  letter-spacing:.09em; color:#49535E; display:flex; flex-wrap:wrap; gap:.7rem 2rem; justify-content:space-between}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms !important; animation-iteration-count:1 !important;
+    transition-duration:.01ms !important}
+  .h-line span,.h-sub,.h-meta,.cue{transform:none !important; opacity:1 !important; animation:none !important}
+  .rv{opacity:1 !important; transform:none !important}
+  .pin{position:relative; height:auto; padding:4rem 0}
+  #dust{display:none}
+}
+</style>
+
+<!-- ══════════ shaft backdrop ══════════ -->
+<div id="shaft" aria-hidden="true">
+  <div id="glow"></div>
+  <div class="rail l"></div>
+  <div class="rail r"></div>
+  <div id="ticks"></div>
+  <canvas id="dust"></canvas>
+</div>
+
+<!-- ══════════ floor indicator ══════════ -->
+<aside id="fi" aria-label="Floor indicator">
+  <span class="arrow" id="fiArrow">▲</span>
+  <span class="read" id="fiRead">L</span>
+  <div class="bar"><i id="fiBar"></i></div>
+  <ol id="fiList"></ol>
+</aside>
+
+<header id="hdr">
+  <div class="wrap">
+    <a class="brand" href="#hero">
+      <svg viewBox="0 0 120 120" aria-hidden="true">
+        <rect width="120" height="120" rx="20" fill="#E08A1E"/>
+        <path d="M35 49 L60 29 L85 49" fill="none" stroke="#0E1115" stroke-width="10"/>
+        <path d="M35 70 L60 50 L85 70" fill="none" stroke="#0E1115" stroke-width="10" opacity=".62"/>
+        <path d="M35 91 L60 71 L85 91" fill="none" stroke="#0E1115" stroke-width="10" opacity=".34"/>
+      </svg>
+      <span class="nm">Al Dirayah</span>
+    </a>
+    <nav>
+      <a href="#l">Systems</a><a href="#f2">Anatomy</a><a href="#f3">Process</a><a href="#f4">Configure</a>
+    </nav>
+    <a class="cta" href="#ph">Request a survey</a>
+  </div>
+</header>
+
+<main>
+
+<!-- ══════════ HERO ══════════ -->
+<section id="hero" data-floor="L" data-label="Lobby">
+  <div class="wrap">
+    <p class="eyebrow" style="opacity:0;animation:fade .9s var(--ease) .5s forwards">Abu Dhabi · Electromechanical Contracting</p>
+    <h1>
+      <span class="h-line"><span style="animation-delay:.05s">Keep</span></span>
+      <span class="h-line"><span style="animation-delay:.17s">it</span></span>
+      <span class="h-line"><span class="am" style="animation-delay:.29s">Moving</span></span>
+    </h1>
+    <p class="h-sub" style="margin-top:1.8rem">We supply, install and maintain the systems that move, power, connect and protect Abu Dhabi's buildings — with the certified know-how to be trusted with all four.</p>
+    <div class="h-meta">
+      <span>Lifts &amp; escalators</span><span>MEP</span><span>Power networks</span><span>Low current</span>
+      <span class="ar" style="letter-spacing:0">الدراية</span>
+    </div>
+    <div class="cue"><i></i> Scroll to ascend</div>
+  </div>
+</section>
+
+<!-- ══════════ L — SYSTEMS ══════════ -->
+<section id="l" class="pad" data-floor="1" data-label="Systems">
+  <div class="wrap">
+    <p class="eyebrow rv">01 — What we do</p>
+    <h2 class="big rv" data-d="1">Four systems.<br>One contractor.</h2>
+    <p class="lede rv" data-d="2">A building needs things that move it, power it, connect it and protect it. Most owners buy those from four different companies and spend their week chasing all four. We are the single number.</p>
+    <div class="sys">
+      <article class="rv"><span class="n">/ 01</span><h3>Move</h3><p>Lifts, escalators and moving walkways. Installation, repair, modernisation and annual maintenance — as approved subcontractor to TKE, OTIS and KONE.</p></article>
+      <article class="rv" data-d="1"><span class="n">/ 02</span><h3>Power</h3><p>Electromechanical plant, power distribution networks, substations and transmission line contracting.</p></article>
+      <article class="rv" data-d="2"><span class="n">/ 03</span><h3>Connect</h3><p>Structured cabling and network infrastructure, commissioned and certified to standard.</p></article>
+      <article class="rv" data-d="3"><span class="n">/ 04</span><h3>Protect</h3><p>CCTV, surveillance and access control, delivered by ADMCC-registered technicians.</p></article>
+    </div>
+    <div class="stats">
+      <div class="rv"><div class="v"><span class="cnt" data-to="24">0</span>/7</div><div class="k">Callout response</div></div>
+      <div class="rv" data-d="1"><div class="v"><span class="cnt" data-to="8">0</span></div><div class="k">Licensed activities</div></div>
+      <div class="rv" data-d="2"><div class="v"><span class="cnt" data-to="3">0</span></div><div class="k">OEM principals</div></div>
+      <div class="rv" data-d="3"><div class="v"><span class="cnt" data-to="100">0</span>%</div><div class="k">Genuine parts</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 2 — EXPLODED ANATOMY (pinned) ══════════ -->
+<section id="f2" class="pinwrap" style="height:340svh" data-floor="2" data-label="Anatomy">
+  <div class="pin">
+    <div class="wrap">
+      <div class="ex">
+        <figure>
+          <svg id="exSvg" viewBox="0 0 640 560" width="640" height="560" role="img" aria-label="Exploded view of a traction lift assembly">
+            <defs>
+              <linearGradient id="metal" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#2A323B"/><stop offset=".45" stop-color="#4A5560"/>
+                <stop offset=".55" stop-color="#5A6672"/><stop offset="1" stop-color="#2A323B"/>
+              </linearGradient>
+              <linearGradient id="cab" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#333C46"/><stop offset=".5" stop-color="#59646F"/><stop offset="1" stop-color="#333C46"/>
+              </linearGradient>
+            </defs>
+
+            <!-- static shaft guides -->
+            <g opacity=".26" stroke="#2B333D" stroke-width="1" stroke-dasharray="3 5">
+              <line x1="196" y1="20" x2="196" y2="540"/><line x1="444" y1="20" x2="444" y2="540"/>
+            </g>
+
+            <!-- 6 · buffer -->
+            <g class="expl-g" data-dx="0" data-dy="70" data-ix="6">
+              <rect x="290" y="486" width="60" height="16" fill="#39434E"/>
+              <rect x="304" y="452" width="32" height="36" rx="3" fill="url(#metal)"/>
+              <rect x="298" y="446" width="44" height="8" rx="2" fill="#5A6672"/>
+            </g>
+
+            <!-- 2 · guide rails -->
+            <g class="expl-g" data-dx="-132" data-dy="0" data-ix="2">
+              <rect x="188" y="96" width="15" height="360" rx="2" fill="url(#metal)"/>
+              <rect x="193" y="96" width="5" height="360" fill="#6D7885" opacity=".55"/>
+            </g>
+            <g class="expl-g" data-dx="132" data-dy="0" data-ix="2">
+              <rect x="437" y="96" width="15" height="360" rx="2" fill="url(#metal)"/>
+              <rect x="442" y="96" width="5" height="360" fill="#6D7885" opacity=".55"/>
+            </g>
+
+            <!-- 3 · counterweight -->
+            <g class="expl-g" data-dx="158" data-dy="0" data-ix="3">
+              <rect x="462" y="228" width="34" height="120" rx="3" fill="#2F3841" stroke="#4A5560"/>
+              <g fill="#4A5560">
+                <rect x="467" y="238" width="24" height="12"/><rect x="467" y="256" width="24" height="12"/>
+                <rect x="467" y="274" width="24" height="12"/><rect x="467" y="292" width="24" height="12"/>
+                <rect x="467" y="310" width="24" height="12"/><rect x="467" y="328" width="24" height="12"/>
+              </g>
+            </g>
+
+            <!-- 1 · hoist machine + rope -->
+            <g class="expl-g" data-dx="0" data-dy="-74" data-ix="1">
+              <rect x="262" y="34" width="116" height="52" rx="5" fill="#333C46" stroke="#4F5A66"/>
+              <rect x="274" y="46" width="34" height="28" rx="2" fill="#5A6672"/>
+              <circle cx="348" cy="60" r="17" fill="none" stroke="#6D7885" stroke-width="5"/>
+              <circle cx="348" cy="60" r="4" fill="#8E98A5"/>
+              <g stroke="#5A6672" stroke-width="2" opacity=".85">
+                <line x1="332" y1="66" x2="332" y2="188"/><line x1="364" y1="66" x2="364" y2="226"/>
+              </g>
+            </g>
+
+            <!-- 4 · car frame (anchor, stays) -->
+            <g class="expl-g" data-dx="0" data-dy="0" data-ix="4">
+              <rect x="248" y="182" width="144" height="14" rx="2" fill="url(#metal)"/>
+              <rect x="248" y="404" width="144" height="14" rx="2" fill="url(#metal)"/>
+              <rect x="248" y="188" width="12" height="224" fill="#3C4650"/>
+              <rect x="380" y="188" width="12" height="224" fill="#3C4650"/>
+            </g>
+
+            <!-- 5 · cabin + doors -->
+            <g class="expl-g" data-dx="-196" data-dy="0" data-ix="5">
+              <rect x="262" y="198" width="116" height="204" rx="2" fill="url(#cab)" stroke="#6D7885" stroke-width="1.2"/>
+              <rect x="270" y="206" width="100" height="188" fill="#212932"/>
+              <rect x="276" y="212" width="42" height="176" fill="#3E4954" stroke="#7A8593" stroke-width=".8"/>
+              <rect x="322" y="212" width="42" height="176" fill="#3E4954" stroke="#7A8593" stroke-width=".8"/>
+              <line x1="320" y1="212" x2="320" y2="388" stroke="#0E1115" stroke-width="2"/>
+              <rect x="366" y="240" width="8" height="34" rx="2" fill="#E08A1E" opacity=".9"/>
+            </g>
+          </svg>
+        </figure>
+        <div>
+          <p class="eyebrow">02 — Anatomy</p>
+          <h2 class="big" style="font-size:clamp(2rem,4.4vw,3.2rem)">Everything we<br>are certified on</h2>
+          <p style="font-size:.94rem;color:var(--steel-lt)">Scroll to separate the assembly. Every component below is one our technicians are trained and certified to install, inspect and replace.</p>
+          <ul class="parts" id="parts">
+            <li data-p="1"><span class="ix">01</span><span>Hoist machine &amp; sheave</span></li>
+            <li data-p="2"><span class="ix">02</span><span>Guide rails &amp; brackets</span></li>
+            <li data-p="3"><span class="ix">03</span><span>Counterweight assembly</span></li>
+            <li data-p="4"><span class="ix">04</span><span>Car frame &amp; safety gear</span></li>
+            <li data-p="5"><span class="ix">05</span><span>Cabin &amp; door operator</span></li>
+            <li data-p="6"><span class="ix">06</span><span>Buffers &amp; pit equipment</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 3 — PROCESS (pinned horizontal) ══════════ -->
+<section id="f3" class="pinwrap" style="height:400svh" data-floor="3" data-label="Process">
+  <div class="pin">
+    <div class="wrap" style="margin-bottom:2.4rem">
+      <p class="eyebrow">03 — How it runs</p>
+      <h2 class="big" style="font-size:clamp(2rem,5vw,3.6rem)">From survey to handover</h2>
+    </div>
+    <div class="htrack" id="htrack">
+      <article class="step"><span class="num">01</span><span class="tag">Week 1</span><h3>Survey</h3><p>Site attendance, shaft and machine-room measurement, load and traffic assessment, and a written condition report on existing equipment.</p></article>
+      <article class="step"><span class="num">02</span><span class="tag">Weeks 2–3</span><h3>Design &amp; approvals</h3><p>Shop drawings, method statement and risk assessment, DMT and authority submissions, and OEM coordination where we are working under a principal.</p></article>
+      <article class="step"><span class="num">03</span><span class="tag">Weeks 4–10</span><h3>Installation</h3><p>Rail alignment, machine set, car assembly and roping, executed under an OSHAD-compliant safety plan with daily permit control.</p></article>
+      <article class="step"><span class="num">04</span><span class="tag">Week 11</span><h3>Test &amp; commission</h3><p>Load testing, overspeed and brake verification, door timing, and third-party inspection witnessed to standard.</p></article>
+      <article class="step"><span class="num">05</span><span class="tag">Ongoing</span><h3>Maintain</h3><p>Planned preventive visits on a fixed schedule, 24/7 callout, genuine spare parts held locally, and a written report after every attendance.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ 4 — CONFIGURATOR ══════════ -->
+<section id="f4" class="pad" data-floor="4" data-label="Configure">
+  <div class="wrap">
+    <p class="eyebrow rv">04 — Specify</p>
+    <h2 class="big rv" data-d="1" style="font-size:clamp(2rem,5vw,3.6rem)">Choose a cabin finish</h2>
+    <p class="lede rv" data-d="2" style="margin-bottom:2.6rem">A working sample of the specification tool. On the live site this would carry the real finish library, load ratings and a downloadable schedule for your consultant.</p>
+    <div class="cfg rv" data-d="3">
+      <figure>
+        <svg id="cabSvg" viewBox="0 0 320 400" width="320" height="400" role="img" aria-label="Lift cabin interior preview">
+          <rect width="320" height="400" fill="#141A20"/>
+          <!-- back wall -->
+          <polygon id="cWallB" points="80,80 240,80 240,330 80,330" fill="#4A5560"/>
+          <!-- side walls -->
+          <polygon id="cWallL" points="20,32 80,80 80,330 20,378" fill="#3A434D"/>
+          <polygon id="cWallR" points="300,32 240,80 240,330 300,378" fill="#333C46"/>
+          <!-- ceiling + floor -->
+          <polygon points="20,32 300,32 240,80 80,80" fill="#232A33"/>
+          <polygon id="cFloor" points="20,378 300,378 240,330 80,330" fill="#2A313A"/>
+          <!-- ceiling light -->
+          <rect x="112" y="48" width="96" height="9" rx="4" fill="#F5E6C8" opacity=".92"/>
+          <ellipse cx="160" cy="120" rx="130" ry="52" fill="#F5E6C8" opacity=".07"/>
+          <!-- handrail -->
+          <rect id="cRail" x="88" y="228" width="144" height="5" rx="2.5" fill="#98A3B0"/>
+          <!-- COP panel -->
+          <rect x="250" y="150" width="20" height="96" rx="3" fill="#1B2128" stroke="#4A5560"/>
+          <g fill="#E08A1E">
+            <circle cx="260" cy="166" r="3.4"/><circle cx="260" cy="182" r="3.4"/>
+            <circle cx="260" cy="198" r="3.4"/><circle cx="260" cy="214" r="3.4"/>
+          </g>
+          <rect x="252" y="228" width="16" height="10" rx="2" fill="#0E1115"/>
+          <text x="260" y="236" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="7" fill="#F5A93C">12</text>
+          <!-- mirror -->
+          <rect id="cMirror" x="104" y="112" width="112" height="104" fill="#5E6975" opacity=".5"/>
+        </svg>
+      </figure>
+      <div>
+        <div class="swatches" id="swatches">
+          <button class="sw" aria-pressed="true" data-b="#4A5560" data-l="#3A434D" data-r="#333C46" data-f="#2A313A" data-rail="#98A3B0">
+            <span class="chip" style="background:#4A5560"></span><span class="lbl"><b>ST-01</b>Brushed stainless</span></button>
+          <button class="sw" aria-pressed="false" data-b="#2A313A" data-l="#222831" data-r="#1C222A" data-f="#171C23" data-rail="#E08A1E">
+            <span class="chip" style="background:#2A313A"></span><span class="lbl"><b>GR-04</b>Graphite with brass rail</span></button>
+          <button class="sw" aria-pressed="false" data-b="#6B5636" data-l="#57452B" data-r="#4A3B25" data-f="#33291A" data-rail="#D9C08A">
+            <span class="chip" style="background:#6B5636"></span><span class="lbl"><b>WD-02</b>Walnut veneer</span></button>
+          <button class="sw" aria-pressed="false" data-b="#D8D4CC" data-l="#C2BEB5" data-r="#B0ACA3" data-f="#8E8A82" data-rail="#5A6672">
+            <span class="chip" style="background:#D8D4CC"></span><span class="lbl"><b>MB-06</b>Marble composite</span></button>
+        </div>
+        <div class="meters" id="meters" style="margin-top:2rem">
+          <div class="meter"><div class="top"><span>Rated load</span><b>1600 kg</b></div><div class="track"><i data-w="80"></i></div></div>
+          <div class="meter"><div class="top"><span>Rated speed</span><b>1.75 m/s</b></div><div class="track"><i data-w="62"></i></div></div>
+          <div class="meter"><div class="top"><span>Capacity</span><b>21 persons</b></div><div class="track"><i data-w="70"></i></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ PH — CONTACT ══════════ -->
+<section id="ph" class="pad" data-floor="PH" data-label="Contact">
+  <div class="wrap">
+    <div class="ctarow">
+      <div>
+        <p class="eyebrow rv">Penthouse — Get in touch</p>
+        <h2 class="big rv" data-d="1">Book a site survey</h2>
+        <p class="lede rv" data-d="2" style="margin-bottom:2rem">Tell us the building, the equipment and the problem. We attend, measure, and come back with a written report and a fixed price.</p>
+        <a class="big-cta rv" data-d="3" href="#ph">Request a survey →</a>
+      </div>
+      <div class="dl rv" data-d="2">
+        <div><b>Office</b>Mussafah Industrial Area, Abu Dhabi</div>
+        <div><b>Service desk</b>+971 __ ___ ____ · 24/7</div>
+        <div><b>Email</b>service@aldirayah.ae</div>
+        <div><b>Web</b>aldirayah.ae</div>
+        <div class="ar" style="font-size:1.15rem;color:var(--steel-lt);margin-top:.5rem">الدراية للمقاولات الكهروميكانيكية</div>
+      </div>
+    </div>
+    <footer>
+      <span>© 2026 Al Dirayah Electromechanical Contracting LLC</span>
+      <span>Keep it moving · الحركة لا تتوقف</span>
+    </footer>
+  </div>
+</section>
+
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var RM = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var clamp = function(v,a,b){ return v<a?a:v>b?b:v; };
+
+  /* ── floor indicator + ticks ─────────────────────────── */
+  var secs = Array.prototype.slice.call(document.querySelectorAll("[data-floor]"));
+  var fiRead=document.getElementById("fiRead"), fiBar=document.getElementById("fiBar"),
+      fiArrow=document.getElementById("fiArrow"), fiList=document.getElementById("fiList"),
+      hdr=document.getElementById("hdr");
+
+  secs.forEach(function(s){
+    var li=document.createElement("li"); li.textContent=s.dataset.floor; fiList.appendChild(li);
+  });
+  var lis=fiList.children;
+
+  var ticks=document.getElementById("ticks");
+  if(!RM){
+    for(var i=0;i<26;i++){
+      var t=document.createElement("div"); t.className="tick";
+      t.style.top=(i*140)+"px";
+      t.innerHTML="<b>"+String(i*3+2).padStart(2,"0")+"</b>";
+      ticks.appendChild(t);
+    }
+  }
+
+  /* ── dust particles ──────────────────────────────────── */
+  var cv=document.getElementById("dust"), ctx=cv&&cv.getContext("2d"), P=[], W=0, H=0;
+  function sizeCv(){ if(!cv) return; W=cv.width=innerWidth; H=cv.height=innerHeight; }
+  function seed(){
+    P=[]; var n=Math.min(70,Math.round(innerWidth/22));
+    for(var i=0;i<n;i++) P.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.5+.35,
+      v:Math.random()*.35+.08,o:Math.random()*.4+.08});
+  }
+  function dust(){
+    if(!ctx) return;
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<P.length;i++){
+      var p=P[i]; p.y-=p.v; if(p.y<-4){ p.y=H+4; p.x=Math.random()*W; }
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,6.283);
+      ctx.fillStyle="rgba(224,152,60,"+p.o+")"; ctx.fill();
+    }
+    requestAnimationFrame(dust);
+  }
+  if(!RM && cv){ sizeCv(); seed(); dust(); addEventListener("resize",function(){ sizeCv(); seed(); },{passive:true}); }
+
+  /* ── scroll engine ───────────────────────────────────── */
+  var explG = Array.prototype.slice.call(document.querySelectorAll(".expl-g"));
+  var parts = document.getElementById("parts");
+  var htrack = document.getElementById("htrack");
+  var f2 = document.getElementById("f2"), f3 = document.getElementById("f3");
+  var lastY = 0, ticking = false;
+
+  function frame(){
+    ticking = false;
+    var y = scrollY, vh = innerHeight, doc = document.documentElement;
+
+    hdr.classList.toggle("stuck", y > 40);
+
+    /* progress bar */
+    var total = doc.scrollHeight - vh;
+    fiBar.style.height = clamp(y/total*100,0,100) + "%";
+
+    /* direction arrow */
+    if(Math.abs(y-lastY) > 1){
+      fiArrow.style.transform = (y > lastY) ? "rotate(180deg)" : "rotate(0deg)";
+      lastY = y;
+    }
+
+    /* active floor */
+    var act = 0;
+    for(var i=0;i<secs.length;i++){
+      if(secs[i].getBoundingClientRect().top <= vh*0.45) act = i;
+    }
+    if(fiRead.textContent !== secs[act].dataset.floor){
+      fiRead.textContent = secs[act].dataset.floor;
+    }
+    for(var j=0;j<lis.length;j++){
+      if(j===act) lis[j].setAttribute("data-on",""); else lis[j].removeAttribute("data-on");
+    }
+
+    /* shaft parallax */
+    if(!RM){
+      ticks.style.transform = "translate3d(0," + (-(y*0.32) % 140) + "px,0)";
+      document.querySelector(".rail.l").style.transform = "translate3d(0," + (-(y*0.12) % 200) + "px,0)";
+      document.querySelector(".rail.r").style.transform = "translate3d(0," + (-(y*0.18) % 200) + "px,0)";
+    }
+
+    /* exploded view */
+    if(f2 && !RM){
+      var r2 = f2.getBoundingClientRect();
+      var p2 = clamp((-r2.top) / (f2.offsetHeight - vh), 0, 1);
+      var e = p2 < .5 ? 4*p2*p2*p2 : 1-Math.pow(-2*p2+2,3)/2;   /* easeInOutCubic */
+      explG.forEach(function(g){
+        var dx = (+g.dataset.dx||0)*e, dy = (+g.dataset.dy||0)*e;
+        g.setAttribute("transform","translate("+dx.toFixed(2)+","+dy.toFixed(2)+")");
+      });
+      if(parts){
+        var idx = clamp(Math.floor(e*6)+1,1,6);
+        for(var k=0;k<parts.children.length;k++){
+          var li=parts.children[k];
+          if(e>0.04 && (+li.dataset.p)<=idx) li.setAttribute("data-on",""); else li.removeAttribute("data-on");
+        }
+      }
+    }
+
+    /* horizontal process */
+    if(f3 && htrack){
+      if(RM){ htrack.style.transform="none"; }
+      else{
+        var r3 = f3.getBoundingClientRect();
+        var p3 = clamp((-r3.top) / (f3.offsetHeight - vh), 0, 1);
+        var span = htrack.scrollWidth - innerWidth;
+        htrack.style.transform = "translate3d(" + (-(span>0?span:0) * p3).toFixed(2) + "px,0,0)";
+      }
+    }
+  }
+  addEventListener("scroll", function(){ if(!ticking){ ticking=true; requestAnimationFrame(frame); } },{passive:true});
+  addEventListener("resize", frame, {passive:true});
+
+  /* ── reveals, counters, meters ───────────────────────── */
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(en){
+      if(!en.isIntersecting) return;
+      var el = en.target;
+      el.classList.add("in");
+      el.querySelectorAll && Array.prototype.forEach.call(el.querySelectorAll(".cnt"), function(c){
+        if(c.dataset.done) return; c.dataset.done="1";
+        var to = +c.dataset.to, t0 = performance.now(), dur = 1100;
+        (function step(t){
+          var p = clamp((t-t0)/dur,0,1), e = 1-Math.pow(1-p,3);
+          c.textContent = Math.round(to*e);
+          if(p<1) requestAnimationFrame(step);
+        })(t0);
+      });
+      io.unobserve(el);
+    });
+  },{threshold:.18, rootMargin:"0px 0px -8% 0px"});
+  document.querySelectorAll(".rv").forEach(function(el){ io.observe(el); });
+
+  var mio = new IntersectionObserver(function(es){
+    es.forEach(function(en){
+      if(!en.isIntersecting) return;
+      en.target.querySelectorAll(".track i").forEach(function(b){ b.style.width = b.dataset.w + "%"; });
+      mio.unobserve(en.target);
+    });
+  },{threshold:.35});
+  var mtr = document.getElementById("meters"); if(mtr) mio.observe(mtr);
+
+  /* ── configurator ────────────────────────────────────── */
+  var sw = document.getElementById("swatches");
+  if(sw){
+    sw.addEventListener("click", function(ev){
+      var b = ev.target.closest(".sw"); if(!b) return;
+      Array.prototype.forEach.call(sw.children, function(x){ x.setAttribute("aria-pressed","false"); });
+      b.setAttribute("aria-pressed","true");
+      var set = function(id,v){ var n=document.getElementById(id); if(n) n.style.transition="fill .55s cubic-bezier(.16,1,.3,1)", n.setAttribute("fill",v); };
+      set("cWallB", b.dataset.b); set("cWallL", b.dataset.l);
+      set("cWallR", b.dataset.r); set("cFloor", b.dataset.f);
+      var rail=document.getElementById("cRail"); if(rail){ rail.style.transition="fill .55s"; rail.setAttribute("fill", b.dataset.rail); }
+    });
+  }
+
+  frame();
+})();
+</script>

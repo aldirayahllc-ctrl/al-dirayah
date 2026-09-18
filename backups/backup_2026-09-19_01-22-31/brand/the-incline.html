@@ -1,0 +1,276 @@
+<title>The Incline</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   THE INCLINE — a scroll study that rides like an escalator
+   Three 100vh sections. Section 2 travels diagonally, up and right,
+   driven directly off the scroll timeline.
+   ═══════════════════════════════════════════════════════════════ */
+:root{
+  --slate:#22272E;          /* dark slate ground */
+  --slate-d:#191D23;        /* deeper slate */
+  --slate-l:#2C333B;        /* raised slate */
+  --groove:rgba(255,255,255,.028);
+  --yellow:#F5C518;         /* escalator demarcation yellow */
+  --ink:#0D1014;
+  --paper:#E9E7E2;
+  --muted:#98A0AB;
+  --dim:#6E7885;
+  --rail:20px;              /* handrail width, per spec */
+  --f-d:"Barlow Condensed","Arial Narrow",sans-serif;
+  --f-b:"IBM Plex Sans",system-ui,sans-serif;
+  --f-m:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--slate);
+  color:var(--paper);
+  font-family:var(--f-b);
+  line-height:1.6;
+  overflow-x:hidden;               /* the +200px travel must not create a scrollbar */
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2{margin:0; font-family:var(--f-d); font-weight:600; text-transform:uppercase;
+  line-height:.94; letter-spacing:.012em; text-wrap:balance}
+p{margin:0 0 1rem}
+:focus-visible{outline:2px solid var(--yellow); outline-offset:3px}
+
+/* ── tread texture: 30° grooves, per spec ─────────────────────── */
+#treads{
+  position:fixed; inset:-30%;
+  z-index:0; pointer-events:none;
+  background:repeating-linear-gradient(
+    30deg,
+    transparent      0px,
+    transparent      11px,
+    var(--groove)    11px,
+    var(--groove)    13px,
+    rgba(0,0,0,.16)  13px,
+    rgba(0,0,0,.16)  15px
+  );
+}
+#wash{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:radial-gradient(72% 52% at 42% 8%, rgba(245,197,24,.075), transparent 68%);
+}
+
+/* ── the handrail: fixed 20px black bar, right edge ───────────── */
+#handrail{
+  position:fixed; top:0; right:0; bottom:0;
+  width:var(--rail);
+  background:#000;
+  z-index:60;
+  overflow:hidden;
+  /* specular roll — sells the rubber section */
+  box-shadow:inset 3px 0 5px -2px rgba(255,255,255,.22),
+             inset -4px 0 7px -2px rgba(0,0,0,.9),
+             -6px 0 22px rgba(0,0,0,.55);
+}
+#handrail .marks{
+  position:absolute; left:0; right:0; top:-160%; height:420%;
+  background:repeating-linear-gradient(
+    180deg,
+    transparent          0px,
+    transparent          78px,
+    rgba(255,255,255,.09) 78px,
+    rgba(255,255,255,.09) 81px,
+    transparent          81px,
+    transparent          164px
+  );
+  will-change:transform;
+}
+#handrail .sheen{
+  position:absolute; left:2px; width:4px; top:0; bottom:0;
+  background:linear-gradient(90deg, rgba(255,255,255,.20), rgba(255,255,255,.02));
+  border-radius:2px;
+}
+
+/* ── layout ───────────────────────────────────────────────────── */
+main{position:relative; z-index:2}
+.sec{
+  height:100vh;                 /* per spec */
+  height:100svh;
+  display:grid;
+  place-items:center;
+  padding:0 calc(var(--rail) + clamp(1.4rem,6vw,5rem)) 0 clamp(1.4rem,6vw,5rem);
+}
+.panel{
+  max-width:660px;
+  width:100%;
+  padding:clamp(1.6rem,3.4vw,2.6rem) clamp(1.6rem,3.4vw,2.4rem);
+  background:linear-gradient(150deg, rgba(44,51,59,.86), rgba(25,29,35,.82));
+  backdrop-filter:blur(2px);
+  border-right:4px solid var(--yellow);   /* the safety demarcation, per spec */
+  box-shadow:0 24px 60px rgba(0,0,0,.42);
+}
+.eyebrow{
+  font-family:var(--f-m); font-size:.68rem; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--yellow); margin:0 0 1rem;
+}
+.lede{color:var(--muted); font-size:clamp(1rem,1.7vw,1.13rem); max-width:52ch}
+
+/* flat landing sections read calm and centred */
+.entry .panel, .exit .panel{ text-align:center; border-right-width:4px }
+.entry h1{font-size:clamp(3rem,11vw,7.5rem); color:#fff}
+.entry h1 em{font-style:normal; color:var(--yellow); display:block}
+.exit h2{font-size:clamp(2.6rem,9vw,6rem); color:#fff}
+.entry .lede, .exit .lede{margin:1.4rem auto 0}
+
+/* ── SECTION 2 · THE INCLINE ─────────────────────────────────────
+   translate(0,0) → translate(200px,-200px) across its passage.     */
+@keyframes ride{
+  from{ transform:translate(0px, 0px) }
+  to  { transform:translate(200px, -200px) }
+}
+@keyframes railrun{
+  from{ transform:translateY(0) }
+  to  { transform:translateY(680px) }
+}
+
+.incline{ will-change:transform }
+.incline h2{font-size:clamp(2rem,5.6vw,3.6rem); color:#fff; margin-bottom:1.1rem}
+.incline .lede{margin-bottom:1.6rem}
+.figs{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+  background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.07); margin-top:1.6rem;
+}
+.figs div{background:rgba(13,16,20,.5); padding:1rem .9rem}
+.figs b{display:block; font-family:var(--f-d); font-size:clamp(1.7rem,4vw,2.5rem);
+  color:var(--yellow); line-height:1}
+.figs span{font-family:var(--f-m); font-size:.6rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--dim); display:block; margin-top:.3rem}
+
+/* Native scroll-driven timelines — composited, so genuinely lag-free. */
+@supports (animation-timeline: view()){
+  .incline{
+    animation:ride linear both;
+    animation-timeline:view();
+    animation-range:entry 0% exit 100%;
+  }
+  #handrail .marks{
+    animation:railrun linear both;
+    animation-timeline:scroll(root block);
+  }
+}
+/* JS fallback drives the identical transforms where timelines are unsupported. */
+html.no-sdt .incline, html.no-sdt #handrail .marks{ animation:none }
+
+.cue{
+  position:fixed; left:50%; bottom:1.6rem; transform:translateX(-50%);
+  font-family:var(--f-m); font-size:.6rem; letter-spacing:.24em; text-transform:uppercase;
+  color:var(--dim); z-index:40; display:flex; align-items:center; gap:.6rem;
+  transition:opacity .5s ease;
+}
+.cue i{width:1px; height:26px; background:linear-gradient(180deg,var(--yellow),transparent)}
+.cue.gone{opacity:0}
+
+.badge{
+  position:fixed; left:clamp(1rem,3vw,2rem); top:50%; transform:translateY(-50%);
+  z-index:40; font-family:var(--f-m); font-size:.62rem; letter-spacing:.14em;
+  color:var(--yellow); border:1px solid rgba(245,197,24,.4); border-radius:2px;
+  padding:.25rem .4rem; writing-mode:vertical-rl;
+}
+@media(max-width:640px){ .badge{display:none} }
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .incline{ animation:none !important; transform:none !important }
+  #handrail .marks{ animation:none !important; transform:none !important }
+  .cue i{animation:none}
+}
+</style>
+
+<div id="treads" aria-hidden="true"></div>
+<div id="wash" aria-hidden="true"></div>
+
+<!-- the handrail — fixed, 20px, right edge -->
+<div id="handrail" aria-hidden="true">
+  <div class="marks"></div>
+  <div class="sheen"></div>
+</div>
+
+<span class="badge" aria-hidden="true">INCLINE 30°</span>
+
+<main>
+
+  <!-- ── SECTION 1 · THE ENTRY ── flat landing, centred ── -->
+  <section class="sec entry">
+    <div class="panel">
+      <p class="eyebrow">Ground floor · Comb plate</p>
+      <h1>Step<em>On</em></h1>
+      <p class="lede">Match your pace to the step, hold the rail, and let the building do the climbing. Everything from here is continuous.</p>
+    </div>
+  </section>
+
+  <!-- ── SECTION 2 · THE INCLINE ── travels up and right ── -->
+  <section class="sec incline">
+    <div class="panel">
+      <p class="eyebrow">The incline · Carrying run</p>
+      <h2>Everything moves while you stand still</h2>
+      <p class="lede">This is the part nobody notices. Thirty degrees of steady climb, a step chain running beneath your feet, a handrail matched to within a few percent of the tread speed — all of it engineered so that standing still feels like nothing at all.</p>
+      <p class="lede">Getting to nothing-at-all is the whole job. It takes alignment, tension, and somebody who returns every month to check both.</p>
+      <div class="figs">
+        <div><b>30°</b><span>Incline</span></div>
+        <div><b>0.5</b><span>m/s rated</span></div>
+        <div><b>5,000</b><span>hours a year</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 3 · THE EXIT ── flat landing, centred ── -->
+  <section class="sec exit">
+    <div class="panel">
+      <p class="eyebrow">Upper floor · Landing plate</p>
+      <h2>Step Off</h2>
+      <p class="lede">You have risen four metres and thought about none of it. That is what a maintained escalator feels like — and precisely why it is worth maintaining.</p>
+    </div>
+  </section>
+
+</main>
+
+<div class="cue" id="cue"><i></i> Scroll to ride</div>
+
+<script>
+(function(){
+  "use strict";
+  var RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var clamp = function(v,a,b){ return v<a?a:v>b?b:v; };
+
+  /* Prefer native scroll-driven timelines; fall back to rAF only when absent. */
+  var native = CSS.supports("animation-timeline", "view()");
+  if(!native) document.documentElement.classList.add("no-sdt");
+
+  var incline = document.querySelector(".incline");
+  var marks   = document.querySelector("#handrail .marks");
+  var cue     = document.getElementById("cue");
+  var ticking = false;
+
+  function frame(){
+    ticking = false;
+    var vh = innerHeight, y = pageYOffset;
+
+    if(cue) cue.classList.toggle("gone", y > vh * 0.5);
+    if(RM) return;
+
+    if(!native){
+      /* view() progress: 0 as the section enters, 1 as it fully exits */
+      var r = incline.getBoundingClientRect();
+      var p = clamp((vh - r.top) / (vh + r.height), 0, 1);
+      incline.style.transform = "translate(" + (200*p).toFixed(2) + "px," + (-200*p).toFixed(2) + "px)";
+
+      var total = document.documentElement.scrollHeight - vh;
+      var sp = clamp(y / (total || 1), 0, 1);
+      marks.style.transform = "translateY(" + (680*sp).toFixed(2) + "px)";
+    }
+  }
+
+  addEventListener("scroll", function(){
+    if(!ticking){ ticking = true; requestAnimationFrame(frame); }
+  }, {passive:true});
+  addEventListener("resize", frame, {passive:true});
+  frame();
+})();
+</script>

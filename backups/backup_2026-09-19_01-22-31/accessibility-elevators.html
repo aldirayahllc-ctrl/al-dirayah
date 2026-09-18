@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Customized Lifts for Elderly & People of Determination (EN 81-70) | Al Dirayah Contracting — Abu Dhabi</title>
+<meta name="description" content="Custom accessibility elevators engineered for elderly family members and People of Determination in Abu Dhabi & Dubai. EN 81-70 compliant, low-height Braille controls, wheelchair access, soft VVVF drives, and emergency battery rescue by Al Dirayah Electromechanical Contracting LLC.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap">
+
+<style>
+:root{
+  --ink:#0E1115; --ink-2:#151A20; --surface:#1B2128; --surface-2:#232A33;
+  --line:#2B333D; --line-2:#3A4550;
+  --amber:#E08A1E; --amber-lt:#F5A93C; --amber-dim:#8A5A14;
+  --steel:#6E7885; --steel-lt:#9AA3B0; --paper:#E9E7E2; --white:#fff;
+  --f-d:"Barlow Condensed","Arial Narrow",sans-serif;
+  --f-b:"IBM Plex Sans",system-ui,sans-serif;
+  --f-m:"IBM Plex Mono",ui-monospace,monospace;
+  --f-a:"IBM Plex Sans Arabic",serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--ink); color:var(--paper);
+  font-family:var(--f-b); font-size:16px; line-height:1.6;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+h1,h2,h3,h4{margin:0; text-wrap:balance; font-family:var(--f-d); font-weight:600; text-transform:uppercase; line-height:.95; letter-spacing:.01em}
+p{margin:0 0 1rem; max-width:62ch}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--amber); outline-offset:3px; border-radius:2px}
+.wrap{max-width:1180px; margin:0 auto; padding:0 clamp(1.1rem,4vw,2.5rem)}
+#hero > .wrap{width:100%}
+.eyebrow{font-family:var(--f-m); font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; color:var(--amber); margin:0 0 1rem}
+.mono{font-family:var(--f-m); font-variant-numeric:tabular-nums}
+.ar{font-family:var(--f-a); direction:rtl; unicode-bidi:isolate}
+
+/* ── shaft backdrop (parallax) ─────────────────────────────── */
+#shaft{position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden}
+#dust{position:absolute; inset:0; width:100%; height:100%}
+.rail{position:absolute; top:-20vh; height:160vh; width:10px; background:
+  linear-gradient(90deg,#20272F 0%,#39424D 42%,#4A5560 50%,#39424D 58%,#20272F 100%);
+  box-shadow:0 0 30px rgba(0,0,0,.6)}
+.rail.l{left:7vw} .rail.r{right:7vw}
+#ticks{position:absolute; inset:0}
+.tick{position:absolute; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,#2A323B 12%,#2A323B 88%,transparent)}
+.tick b{position:absolute; left:calc(7vw + 22px); top:-9px; font-family:var(--f-m); font-size:.6rem; letter-spacing:.18em; color:#39434E}
+#glow{position:absolute; left:50%; top:0; width:min(1100px,120vw); height:60vh; transform:translateX(-50%);
+  background:radial-gradient(60% 60% at 50% 0%, rgba(224,138,30,.18), transparent 70%)}
+
+/* ── floor indicator ──────────────────────────────────────── */
+#fi{
+  position:fixed; right:clamp(.8rem,2.5vw,2rem); top:50%; transform:translateY(-50%);
+  z-index:40; background:#0A0D10; border:1px solid var(--line-2); border-radius:8px;
+  padding:.75rem .6rem; display:flex; flex-direction:column; align-items:center; gap:.5rem;
+  box-shadow:0 12px 40px rgba(0,0,0,.7);
+}
+#fi .arrow{font-size:.9rem; color:var(--amber); line-height:1; transition:transform .4s var(--ease), opacity .3s}
+#fi .read{
+  font-family:var(--f-m); font-weight:600; font-size:1.45rem; color:var(--amber-lt);
+  min-width:2.1ch; text-align:center; line-height:1;
+  text-shadow:0 0 14px rgba(245,169,60,.55);
+}
+#fi .bar{width:3px; height:120px; background:#1A2027; border-radius:2px; overflow:hidden; position:relative}
+#fi .bar i{position:absolute; left:0; right:0; top:0; background:linear-gradient(180deg,var(--amber-lt),var(--amber-dim)); height:0%}
+#fi ol{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.34rem}
+#fi ol li{font-family:var(--f-m); font-size:.62rem; color:#39434E; letter-spacing:.06em; cursor:pointer; transition:color .3s, transform .2s}
+#fi ol li:hover{color:var(--steel-lt)}
+#fi ol li[data-on]{color:var(--amber); font-weight:600; transform:scale(1.15)}
+@media(max-width:700px){ #fi{padding:.5rem .4rem} #fi .bar{height:70px} #fi ol{display:none} }
+
+/* ── header ───────────────────────────────────────────────── */
+header{position:fixed; top:0; left:0; right:0; z-index:50; padding:.9rem 0;
+  transition:background .4s, backdrop-filter .4s, border-color .4s;
+  border-bottom:1px solid transparent}
+header.stuck{background:rgba(14,17,21,.92); backdrop-filter:blur(16px); border-bottom-color:var(--line)}
+header .wrap{display:flex; align-items:center; justify-content:space-between; gap:1rem}
+.brand{display:flex; align-items:center; gap:.7rem}
+.brand svg{width:34px;height:34px;flex:none}
+.brand .nm{font-family:var(--f-d); font-size:1.4rem; letter-spacing:.045em; text-transform:uppercase; font-weight:600; color:var(--white)}
+
+/* Switcher pills */
+.div-switcher{display:flex; background:rgba(21,26,32,0.85); padding:3px; border-radius:6px; border:1px solid var(--line-2)}
+.sw-pill{font-family:var(--f-m); font-size:.64rem; letter-spacing:.12em; text-transform:uppercase; color:var(--steel-lt); padding:.35rem .75rem; border-radius:4px; transition:all .25s ease; display:inline-flex; align-items:center; gap:.4rem; text-decoration:none}
+.sw-pill:hover{color:var(--white); background:rgba(255,255,255,0.06)}
+.sw-pill.active{background:var(--amber); color:var(--ink); font-weight:600; box-shadow:0 0 12px rgba(224,138,30,0.35)}
+.sw-pill .icon{font-size:.75rem}
+
+nav{display:flex; gap:1.4rem}
+nav a{font-family:var(--f-m); font-size:.67rem; letter-spacing:.16em; text-transform:uppercase; color:var(--steel-lt); transition:color .25s}
+nav a:hover{color:var(--amber)}
+.cta-btn{font-family:var(--f-m); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase;
+  border:1px solid var(--amber); color:var(--amber); padding:.5rem .95rem; border-radius:3px; background:transparent; cursor:pointer;
+  transition:background .25s,color .25s,box-shadow .25s}
+.cta-btn:hover{background:var(--amber); color:var(--ink); box-shadow:0 0 14px rgba(224,138,30,.4)}
+@media(max-width:920px){ nav{display:none} }
+
+/* ── sections ─────────────────────────────────────────────── */
+main{position:relative; z-index:2}
+section{position:relative}
+.pad{padding:clamp(5rem,13vh,8rem) 0}
+
+/* Buttons & CTA */
+.big-cta { background: linear-gradient(135deg, var(--amber-lt), var(--amber)); color: var(--ink); font-family: var(--f-d); font-size: 1.15rem; font-weight: 700; padding: .9rem 2.2rem; border-radius: 6px; border: none; cursor: pointer; transition: all .25s var(--ease); text-transform: uppercase; letter-spacing: .5px; display: inline-flex; align-items: center; gap: .6rem; text-decoration: none; }
+.big-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(224,138,30,0.4); }
+.btn-sec { background: rgba(255,255,255,0.05); color: var(--white); border: 1px solid var(--line-2); font-family: var(--f-d); font-size: 1.1rem; font-weight: 700; padding: .85rem 2rem; border-radius: 6px; cursor: pointer; transition: all .25s var(--ease); display: inline-flex; align-items: center; gap: .6rem; text-decoration: none; }
+.btn-sec:hover { border-color: var(--amber-lt); color: var(--amber-lt); background: rgba(224,138,30,0.1); }
+
+/* Table styling */
+.table-card { background: var(--surface); border: 1px solid var(--line-2); border-radius: 12px; overflow: hidden; margin-top: 2rem; }
+table { width: 100%; border-collapse: collapse; font-size: .9rem; text-align: left; }
+th { font-family: var(--f-m); font-size: .78rem; color: var(--amber-lt); text-transform: uppercase; letter-spacing: 1px; background: rgba(224,138,30,0.1); padding: 1rem 1.2rem; border-bottom: 1px solid var(--line-2); }
+td { padding: 1rem 1.2rem; border-bottom: 1px solid var(--line); color: var(--steel-lt); }
+td.highlight { color: var(--white); font-weight: 600; font-family: var(--f-m); }
+
+/* Modal overlay */
+.modal-overlay { display:none; position:fixed; inset:0; z-index:999; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); align-items:center; justify-content:center; padding:1.5rem; }
+.modal-overlay.active { display:flex; }
+.modal-card { background:var(--ink-2); border:1px solid var(--amber); border-radius:14px; padding:2.5rem; max-width:540px; width:100%; position:relative; box-shadow:0 25px 60px rgba(0,0,0,0.9); }
+.modal-close { position:absolute; top:1.2rem; right:1.2rem; background:none; border:none; color:var(--steel); font-size:1.5rem; cursor:pointer; }
+.modal-card h3 { font-family:var(--f-d); font-size:1.8rem; color:var(--white); margin-bottom:.5rem; }
+.modal-card p { font-size:.9rem; color:var(--steel-lt); margin-bottom:1.5rem; }
+.modal-card label { display:block; font-family:var(--f-m); font-size:.78rem; color:var(--amber-lt); text-transform:uppercase; margin-bottom:.4rem; }
+.modal-card input, .modal-card select, .modal-card textarea { width:100%; background:var(--ink); border:1px solid var(--line-2); color:var(--paper); padding:.75rem 1rem; border-radius:6px; font-family:var(--f-b); font-size:.9rem; margin-bottom:1rem; }
+.modal-card button[type="submit"] { width:100%; background:linear-gradient(135deg, var(--amber-lt), var(--amber)); color:var(--ink); font-family:var(--f-d); font-weight:700; font-size:1.1rem; padding:.85rem; border:none; border-radius:6px; cursor:pointer; text-transform:uppercase; margin-top:.5rem; }
+</style>
+</head>
+<body>
+
+  <!-- Parallax Shaft Backdrop -->
+  <div id="shaft" aria-hidden="true">
+    <canvas id="dust"></canvas>
+    <div class="rail l"></div>
+    <div class="rail r"></div>
+    <div id="ticks"></div>
+    <div id="glow"></div>
+  </div>
+
+  <!-- Floor Indicator & Elevator Position Gauge -->
+  <div id="fi" aria-label="Building Floor Navigation">
+    <div class="read" id="fiRead">L</div>
+    <div class="bar"><i id="fiBar"></i></div>
+    <div class="arrow" id="fiArrow" aria-hidden="true">▲</div>
+    <ol>
+      <li data-floor="L">L</li>
+      <li data-floor="1">1</li>
+      <li data-floor="2">2</li>
+      <li data-floor="3">3</li>
+      <li data-floor="4">4</li>
+      <li data-floor="PH">PH</li>
+    </ol>
+  </div>
+
+  <!-- Master Header Bar (Identical to lifts.html) -->
+  <header id="hdr">
+    <div class="wrap">
+      <a href="index.html" class="brand" aria-label="Al Dirayah Electromechanical Contracting">
+        <svg viewBox="0 0 120 120" class="brand-mark" aria-hidden="true">
+          <rect width="120" height="120" rx="20" fill="#E08A1E"/>
+          <path d="M35 49 L60 29 L85 49" fill="none" stroke="#0E1115" stroke-width="10"/>
+          <path d="M35 70 L60 50 L85 70" fill="none" stroke="#0E1115" stroke-width="10" opacity=".62"/>
+          <path d="M35 91 L60 71 L85 91" fill="none" stroke="#0E1115" stroke-width="10" opacity=".34"/>
+        </svg>
+        <span class="nm">AL DIRAYAH</span>
+      </a>
+
+      <!-- Division Switcher Pills -->
+      <div class="div-switcher">
+        <a href="lifts.html" class="sw-pill active"><span class="icon">🛗</span> LIFTS</a>
+        <a href="escalators.html" class="sw-pill"><span class="icon">⚡</span> ESCALATORS</a>
+      </div>
+
+      <nav>
+        <a href="#hero">OVERVIEW</a>
+        <a href="#l">FEATURES</a>
+        <a href="#f2">DESIGN</a>
+        <a href="#f3">SPECS</a>
+        <a href="#ph">CONTACT</a>
+      </nav>
+
+      <button class="cta-btn" onclick="openSurveyModal('Nav Header CTA')">Site Survey &rarr;</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Section #hero (Lobby / Hero) -->
+    <section id="hero" class="pad" data-floor="L" data-label="Lobby" style="padding-top:7rem">
+      <div class="wrap">
+        <div style="display:grid;grid-template-columns:1.2fr 0.8fr;gap:3rem;align-items:center">
+          <div>
+            <div class="eyebrow">♿ EN 81-70 ACCESSIBILITY &amp; INCLUSIVE MOBILITY</div>
+            <h1 style="font-size:clamp(2.5rem,5vw,4.2rem);color:var(--white);margin-bottom:1rem;line-height:1.05">
+              Customized Lifts for Elderly &amp; People of Determination
+            </h1>
+            <p style="font-size:1.1rem;color:var(--steel-lt);margin-bottom:2rem;line-height:1.65;max-width:580px">
+              Engineered for dignity, safety, and total independence. Our EN 81-70 compliant accessibility elevators are custom-built for private villa estates, residential communities, and commercial facilities across Abu Dhabi &amp; Dubai — featuring zero-threshold entrances, ergonomic low-height Braille controls, soft-acceleration VVVF drives, multi-lingual voice guidance, and 24/7 battery emergency rescue.
+            </p>
+            <div style="display:flex;flex-wrap:wrap;gap:1.2rem;align-items:center">
+              <button class="big-cta" onclick="openSurveyModal('Elderly &amp; Determination Accessibility Lifts')">Request Site Survey 📐</button>
+              <a href="Al-Dirayah-Company-Profile.pdf" target="_blank" class="btn-sec">Download Profile (PDF) 📄</a>
+            </div>
+          </div>
+
+          <!-- Hero Image Card -->
+          <div style="position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--amber-dim);box-shadow:0 25px 60px rgba(0,0,0,0.95)">
+            <img src="accessibility_lift_hero_3d.jpg" alt="EN 81-70 Wheelchair Accessible Elevator 3D Render" style="width:100%;height:auto;display:block;object-fit:cover">
+            <div style="position:absolute;bottom:1.2rem;left:1.2rem;right:1.2rem;background:rgba(14,17,21,0.88);backdrop-filter:blur(12px);padding:1rem 1.25rem;border-radius:10px;border:1px solid var(--amber-dim)">
+              <div style="font-family:var(--f-d);font-weight:700;font-size:1.2rem;color:var(--white);margin-bottom:.2rem">EN 81-70 Accessible Cabin 3D Render</div>
+              <div style="font-size:.8rem;color:var(--amber-lt);font-family:var(--f-m)">Low-Height Braille COP · Continuous Handrail · Folding Seat</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section #l (Floor 1 - In-Depth Feature Modules Grid) -->
+    <section id="l" class="pad" data-floor="1" data-label="Features" style="background:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+      <div class="wrap">
+        <div style="max-width:760px;margin-bottom:3.5rem">
+          <span class="eyebrow">01 — ENGINEERING MODULES</span>
+          <h2 style="font-size:clamp(2rem,4vw,3.2rem);color:var(--white);margin-bottom:.8rem">Engineered Accessibility Features</h2>
+          <p style="font-size:1.05rem;color:var(--steel-lt);line-height:1.65">Every component is custom-tailored to provide effortless mobility, high contrast legibility, and maximum physical safety for senior citizens and People of Determination.</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:1.8rem">
+          <!-- Card 1 -->
+          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:2rem;transition:all .25s var(--ease)">
+            <div style="width:48px;height:48px;border-radius:10px;background:rgba(224,138,30,0.15);border:1px solid var(--amber-dim);display:grid;place-items:center;font-size:1.5rem;margin-bottom:1.25rem">♿</div>
+            <h3 style="font-family:var(--f-d);font-size:1.4rem;color:var(--white);margin-bottom:.6rem">EN 81-70 Wheelchair Accessibility</h3>
+            <p style="font-size:.95rem;color:var(--steel-lt);line-height:1.6">Extra-wide automatic telescopic sliding doors (800mm to 1100mm clear width) with zero-bump flush threshold sills, non-glare interior lighting, and durable anti-slip composite floor surfaces.</p>
+          </div>
+
+          <!-- Card 2 -->
+          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:2rem;transition:all .25s var(--ease)">
+            <div style="width:48px;height:48px;border-radius:10px;background:rgba(224,138,30,0.15);border:1px solid var(--amber-dim);display:grid;place-items:center;font-size:1.5rem;margin-bottom:1.25rem">🎛️</div>
+            <h3 style="font-family:var(--f-d);font-size:1.4rem;color:var(--white);margin-bottom:.6rem">Ergonomic Inclined COP &amp; Braille</h3>
+            <p style="font-size:.95rem;color:var(--steel-lt);line-height:1.6">Dual-height Car Operating Panels (COP) positioned ergonomically at 900mm–1100mm height for seated wheelchair users, featuring raised tactile numbers and dual Arabic/English Braille characters.</p>
+          </div>
+
+          <!-- Card 3 -->
+          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:2rem;transition:all .25s var(--ease)">
+            <div style="width:48px;height:48px;border-radius:10px;background:rgba(224,138,30,0.15);border:1px solid var(--amber-dim);display:grid;place-items:center;font-size:1.5rem;margin-bottom:1.25rem">🛗</div>
+            <h3 style="font-family:var(--f-d);font-size:1.4rem;color:var(--white);margin-bottom:.6rem">Soft VVVF Acceleration Drive</h3>
+            <p style="font-size:.95rem;color:var(--steel-lt);line-height:1.6">Specialized low-jerk travel profiles engineered for gentle start, smooth deceleration, and ±2mm exact flush floor levelling to completely eliminate tripping hazards for seniors.</p>
+          </div>
+
+          <!-- Card 4 -->
+          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:2rem;transition:all .25s var(--ease)">
+            <div style="width:48px;height:48px;border-radius:10px;background:rgba(224,138,30,0.15);border:1px solid var(--amber-dim);display:grid;place-items:center;font-size:1.5rem;margin-bottom:1.25rem">🚨</div>
+            <h3 style="font-family:var(--f-d);font-size:1.4rem;color:var(--white);margin-bottom:.6rem">Automatic Floor Rescue &amp; Voice</h3>
+            <p style="font-size:.95rem;color:var(--steel-lt);line-height:1.6">Integrated Automatic Rescue Device (ARD) lowers car to the nearest floor during power failures, automatically releases doors, and connects to 24/7 emergency dispatch hotline.</p>
+          </div>
+
+          <!-- Card 5 -->
+          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:2rem;transition:all .25s var(--ease)">
+            <div style="width:48px;height:48px;border-radius:10px;background:rgba(224,138,30,0.15);border:1px solid var(--amber-dim);display:grid;place-items:center;font-size:1.5rem;margin-bottom:1.25rem">🪞</div>
+            <h3 style="font-family:var(--f-d);font-size:1.4rem;color:var(--white);margin-bottom:.6rem">128-Beam Safety Curtain &amp; Mirror</h3>
+            <p style="font-size:.95rem;color:var(--steel-lt);line-height:1.6">Full-height 128-beam infrared safety sensors instantly prevent door contact with passengers, paired with a rear wall glass mirror for safe wheelchair reversing visibility.</p>
+          </div>
+
+          <!-- Card 6 -->
+          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:2rem;transition:all .25s var(--ease)">
+            <div style="width:48px;height:48px;border-radius:10px;background:rgba(224,138,30,0.15);border:1px solid var(--amber-dim);display:grid;place-items:center;font-size:1.5rem;margin-bottom:1.25rem">🛋️</div>
+            <h3 style="font-family:var(--f-d);font-size:1.4rem;color:var(--white);margin-bottom:.6rem">Continuous Handrails &amp; Folding Seat</h3>
+            <p style="font-size:.95rem;color:var(--steel-lt);line-height:1.6">Dual-tier 32mm brushed stainless steel grab rails extending across three cabin walls, with optional heavy-duty wall-mounted cushioned folding seat for senior passenger comfort.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section #f2 (Floor 2 - Architectural Entrance Showcase) -->
+    <section id="f2" class="pad" data-floor="2" data-label="Design">
+      <div class="wrap">
+        <div style="background:linear-gradient(135deg, rgba(224,138,30,0.1), rgba(20,24,29,0.95));border:1px solid var(--amber-dim);border-radius:16px;padding:3rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center">
+          <div style="position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--amber-dim);box-shadow:0 20px 45px rgba(0,0,0,0.8)">
+            <img src="accessibility_lift_entrance_3d.jpg" alt="Luxury Villa Wheelchair Accessible Elevator Entrance Foyer" style="width:100%;height:auto;display:block;object-fit:cover">
+            <div style="position:absolute;bottom:1rem;left:1rem;background:rgba(14,17,21,0.85);backdrop-filter:blur(10px);padding:.6rem 1rem;border-radius:8px;border:1px solid var(--amber-dim);font-family:var(--f-m);font-size:.78rem;color:var(--amber-lt)">
+              ZERO-THRESHOLD ENTRANCE FOYER
+            </div>
+          </div>
+          <div>
+            <div class="eyebrow">02 — ARCHITECTURAL INTEGRATION</div>
+            <h2 style="font-size:clamp(1.8rem,3vw,2.6rem);color:var(--white);margin-bottom:1rem;line-height:1.1">
+              Seamless Barrier-Free Entrance Design
+            </h2>
+            <p style="color:var(--steel-lt);font-size:1.02rem;line-height:1.65;margin-bottom:1.5rem">
+              Our accessibility elevators blend seamlessly into high-end UAE villa interiors and commercial lobbies. Featuring automatic telescopic doors in champagne gold and glass, flush floor thresholds for effortless wheelchair passage, and low-height wall call stations in Arabic and English.
+            </p>
+            <div style="display:grid;gap:.8rem;font-size:.92rem">
+              <div style="display:flex;align-items:center;gap:.7rem;color:var(--paper)"><span style="color:var(--amber-lt);font-weight:700">✓</span> Zero-tripping threshold alignment (±2mm precision)</div>
+              <div style="display:flex;align-items:center;gap:.7rem;color:var(--paper)"><span style="color:var(--amber-lt);font-weight:700">✓</span> Wide 800mm – 1100mm clear door openings</div>
+              <div style="display:flex;align-items:center;gap:.7rem;color:var(--paper)"><span style="color:var(--amber-lt);font-weight:700">✓</span> Multi-lingual tactile &amp; illuminated wall call stations</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section #f3 (Floor 3 - Technical Specification Matrix Table) -->
+    <section id="f3" class="pad" data-floor="3" data-label="Specs" style="background:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+      <div class="wrap">
+        <div style="max-width:760px;margin-bottom:2.5rem">
+          <span class="eyebrow">03 — COMPLIANCE MATRIX</span>
+          <h2 style="font-size:clamp(2rem,3.5vw,3rem);color:var(--white);margin-bottom:.8rem">EN 81-70 Technical Specification Matrix</h2>
+          <p style="font-size:1.05rem;color:var(--steel-lt);line-height:1.65">Detailed technical parameters for architectural specification and authority submission across Abu Dhabi &amp; Dubai.</p>
+        </div>
+
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr>
+                <th>Specification Parameter</th>
+                <th>EN 81-70 Standard Requirement</th>
+                <th>Al Dirayah Custom Engineering Specification</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="highlight">Door Clear Opening Width</td>
+                <td>Minimum 800 mm</td>
+                <td>800 mm / 900 mm / 1000 mm / 1100 mm Telescopic Doors</td>
+              </tr>
+              <tr>
+                <td class="highlight">Car Operating Panel Height</td>
+                <td>900 mm – 1100 mm from floor</td>
+                <td>Dual-Height Ergonomic Horizontal COP with Inclined Faceplate</td>
+              </tr>
+              <tr>
+                <td class="highlight">Floor Levelling Accuracy</td>
+                <td>± 10 mm max deviation</td>
+                <td>± 2 mm Exact Flush Levelling (VVVF Micro-Encoder Control)</td>
+              </tr>
+              <tr>
+                <td class="highlight">Door Hold Delay Timer</td>
+                <td>Minimum 2 – 20 seconds adjustable</td>
+                <td>Programmable Extended Hold (5 – 30 seconds) with Nudge Button</td>
+              </tr>
+              <tr>
+                <td class="highlight">Door Safety Sensor</td>
+                <td>Multi-beam light curtain required</td>
+                <td>128-Beam 3D Infrared Curtain with Reopening Interlock</td>
+              </tr>
+              <tr>
+                <td class="highlight">Emergency Power Backup</td>
+                <td>Automatic landing device (ARD)</td>
+                <td>Heavy-Duty ARD Battery Bank + Auto-Door Release + 24/7 Hotline</td>
+              </tr>
+              <tr>
+                <td class="highlight">Voice Guidance Synthesizer</td>
+                <td>Audio &amp; visual indicators</td>
+                <td>Multi-Lingual Floor Announcement Synthesizer (Arabic &amp; English)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section #f4 (Floor 4 - Ideal Application Sectors) -->
+    <section id="f4" class="pad" data-floor="4" data-label="Sectors">
+      <div class="wrap">
+        <div style="max-width:760px;margin-bottom:3rem">
+          <span class="eyebrow">04 — SECTOR APPLICATIONS</span>
+          <h2 style="font-size:clamp(2rem,3.5vw,3rem);color:var(--white);margin-bottom:.8rem">Building Application Domains</h2>
+          <p style="font-size:1.05rem;color:var(--steel-lt)">Custom accessibility installations across private homes, healthcare institutions, and public infrastructure.</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:1.5rem">
+          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:1.8rem">
+            <h4 style="font-size:1.3rem;color:var(--white);margin-bottom:.5rem">🏡 Private Villa Estates</h4>
+            <p style="font-size:.9rem;color:var(--steel-lt);margin:0">Bespoke residential lifts tailored for multi-generational families, ensuring elderly parents move freely across all villa floors.</p>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:1.8rem">
+            <h4 style="font-size:1.3rem;color:var(--white);margin-bottom:.5rem">🏥 Healthcare &amp; Rehab Centers</h4>
+            <p style="font-size:.9rem;color:var(--steel-lt);margin:0">Heavy-duty stretcher &amp; wheelchair elevators engineered for hospitals, nursing homes, and outpatient clinics.</p>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:1.8rem">
+            <h4 style="font-size:1.3rem;color:var(--white);margin-bottom:.5rem">🏢 Commercial Towers &amp; Malls</h4>
+            <p style="font-size:.9rem;color:var(--steel-lt);margin:0">Fully compliant EN 81-70 commercial passenger lifts with high traffic handling and dual COP panels.</p>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:1.8rem">
+            <h4 style="font-size:1.3rem;color:var(--white);margin-bottom:.5rem">🏛️ Government &amp; Public Facilities</h4>
+            <p style="font-size:.9rem;color:var(--steel-lt);margin:0">Barrier-free mobility solutions approved for municipality, educational, and public utility buildings.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ PH — MASTER FOOTER & CONTACT (Identical to lifts.html) ══════════ -->
+    <section id="ph" class="pad" data-floor="PH" data-label="Contact" style="padding-top:4rem;padding-bottom:3rem;background:var(--ink-2);border-top:1px solid var(--line)">
+      <div class="wrap">
+        
+        <!-- Top Contact CTA Banner -->
+        <div style="background:linear-gradient(135deg, rgba(224,138,30,0.12), rgba(20,24,29,0.95));border:1px solid var(--amber-dim);border-radius:14px;padding:2.5rem;display:grid;grid-template-columns:1.4fr 1fr;gap:2rem;align-items:center;margin-bottom:4rem;box-shadow:0 15px 40px rgba(0,0,0,0.5)">
+          <div>
+            <p class="eyebrow" style="color:var(--amber-lt);font-family:var(--f-m);font-size:.78rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:.5rem">PENTHOUSE — DIRECT TECHNICAL CONSULTATION</p>
+            <h2 style="font-family:var(--f-d);font-size:clamp(2rem,4vw,3.2rem);color:var(--white);margin-bottom:.8rem;line-height:1.05">Book a Site Technical Survey</h2>
+            <p style="color:var(--steel-lt);font-size:1rem;margin-bottom:1.5rem;max-width:560px;line-height:1.6">Provide building rise, number of stops, or existing OEM status. Our senior engineers measure, inspect, and deliver a comprehensive technical proposal within 24 hours.</p>
+            <button class="big-cta" onclick="openSurveyModal('Footer CTA')" style="display:inline-flex;align-items:center;gap:.6rem;padding:.85rem 1.8rem;font-size:1rem">Request On-Site Survey &rarr;</button>
+          </div>
+            
+          
+          <div style="display:grid;gap:1rem;background:rgba(14,17,21,0.6);padding:1.5rem;border-radius:10px;border:1px solid var(--line)">
+            <div style="display:flex;align-items:center;gap:.8rem">
+              <div style="width:36px;height:36px;border-radius:6px;background:var(--amber-dim);border:1px solid var(--amber-lt);display:grid;place-items:center;color:var(--amber-lt);font-size:1.1rem">⚡</div>
+              <div>
+                <b style="font-size:.9rem;color:var(--white);display:block">24/7 Rapid Callout Dispatch</b>
+                <span style="font-size:.78rem;color:var(--steel)">SLA response: 30 minutes in Abu Dhabi &amp; 2 hours in Dubai</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:.8rem">
+              <div style="width:36px;height:36px;border-radius:6px;background:var(--amber-dim);border:1px solid var(--amber-lt);display:grid;place-items:center;color:var(--amber-lt);font-size:1.1rem">📐</div>
+              <div>
+                <b style="font-size:.9rem;color:var(--white);display:block">Free Shaft &amp; Pit Inspection</b>
+                <span style="font-size:.78rem;color:var(--steel)">EN 81-20/50 &amp; EN 115 Compliance Audit</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:.8rem">
+              <div style="width:36px;height:36px;border-radius:6px;background:var(--amber-dim);border:1px solid var(--amber-lt);display:grid;place-items:center;color:var(--amber-lt);font-size:1.1rem">🛡️</div>
+              <div>
+                <b style="font-size:.9rem;color:var(--white);display:block">ADMCC &amp; OSHAD Certified</b>
+                <span style="font-size:.78rem;color:var(--steel)">Certified Engineers &amp; Safety Compliance</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Master 3-Column Footer Grid -->
+        <div style="display:grid;grid-template-columns:1.8fr 1.2fr 1.4fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid var(--line)">
+          <!-- Col 1: Profile -->
+          <div>
+            <div style="display:flex;align-items:center;gap:.7rem;font-family:var(--f-d);font-size:1.4rem;color:var(--white);font-weight:700;margin-bottom:1rem">
+              <svg viewBox="0 0 120 120" style="width:30px;height:30px;flex:none" aria-hidden="true">
+                <rect width="120" height="120" rx="20" fill="#E08A1E"/>
+                <path d="M35 49 L60 29 L85 49" fill="none" stroke="#0E1115" stroke-width="10"/>
+                <path d="M35 70 L60 50 L85 70" fill="none" stroke="#0E1115" stroke-width="10" opacity=".62"/>
+                <path d="M35 91 L60 71 L85 91" fill="none" stroke="#0E1115" stroke-width="10" opacity=".34"/>
+              </svg>
+              <span>AL DIRAYAH</span>
+            </div>
+            <p style="color:var(--steel-lt);font-size:.9rem;line-height:1.65;margin-bottom:1.2rem">Al Dirayah Electromechanical Contracting LLC. Certified vertical transportation and building infrastructure engineering specialists in Abu Dhabi and across the United Arab Emirates.</p>
+            <div style="font-family:var(--f-m);font-size:1.1rem;color:var(--amber-lt);direction:rtl;text-align:right">الدراية للمقاولات الكهروميكانيكية</div>
+          </div>
+
+          <!-- Col 2: Divisions -->
+          <div>
+            <h4 style="font-family:var(--f-d);font-size:1.1rem;color:var(--white);margin-bottom:1.2rem;letter-spacing:1px">DIVISIONS &amp; SERVICES</h4>
+            <ul style="list-style:none;padding:0;margin:0;display:grid;gap:.65rem;font-size:.88rem">
+              <li><a href="lifts.html" style="color:var(--steel);transition:color .2s">Vertical Lifts &amp; Elevators</a></li>
+              <li><a href="escalators.html" style="color:var(--steel);transition:color .2s">Escalators &amp; Moving Walkways</a></li>
+              <li><a href="residential-elevators.html" style="color:var(--steel);transition:color .2s">Residential Villa Lifts</a></li>
+              <li><a href="commercial-elevators.html" style="color:var(--steel);transition:color .2s">Commercial Tower Elevators</a></li>
+              <li><a href="maintenance-modernization.html" style="color:var(--steel);transition:color .2s">24/7 Maintenance &amp; AMC</a></li>
+              <li><a href="engineering-services.html" style="color:var(--steel);transition:color .2s">Engineering &amp; Traffic Audits</a></li>
+            </ul>
+          </div>
+
+          <!-- Col 3: Abu Dhabi HQ -->
+          <div>
+            <h4 style="font-family:var(--f-d);font-size:1.1rem;color:var(--white);margin-bottom:1.2rem;letter-spacing:1px">ABU DHABI HEADQUARTERS</h4>
+            <div style="display:grid;gap:.8rem;font-size:.88rem;color:var(--steel-lt)">
+              <div><b style="color:var(--white);display:block;margin-bottom:.2rem">Office Address:</b>Mussafah Industrial Area, Abu Dhabi, UAE</div>
+              <div><b style="color:var(--white);display:block;margin-bottom:.2rem">24/7 Emergency Dispatch:</b><span style="font-family:var(--f-m);color:var(--amber-lt)">+971 2 555 0192</span></div>
+              <div><b style="color:var(--white);display:block;margin-bottom:.2rem">Official Email:</b><span style="font-family:var(--f-m);color:var(--amber-lt)">service@aldirayah.ae</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Copyright Bar -->
+        <div style="padding-top:1.5rem;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;font-family:var(--f-m);font-size:.8rem;color:var(--steel)">
+          <span>© 2026 Al Dirayah Electromechanical Contracting LLC. All rights reserved.</span>
+          <span style="color:var(--amber-lt)">Keep it moving · الحركة لا تتوقف</span>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Integrated Request Survey Modal -->
+  <div class="modal-overlay" id="surveyModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeSurveyModal()">×</button>
+      <div style="font-family:var(--f-m);font-size:.75rem;color:var(--amber-lt);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:.3rem">TECHNICAL CONSULTATION</div>
+      <h3>Request Site Survey &amp; Audit</h3>
+      <p>Select your required product or service below to schedule an on-site technical inspection by an Al Dirayah senior engineer.</p>
+      <form onsubmit="handleSurveySubmit(event)">
+        <label>Product or Service Required *
+          <select id="mEquip" required>
+            <option value="Elderly & People of Determination Customized Lifts (EN 81-70)" selected>Elderly &amp; People of Determination Customized Lifts (EN 81-70)</option>
+            <option value="MRL Gearless Passenger Elevators (EN 81-20/50)">MRL Gearless Passenger Elevators (EN 81-20/50)</option>
+            <option value="Custom Luxury Villa Elevators (MRL Traction)">Custom Luxury Villa Elevators (MRL Traction)</option>
+            <option value="Medical & Hospital Stretcher Elevators (EN 81-70)">Medical &amp; Hospital Stretcher Elevators (EN 81-70)</option>
+            <option value="24/7 Rapid Emergency Response AMC Contract">24/7 Rapid Emergency Response AMC Contract</option>
+          </select>
+        </label>
+        <label>Your Name * <input type="text" id="mName" required placeholder="e.g. Eng. Mansoor Al-Ketbi"></label>
+        <label>Phone / WhatsApp * <input type="tel" id="mPhone" required placeholder="+971 50 000 0000"></label>
+        <label>Project Location *
+          <select id="mLoc" required>
+            <option value="Abu Dhabi City">Abu Dhabi City</option>
+            <option value="Dubai & Northern Emirates">Dubai &amp; Northern Emirates</option>
+            <option value="Al Ain & Regional">Al Ain &amp; Regional</option>
+          </select>
+        </label>
+        <button type="submit">Submit Technical Request &rarr;</button>
+      </form>
+    </div>
+  </div>
+
+<script>
+(function(){
+  "use strict";
+  var clamp = function(v,a,b){ return Math.max(a, Math.min(b, v)); };
+  var hdr = document.getElementById("hdr");
+  var fiBar = document.getElementById("fiBar");
+  var fiRead = document.getElementById("fiRead");
+  var fiArrow = document.getElementById("fiArrow");
+  var ticks = document.getElementById("ticks");
+
+  /* dust particles */
+  var cv = document.getElementById("dust");
+  if(cv){
+    var ctx = cv.getContext("2d");
+    var P = [];
+    var resizeCv = function(){ cv.width = innerWidth; cv.height = innerHeight; };
+    resizeCv();
+    addEventListener("resize", resizeCv, {passive:true});
+    for(var i=0; i<35; i++){
+      P.push({
+        x: Math.random()*innerWidth, y: Math.random()*innerHeight,
+        r: Math.random()*1.4 + .3, vy: -(Math.random()*.35 + .1), vx: (Math.random()-.5)*.15,
+        a: Math.random()*.5 + .15
+      });
+    }
+    (function animDust(){
+      ctx.clearRect(0,0,cv.width,cv.height);
+      for(var k=0; k<P.length; k++){
+        var p = P[k];
+        p.y += p.vy; p.x += p.vx;
+        if(p.y < 0){ p.y = cv.height; p.x = Math.random()*cv.width; }
+        ctx.fillStyle = "rgba(224,138,30," + p.a + ")";
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fill();
+      }
+      requestAnimationFrame(animDust);
+    })();
+  }
+
+  /* ticks generator */
+  if(ticks){
+    var h = 140;
+    for(var t=0; t<25; t++){
+      var d = document.createElement("div");
+      d.className = "tick"; d.style.top = (t*h) + "px";
+      d.innerHTML = "<b>" + String(t*10).padStart(3,"0") + " M</b>";
+      ticks.appendChild(d);
+    }
+  }
+
+  var secs = Array.prototype.slice.call(document.querySelectorAll("[data-floor]"));
+  var lis = document.querySelectorAll("#fi ol li");
+
+  var lastY = 0, ticking = false;
+  function frame(){
+    ticking = false;
+    var y = scrollY, vh = innerHeight, doc = document.documentElement;
+
+    hdr.classList.toggle("stuck", y > 40);
+
+    var total = doc.scrollHeight - vh;
+    if(fiBar) fiBar.style.height = clamp(y/(total||1)*100,0,100) + "%";
+
+    if(Math.abs(y-lastY) > 1){
+      if(fiArrow) fiArrow.style.transform = (y > lastY) ? "rotate(180deg)" : "rotate(0deg)";
+      lastY = y;
+    }
+
+    var act = 0;
+    for(var i=0;i<secs.length;i++){
+      if(secs[i].getBoundingClientRect().top <= vh*0.45) act = i;
+    }
+    if(fiRead && fiRead.textContent !== secs[act].dataset.floor){
+      fiRead.textContent = secs[act].dataset.floor;
+    }
+    for(var j=0;j<lis.length;j++){
+      if(j===act) lis[j].setAttribute("data-on",""); else lis[j].removeAttribute("data-on");
+    }
+  }
+
+  addEventListener("scroll", function(){ if(!ticking){ ticking=true; requestAnimationFrame(frame); } },{passive:true});
+  addEventListener("resize", frame, {passive:true});
+
+  window.openSurveyModal = function(type){
+    var m = document.getElementById("surveyModal");
+    var sel = document.getElementById("mEquip");
+    if(sel && type) sel.value = type;
+    if(m) m.classList.add("active");
+  };
+  window.closeSurveyModal = function(){
+    var m = document.getElementById("surveyModal");
+    if(m) m.classList.remove("active");
+  };
+  window.handleSurveySubmit = function(e){
+    e.preventDefault();
+    alert("Thank you! Your technical accessibility consultation request has been submitted. An Al Dirayah engineer will call you shortly.");
+    closeSurveyModal();
+  };
+
+  frame();
+})();
+</script>
+</body>
+</html>
