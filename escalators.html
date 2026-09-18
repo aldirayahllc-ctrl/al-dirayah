@@ -142,6 +142,7 @@ section{position:relative}
 
 /* ── hero ──────────────────────────────────────────────────── */
 #hero{min-height:100svh; display:grid; align-content:center; padding-top:5.5rem; overflow:hidden}
+#hero > .wrap{position:relative; z-index:10}
 #hero h1{font-size:clamp(3.2rem,14vw,9.5rem); color:var(--white)}
 #hero h1 .am{color:var(--amber)}
 .h-line{overflow:hidden}
@@ -162,7 +163,7 @@ section{position:relative}
 .incline-ctrls button:hover,.incline-ctrls button.active{background:var(--amber); color:var(--ink); border-color:var(--amber); font-weight:600}
 
 /* hero step ribbon */
-#ribbon{position:absolute; left:-12%; right:-12%; bottom:-4%; height:46vh; pointer-events:none; opacity:.85}
+#ribbon{position:absolute; left:-12%; right:-12%; bottom:-4%; height:46vh; pointer-events:none; opacity:.85; z-index:1}
 #ribbon .band{position:absolute; inset:0; display:flex; gap:0; transform:rotate(-30deg); transform-origin:center}
 .rstep{width:74px; height:150px; flex:none; position:relative}
 .rstep::before{content:""; position:absolute; left:2px; right:2px; top:0; height:13px;
