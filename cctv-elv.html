@@ -7,7 +7,7 @@
   <meta name="description" content="Enterprise CCTV surveillance, structured cabling (Cat6A/Cat7/Fiber), cable pulling, and network configuration solutions certified by SIRA & MCC in UAE.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;1,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;1,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --ink: #07090e;
@@ -27,7 +27,30 @@
 
     * { margin:0; padding:0; box-sizing:border-box; }
     html { scroll-behavior: smooth; background: var(--ink); color: #e1e7ed; font-family: var(--font-body); }
-    body { overflow-x: hidden; }
+    body { overflow-x: hidden; position: relative; }
+
+    /* --- FIXED SURVEILLANCE VIEWFINDER OVERLAY RETICLES --- */
+    .cctv-viewport-hud {
+      position: fixed; inset: 0; pointer-events: none; z-index: 900; opacity: 0.85;
+      display: flex; flex-direction: column; justify-content: space-between; padding: 24px;
+    }
+    .hud-corner-row { display: flex; justify-content: space-between; align-items: center; }
+    .hud-reticle-box {
+      font-family: var(--font-mono); font-size: 0.7rem; color: rgba(212,175,55,0.7);
+      background: rgba(7, 9, 14, 0.4); border: 1px solid rgba(212,175,55,0.2);
+      padding: 4px 10px; border-radius: 4px; backdrop-filter: blur(4px);
+      letter-spacing: 1px; display: flex; align-items: center; gap: 8px;
+    }
+    .hud-reticle-box span.active-glow { color: #00ff66; text-shadow: 0 0 8px rgba(0,255,102,0.6); }
+
+    /* Scanline Sweep Effect on Scroll */
+    .hud-scanline-beam {
+      position: fixed; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--amber-lt), var(--cyan-glow), transparent);
+      box-shadow: 0 0 15px var(--cyan-glow); z-index: 899; pointer-events: none;
+      top: 0; opacity: 0; transition: opacity 0.3s ease;
+    }
+    .hud-scanline-beam.active { opacity: 0.6; }
 
     /* --- TOP NAV --- */
     .hdr {
@@ -64,6 +87,65 @@
       border-radius: 6px; text-decoration: none; transition: all 0.3s ease;
     }
     .btn-quote:hover { background: var(--amber); color: var(--ink); box-shadow: 0 0 20px var(--gold-glow); }
+
+    /* --- FLOATING CCTV CAMERA HUD CONSOLE (#camHud) --- */
+    #camHud {
+      position: fixed; right: clamp(10px, 2.5vw, 24px); top: 50%; transform: translateY(-50%);
+      z-index: 999; background: rgba(10, 13, 16, 0.92); border: 1px solid rgba(212,175,55,0.3);
+      border-radius: 12px; padding: 14px 12px; display: flex; flex-direction: column; align-items: center; gap: 10px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.8), 0 0 20px rgba(212,175,55,0.15); backdrop-filter: blur(16px);
+      width: 140px; transition: all 0.3s ease;
+    }
+    .cam-rec-head {
+      display: flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 0.65rem;
+      color: #ff3333; font-weight: 700; text-transform: uppercase; border-bottom: 1px solid var(--border);
+      padding-bottom: 6px; width: 100%; justify-content: center;
+    }
+    .cam-rec-head .dot { width: 7px; height: 7px; background: #ff3333; border-radius: 50%; animation: recBlink 1s infinite; }
+
+    .cam-readout {
+      font-family: var(--font-head); font-size: 1.6rem; font-weight: 800; color: var(--amber-lt);
+      line-height: 1; text-align: center; text-shadow: 0 0 12px rgba(245,169,60,0.6); margin-top: 2px;
+    }
+    .cam-ptz-metrics {
+      font-family: var(--font-mono); font-size: 0.6rem; color: var(--cyan-glow); text-align: center;
+      line-height: 1.3; background: rgba(0,240,255,0.05); padding: 4px 6px; border-radius: 4px; border: 1px solid rgba(0,240,255,0.2); width: 100%;
+    }
+
+    .cam-rail {
+      width: 4px; height: 110px; background: rgba(255,255,255,0.08); border-radius: 2px;
+      position: relative; overflow: hidden; margin: 4px 0;
+    }
+    .cam-rail-marker {
+      position: absolute; left: 0; right: 0; top: 0%; height: 18px;
+      background: linear-gradient(180deg, var(--cyan-glow), var(--amber));
+      border-radius: 2px; box-shadow: 0 0 10px var(--gold-glow); transition: top 0.25s ease;
+    }
+
+    .cam-node-list { list-style: none; padding: 0; margin: 0; width: 100%; display: flex; flex-direction: column; gap: 4px; }
+    .cam-node-item {
+      font-family: var(--font-mono); font-size: 0.65rem; color: var(--slate); padding: 4px 6px;
+      border-radius: 4px; cursor: pointer; transition: all 0.2s ease; text-align: left;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; gap: 4px;
+    }
+    .cam-node-item:hover { color: #fff; background: rgba(255,255,255,0.06); }
+    .cam-node-item.active {
+      color: var(--ink); background: var(--amber); font-weight: 700;
+      box-shadow: 0 0 10px var(--gold-glow); transform: scale(1.04);
+    }
+
+    /* Target Lock Toast Overlay */
+    #camLockToast {
+      position: fixed; bottom: 30px; left: 30px; z-index: 995;
+      background: rgba(7, 9, 14, 0.9); border: 1px solid var(--amber);
+      padding: 10px 18px; border-radius: 8px; backdrop-filter: blur(12px);
+      display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+      opacity: 0; transform: translateY(20px); transition: all 0.35s ease; pointer-events: none;
+    }
+    #camLockToast.show { opacity: 1; transform: translateY(0); }
+    .toast-icon { width: 10px; height: 10px; background: #00ff66; border-radius: 50%; box-shadow: 0 0 10px #00ff66; }
+    .toast-text { font-family: var(--font-mono); font-size: 0.75rem; color: #fff; text-transform: uppercase; }
+    .toast-text span { color: var(--amber-lt); font-weight: 700; }
 
     /* --- HERO SECTION --- */
     #hero {
@@ -216,16 +298,17 @@
     .sol-tag { background: rgba(255,255,255,0.04); border: 1px solid var(--border); padding: 4px 10px; border-radius: 4px; font-family: var(--font-mono); font-size: 0.7rem; color: var(--amber-lt); }
 
     /* --- CONTROL ROOM SHOWCASE BANNER --- */
+    #control-room { padding: 4rem 2rem; background: var(--ink); }
     .ctrl-banner {
-      position: relative; margin: 4rem 0; border-radius: 20px; overflow: hidden; border: 1px solid rgba(212,175,55,0.3);
-      min-height: 480px; display: flex; align-items: center; padding: 4rem;
+      position: relative; border-radius: 20px; overflow: hidden; border: 1px solid rgba(212,175,55,0.3);
+      min-height: 480px; display: flex; align-items: center; padding: 4rem; max-width: 1400px; margin: 0 auto;
     }
     .ctrl-banner img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.4) contrast(1.1); z-index: 1; }
     .ctrl-banner-content { position: relative; z-index: 2; max-width: 650px; }
     .ctrl-banner-content h2 { font-family: var(--font-head); font-size: 3.5rem; font-weight: 800; color: #fff; text-transform: uppercase; line-height: 1.05; margin-bottom: 1rem; }
     .ctrl-banner-content p { color: #d0d7de; font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem; }
 
-    /* --- FOOTER --- */
+    /* --- FOOTER / CONTACT --- */
     footer { background: #040508; border-top: 1px solid var(--border); padding: 4rem 2rem 2rem; color: var(--slate); font-size: 0.9rem; }
     .ft-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
     .ft-brand h3 { font-family: var(--font-head); font-size: 1.5rem; color: #fff; margin-bottom: 1rem; text-transform: uppercase; }
@@ -242,6 +325,7 @@
       .grid-3 { grid-template-columns: 1fr 1fr; }
       .studio-grid { grid-template-columns: 1fr; }
       .stats-ribbon { grid-template-columns: repeat(2, 1fr); }
+      #camHud { display: none; }
     }
     @media (max-width: 768px) {
       .grid-3 { grid-template-columns: 1fr; }
@@ -252,6 +336,57 @@
   </style>
 </head>
 <body>
+
+  <!-- VIEWFINDER HUD OVERLAY RETICLES -->
+  <div class="cctv-viewport-hud">
+    <div class="hud-corner-row">
+      <div class="hud-reticle-box">
+        <span>┌</span> <span>STREAM FEED :: 4K IP SYSTEM</span>
+      </div>
+      <div class="hud-reticle-box">
+        <span>LAT: 24.4539° N | LON: 54.3773° E</span> <span>┐</span>
+      </div>
+    </div>
+    <div class="hud-corner-row">
+      <div class="hud-reticle-box">
+        <span>└</span> <span class="active-glow">● SIRA / MCC AUDIT ONLINE</span>
+      </div>
+      <div class="hud-reticle-box">
+        <span>FPS: 60 | BITRATE: 12.4 Mbps</span> <span>┘</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hud-scanline-beam" id="scanlineBeam"></div>
+
+  <!-- FLOATING CCTV CAMERA CONSOLE SIDEBAR HUD (#camHud) -->
+  <aside id="camHud" aria-label="Camera Sequence Navigator">
+    <div class="cam-rec-head">
+      <span class="dot"></span> REC LIVE
+    </div>
+
+    <div class="cam-readout" id="hudCamRead">CAM-01</div>
+
+    <div class="cam-ptz-metrics" id="hudPtz">
+      P: 0° | T: 0°<br>ZOOM: 1.0X
+    </div>
+
+    <div class="cam-rail">
+      <div class="cam-rail-marker" id="camMarker"></div>
+    </div>
+
+    <ol class="cam-node-list" id="camList">
+      <!-- Generated via JS for data-cam sections -->
+    </ol>
+  </aside>
+
+  <!-- TARGET LOCK TOAST NOTIFICATION -->
+  <div id="camLockToast">
+    <div class="toast-icon"></div>
+    <div class="toast-text">
+      TARGET LOCKED :: <span id="toastCamName">CAM-01 HERO ENTRANCE</span>
+    </div>
+  </div>
 
   <!-- NAVIGATION HEADER -->
   <header class="hdr">
@@ -279,7 +414,7 @@
   </header>
 
   <!-- HERO SECTION -->
-  <section id="hero">
+  <section id="hero" data-cam="01" data-label="ENTRANCE" data-pan="0°" data-tilt="0°" data-zoom="1.0x" data-status="HERO STREAM">
     <div class="hero-bg-grid"></div>
     <div class="hero-wrap">
       <div class="hero-left">
@@ -319,14 +454,14 @@
         </div>
       </div>
 
-      <!-- Live Stream HUD Frame -->
+      <!-- Live Feed Simulation Frame -->
       <div class="hero-right">
         <div class="hero-feed-preview">
           <img id="cctvFeedImg" src="cctv_ip_camera_3d.jpg" alt="CCTV 4K Security Stream Preview">
           <div class="feed-hud">
             <div class="hud-top">
-              <div><span class="rec-dot"></span>LIVE :: CAM-04 (MAIN ENTRANCE)</div>
-              <div id="hudTime">2026-09-19 01:54:06</div>
+              <div><span class="rec-dot"></span>LIVE :: CAM-01 (MAIN ENTRANCE)</div>
+              <div id="hudTime">2026-09-19 02:54:00</div>
             </div>
             <div class="hud-bottom">
               <div id="hudModeLabel">MODE: 4K ULTRA-HD (3840x2160 @ 60FPS)</div>
@@ -339,7 +474,7 @@
   </section>
 
   <!-- 3D EXPLODED CAMERA DISASSEMBLY SECTION (#f2) -->
-  <section id="f2">
+  <section id="f2" data-cam="02" data-label="3D ANATOMY" data-pan="+35°" data-tilt="-15°" data-zoom="2.5x" data-status="DISASSEMBLY SCAN">
     <div class="pin">
       <div class="f2-header">
         <h2>3D HARDWARE ANATOMY</h2>
@@ -392,8 +527,8 @@
     </div>
   </section>
 
-  <!-- CABLING & NETWORK INFRASTRUCTURE SPEC STUDIO (#cabling) -->
-  <section id="cabling">
+  <!-- CABLING & NETWORK SPEC STUDIO (#cabling) -->
+  <section id="cabling" data-cam="03" data-label="CABLING" data-pan="-45°" data-tilt="+10°" data-zoom="1.8x" data-status="FLUKE DIAGNOSTIC">
     <div class="sec-wrap">
       <div class="sec-head">
         <div class="sub">NETWORK BACKBONE & CABLING STUDIO</div>
@@ -469,7 +604,7 @@
   </section>
 
   <!-- COMPLETE ELV SOLUTIONS GRID -->
-  <section id="solutions">
+  <section id="solutions" data-cam="04" data-label="SERVICES" data-pan="+12°" data-tilt="-5°" data-zoom="1.2x" data-status="MATRIX SCAN">
     <div class="sec-wrap">
       <div class="sec-head">
         <div class="sub">END-TO-END CAPABILITIES</div>
@@ -562,22 +697,23 @@
           </div>
         </div>
       </div>
-
-      <!-- CONTROL ROOM BANNER SHOWCASE -->
-      <div class="ctrl-banner">
-        <img src="cctv_control_room_3d.jpg" alt="Al Dirayah Modern Command Center & Control Room">
-        <div class="ctrl-banner-content">
-          <h2>ENTERPRISE SECURITY COMMAND CENTERS</h2>
-          <p>We build mission-critical control rooms equipped with video wall matrices, redundant fiber links, and automated incident alarm response systems.</p>
-          <a href="#contact" class="btn-quote" style="background:var(--amber); color:var(--ink);">Schedule Technical Audit</a>
-        </div>
-      </div>
-
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer>
+  <!-- CONTROL ROOM BANNER SHOWCASE -->
+  <section id="control-room" data-cam="05" data-label="COMMAND" data-pan="-90°" data-tilt="0°" data-zoom="3.0x" data-status="FULL DUPLEX">
+    <div class="ctrl-banner">
+      <img src="cctv_control_room_3d.jpg" alt="Al Dirayah Modern Command Center & Control Room">
+      <div class="ctrl-banner-content">
+        <h2>ENTERPRISE SECURITY COMMAND CENTERS</h2>
+        <p>We build mission-critical control rooms equipped with video wall matrices, redundant fiber links, and automated incident alarm response systems.</p>
+        <a href="#contact" class="btn-quote" style="background:var(--amber); color:var(--ink);">Schedule Technical Audit</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER / AUDIT COMPLIANCE -->
+  <footer id="contact" data-cam="06" data-label="AUDIT" data-pan="180°" data-tilt="-30°" data-zoom="1.0x" data-status="ENCRYPTED">
     <div class="ft-inner">
       <div class="ft-brand">
         <h3>AL DIRAYAH ELECTROMECHANICAL</h3>
@@ -619,7 +755,120 @@
 
   <!-- INTERACTIVE SCRIPTS -->
   <script>
+    // -------------------------------------------------------------
+    // CCTV SCROLL GESTURES ENGINE & CAMERA HUD CONTROLLER (#camHud)
+    // -------------------------------------------------------------
+    (function() {
+      const camSections = Array.from(document.querySelectorAll('[data-cam]'));
+      const hudCamRead = document.getElementById('hudCamRead');
+      const hudPtz = document.getElementById('hudPtz');
+      const camMarker = document.getElementById('camMarker');
+      const camList = document.getElementById('camList');
+      const camLockToast = document.getElementById('camLockToast');
+      const toastCamName = document.getElementById('toastCamName');
+      const scanlineBeam = document.getElementById('scanlineBeam');
+
+      let currentCamId = null;
+      let toastTimer = null;
+
+      // 1. Generate Camera Node Items in Sidebar HUD
+      camSections.forEach((sec, idx) => {
+        const camId = sec.dataset.cam || ('0' + (idx + 1));
+        const label = sec.dataset.label || ('CAM ' + camId);
+
+        const li = document.createElement('li');
+        li.className = 'cam-node-item' + (idx === 0 ? ' active' : '');
+        li.dataset.camTarget = camId;
+        li.innerHTML = `<span style="color:var(--amber); font-weight:700;">${camId}</span> ${label}`;
+
+        li.addEventListener('click', () => {
+          sec.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        camList.appendChild(li);
+      });
+
+      const lis = Array.from(camList.children);
+
+      // 2. Scroll Surveillance Tracking Engine
+      function onScrollSurveillance() {
+        const scrollY = window.scrollY;
+        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = Math.max(0, Math.min(1, scrollY / (totalHeight || 1)));
+
+        // Update Scanline Beam Effect on Scroll
+        if (scanlineBeam) {
+          scanlineBeam.style.top = (progress * 98) + '%';
+          scanlineBeam.classList.add('active');
+          clearTimeout(scanlineBeam._timer);
+          scanlineBeam._timer = setTimeout(() => scanlineBeam.classList.remove('active'), 400);
+        }
+
+        // Update Camera HUD Marker Position
+        if (camMarker) {
+          camMarker.style.top = (progress * 82) + '%';
+        }
+
+        // Determine Active Camera Section based on Viewport Midpoint
+        const viewMid = scrollY + (window.innerHeight / 2);
+        let activeSec = camSections[0];
+
+        for (let i = 0; i < camSections.length; i++) {
+          const sec = camSections[i];
+          const top = sec.offsetTop;
+          const height = sec.offsetHeight;
+          if (viewMid >= top && viewMid <= (top + height)) {
+            activeSec = sec;
+            break;
+          }
+        }
+
+        if (activeSec) {
+          const camId = activeSec.dataset.cam;
+          const label = activeSec.dataset.label;
+          const pan = activeSec.dataset.pan || '0°';
+          const tilt = activeSec.dataset.tilt || '0°';
+          const zoom = activeSec.dataset.zoom || '1.0x';
+
+          // Update HUD Text Displays
+          if (hudCamRead) hudCamRead.textContent = 'CAM-' + camId;
+          if (hudPtz) hudPtz.innerHTML = `P: ${pan} | T: ${tilt}<br>ZOOM: ${zoom}`;
+
+          // Highlight active camera node in list
+          lis.forEach(li => {
+            if (li.dataset.camTarget === camId) {
+              li.classList.add('active');
+            } else {
+              li.classList.remove('active');
+            }
+          });
+
+          // Trigger Target Lock Toast on Camera Transition
+          if (currentCamId !== camId) {
+            currentCamId = camId;
+            showTargetLockToast(camId, label);
+          }
+        }
+      }
+
+      function showTargetLockToast(camId, label) {
+        if (!camLockToast || !toastCamName) return;
+        toastCamName.textContent = `CAM-${camId} ${label.toUpperCase()}`;
+        camLockToast.classList.add('show');
+
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          camLockToast.classList.remove('show');
+        }, 2200);
+      }
+
+      window.addEventListener('scroll', onScrollSurveillance, { passive: true });
+      onScrollSurveillance();
+    })();
+
+    // -------------------------------------------------------------
     // HUD Real-time Clock
+    // -------------------------------------------------------------
     function updateClock() {
       const now = new Date();
       const str = now.toISOString().replace('T', ' ').substring(0, 19);
@@ -629,7 +878,9 @@
     setInterval(updateClock, 1000);
     updateClock();
 
+    // -------------------------------------------------------------
     // Hero CCTV Mode Switcher
+    // -------------------------------------------------------------
     function switchCctvMode(mode) {
       const btns = document.querySelectorAll('.ctrl-btn');
       btns.forEach(b => b.classList.remove('active'));
@@ -653,14 +904,15 @@
       }
     }
 
+    // -------------------------------------------------------------
     // Scroll-driven 3D Exploded Disassembly Engine (#f2)
+    // -------------------------------------------------------------
     window.addEventListener('scroll', () => {
       const f2 = document.getElementById('f2');
       if (!f2) return;
       const rect = f2.getBoundingClientRect();
       const windowH = window.innerHeight;
       
-      // Calculate progress through #f2 section (0 to 1)
       const totalScrollable = rect.height - windowH;
       let progress = -rect.top / totalScrollable;
       progress = Math.max(0, Math.min(1, progress));
@@ -669,7 +921,6 @@
       const explodedImg = document.getElementById('explodedCamImg');
 
       if (baseImg && explodedImg) {
-        // Crossfade images between progress 0.2 and 0.8
         let explodeFactor = (progress - 0.15) / 0.7;
         explodeFactor = Math.max(0, Math.min(1, explodeFactor));
 
@@ -677,7 +928,6 @@
         explodedImg.style.opacity = explodeFactor;
         explodedImg.style.transform = `scale(${1 + explodeFactor * 0.15})`;
 
-        // Toggle visibility of part callouts based on scroll threshold
         const tags = [
           { id: 'tag1', start: 0.2 },
           { id: 'tag2', start: 0.3 },
@@ -700,7 +950,9 @@
       }
     });
 
+    // -------------------------------------------------------------
     // Cabling Spec Studio Interactive Data
+    // -------------------------------------------------------------
     const specData = {
       cat6a: {
         title: 'Cat6A S/FTP Shielded Copper System',
