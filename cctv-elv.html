@@ -131,8 +131,9 @@
       color: #ff3333; font-weight: 700; text-transform: uppercase; border-bottom: 1px solid var(--line);
       padding-bottom: 5px; width: 100%; justify-content: center;
     }
-    .cam-rec-head .dot { width: 6px; height: 6px; background: #ff3333; border-radius: 50%; animation: recBlink 1s infinite; }
-    @keyframes recBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+    .cam-rec-head { color: var(--amber-lt); }
+    .cam-rec-head .dot { width: 6px; height: 6px; background: #00ff66; box-shadow:0 0 8px #00ff66; border-radius: 50%; animation: recBlink 1s infinite; }
+    @keyframes recBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
     .cam-readout {
       font-family: var(--f-m); font-size: 1.4rem; font-weight: 700; color: var(--amber-lt);
@@ -387,7 +388,7 @@
   <div class="cctv-viewport-hud">
     <div class="hud-corner-row">
       <div class="hud-reticle-box">
-        <span>┌</span> <span>STREAM FEED :: 4K IP SYSTEM</span>
+        <span>┌</span> <span>INTERACTIVE DEMO :: 4K IP SYSTEM</span>
       </div>
       <div class="hud-reticle-box">
         <span>LAT: 24.4539° N | LON: 54.3773° E</span> <span>┐</span>
@@ -408,7 +409,7 @@
   <!-- FLOATING CCTV CAMERA CONSOLE SIDEBAR HUD (#camHud) -->
   <aside id="camHud" aria-label="Camera Sequence Navigator">
     <div class="cam-rec-head">
-      <span class="dot"></span> REC LIVE
+      <span class="dot"></span> DEMO SIMULATION
     </div>
 
     <div class="cam-readout" id="hudCamRead">CAM-01</div>
@@ -484,7 +485,7 @@
           <div class="cctv-ctrls">
             <button class="ctrl-btn active" onclick="switchCctvMode('4k')">📷 4K ULTRA-HD</button>
             <button class="ctrl-btn" onclick="switchCctvMode('ir')">🌙 THERMAL IR</button>
-            <button class="ctrl-btn" onclick="switchCctvMode('grid')">🔲 LIVE GRID 2x2</button>
+            <button class="ctrl-btn" onclick="switchCctvMode('grid')">🔲 QUAD GRID 2x2</button>
             <button class="ctrl-btn" onclick="switchCctvMode('ai')">🧠 EDGE AI ANALYTICS</button>
           </div>
 
@@ -514,7 +515,7 @@
             <img id="cctvFeedImg" src="cctv_ip_camera_3d.jpg" alt="CCTV 4K Security Stream Preview">
             <div class="feed-hud">
               <div class="hud-top">
-                <div><span class="rec-dot"></span>LIVE :: CAM-01 (MAIN ENTRANCE)</div>
+                <div><span class="rec-dot" style="background:#00ff66; box-shadow:0 0 8px #00ff66;"></span>DEMO FEED :: CAM-01 (MAIN ENTRANCE)</div>
                 <div id="hudTime">2026-09-19 03:10:00</div>
               </div>
               <div class="hud-bottom">
@@ -1000,7 +1001,7 @@
         label.textContent = 'MODE: THERMAL INFRARED (50m NIGHT VISION)';
       } else if (mode === 'grid') {
         img.style.filter = 'contrast(1.2) saturate(0.8)';
-        label.textContent = 'MODE: LIVE GRID 2x2 QUAD FEED (MULTI-CAM)';
+        label.textContent = 'MODE: QUAD GRID 2x2 MATRIX FEED (MULTI-CAM)';
       } else if (mode === 'ai') {
         img.style.filter = 'brightness(1.1) contrast(1.3) hue-rotate(180deg)';
         label.textContent = 'MODE: EDGE AI THREAT DETECTION & BOUNDING';
