@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Customized Lifts for Elderly & People of Determination (EN 81-70) | Al Dirayah Contracting — Abu Dhabi</title>
-<meta name="description" content="Custom accessibility elevators engineered for elderly family members and People of Determination in Abu Dhabi & Dubai. EN 81-70 compliant, low-height Braille controls, wheelchair access, soft VVVF drives, and emergency battery rescue by Al Dirayah Electromechanical Contracting LLC.">
+<title>ADMCC Certified CCTV & Structured Cabling | Al Dirayah Contracting — Abu Dhabi</title>
+<meta name="description" content="Turnkey CCTV installation, Cat6A/Cat7 structured cabling, cable pulling, managed network configuration, and ADMCC compliance filing by Al Dirayah Electromechanical Contracting LLC in Abu Dhabi & Dubai.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap">
 
 <style>
@@ -31,7 +31,7 @@ p{margin:0 0 1rem; max-width:62ch}
 a{color:inherit;text-decoration:none}
 :focus-visible{outline:2px solid var(--amber); outline-offset:3px; border-radius:2px}
 .wrap{max-width:1180px; margin:0 auto; padding:0 clamp(1.1rem,4vw,2.5rem)}
-#hero > .wrap{width:100%}
+#hero > .wrap{width:100%; position:relative; z-index:10}
 .eyebrow{font-family:var(--f-m); font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; color:var(--amber); margin:0 0 1rem}
 .mono{font-family:var(--f-m); font-variant-numeric:tabular-nums}
 .ar{font-family:var(--f-a); direction:rtl; unicode-bidi:isolate}
@@ -148,11 +148,12 @@ td.highlight { color: var(--white); font-weight: 600; font-family: var(--f-m); }
       <li data-floor="2">2</li>
       <li data-floor="3">3</li>
       <li data-floor="4">4</li>
+      <li data-floor="5">5</li>
       <li data-floor="PH">PH</li>
     </ol>
   </div>
 
-  <!-- Master Header Bar (Identical to lifts.html) -->
+  <!-- Master Header Bar -->
   <header id="hdr">
     <div class="wrap">
       <a href="index.html" class="brand" aria-label="Al Dirayah Electromechanical Contracting">
@@ -165,18 +166,21 @@ td.highlight { color: var(--white); font-weight: 600; font-family: var(--f-m); }
         <span class="nm">AL DIRAYAH</span>
       </a>
 
-      <!-- Division Switcher Pills -->
+      <!-- Division Switcher Pills (With CCTV right after Escalators) -->
       <div class="div-switcher">
-        <a href="lifts.html" class="sw-pill active"><span class="icon">🛗</span> LIFTS</a>
-        <a href="escalators.html" class="sw-pill"><span class="icon">⚡</span> ESCALATORS</a>
-        <a href="cctv-elv.html" class="sw-pill"><span class="icon">📹</span> CCTV</a>
+        <a href="index.html" class="sw-pill"><span class="icon">🏠</span> HUB</a>
+        <a href="lifts.html" class="sw-pill"><span class="icon">↕</span> LIFTS</a>
+        <a href="escalators.html" class="sw-pill"><span class="icon">↗</span> ESCALATORS</a>
+        <a href="cctv-elv.html" class="sw-pill active"><span class="icon">📹</span> CCTV &amp; ELV</a>
       </div>
 
       <nav>
         <a href="#hero">OVERVIEW</a>
-        <a href="#l">FEATURES</a>
-        <a href="#f2">DESIGN</a>
-        <a href="#f3">SPECS</a>
+        <a href="#l">CABLING</a>
+        <a href="#f2">PULLING</a>
+        <a href="#f3">CCTV</a>
+        <a href="#f4">NETWORK</a>
+        <a href="#f5">SPECS</a>
         <a href="#ph">CONTACT</a>
       </nav>
 
@@ -190,167 +194,217 @@ td.highlight { color: var(--white); font-weight: 600; font-family: var(--f-m); }
       <div class="wrap">
         <div style="display:grid;grid-template-columns:1.2fr 0.8fr;gap:3rem;align-items:center">
           <div>
-            <div class="eyebrow">♿ EN 81-70 ACCESSIBILITY &amp; INCLUSIVE MOBILITY</div>
+            <div class="eyebrow">📹 ADMCC &amp; OSHAD CERTIFIED SECURITY INFRASTRUCTURE</div>
             <h1 style="font-size:clamp(2.5rem,5vw,4.2rem);color:var(--white);margin-bottom:1rem;line-height:1.05">
-              Customized Lifts for Elderly &amp; People of Determination
+              CCTV &amp; Structured Cabling Solutions
             </h1>
             <p style="font-size:1.1rem;color:var(--steel-lt);margin-bottom:2rem;line-height:1.65;max-width:580px">
-              Engineered for dignity, safety, and total independence. Our EN 81-70 compliant accessibility elevators are custom-built for private villa estates, residential communities, and commercial facilities across Abu Dhabi &amp; Dubai — featuring zero-threshold entrances, ergonomic low-height Braille controls, soft-acceleration VVVF drives, multi-lingual voice guidance, and 24/7 battery emergency rescue.
+              Turnkey Low Voltage (ELV) engineering for commercial towers, residential communities, and industrial facilities in Abu Dhabi &amp; Dubai. From Cat6A/Cat7 structured cabling and EMT conduit cable pulling to 4K IP CCTV installations, managed PoE+ network switches, NVR storage arrays, and ADMCC compliance approval.
             </p>
             <div style="display:flex;flex-wrap:wrap;gap:1.2rem;align-items:center">
-              <button class="big-cta" onclick="openSurveyModal('Elderly &amp; Determination Accessibility Lifts')">Request Site Survey 📐</button>
+              <button class="big-cta" onclick="openSurveyModal('ADMCC Certified CCTV &amp; Cabling System')">Request Technical Survey 📐</button>
               <a href="Al-Dirayah-Company-Profile.pdf" target="_blank" class="btn-sec">Download Profile (PDF) 📄</a>
             </div>
           </div>
 
           <!-- Hero Image Card -->
           <div style="position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--amber-dim);box-shadow:0 25px 60px rgba(0,0,0,0.95)">
-            <img src="accessibility_lift_hero_3d.jpg" alt="EN 81-70 Wheelchair Accessible Elevator 3D Render" style="width:100%;height:auto;display:block;object-fit:cover">
+            <img src="cctv_control_room_3d.jpg" alt="ADMCC Certified VMS & 4K CCTV Command Center 3D Render" style="width:100%;height:auto;display:block;object-fit:cover">
             <div style="position:absolute;bottom:1.2rem;left:1.2rem;right:1.2rem;background:rgba(14,17,21,0.88);backdrop-filter:blur(12px);padding:1rem 1.25rem;border-radius:10px;border:1px solid var(--amber-dim)">
-              <div style="font-family:var(--f-d);font-weight:700;font-size:1.2rem;color:var(--white);margin-bottom:.2rem">EN 81-70 Accessible Cabin 3D Render</div>
-              <div style="font-size:.8rem;color:var(--amber-lt);font-family:var(--f-m)">Low-Height Braille COP · Continuous Handrail · Folding Seat</div>
+              <div style="font-family:var(--f-d);font-weight:700;font-size:1.2rem;color:var(--white);margin-bottom:.2rem">ADMCC Compliant Command Center</div>
+              <div style="font-size:.8rem;color:var(--amber-lt);font-family:var(--f-m)">4K Video Matrix · Server Racks · PoE+ Managed Network</div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Section #l (Floor 1 - In-Depth Feature Modules Grid) -->
-    <section id="l" class="pad" data-floor="1" data-label="Features" style="background:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+    <!-- Section #l (Floor 1 - Structured Cabling Infrastructure) -->
+    <section id="l" class="pad" data-floor="1" data-label="Cabling" style="background:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
       <div class="wrap">
         <div style="max-width:760px;margin-bottom:3.5rem">
-          <span class="eyebrow">01 — ENGINEERING MODULES</span>
-          <h2 style="font-size:clamp(2rem,4vw,3.2rem);color:var(--white);margin-bottom:.8rem">Engineered Accessibility Features</h2>
-          <p style="font-size:1.05rem;color:var(--steel-lt);line-height:1.65">Every component is custom-tailored to provide effortless mobility, high contrast legibility, and maximum physical safety for senior citizens and People of Determination.</p>
+          <span class="eyebrow">01 — STRUCTURED CABLING</span>
+          <h2 style="font-size:clamp(2rem,4vw,3.2rem);color:var(--white);margin-bottom:.8rem">Cat6A / Cat7 &amp; Fiber Optic Backbone</h2>
+          <p style="font-size:1.05rem;color:var(--steel-lt);line-height:1.65">High-density structured cabling infrastructure engineered for high-speed data transmission, PoE+ power distribution, and zero-loss optical backhauling.</p>
         </div>
 
         <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:1.8rem">
           <!-- Card 1 -->
-          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:2rem;transition:all .25s var(--ease)">
-            <div style="width:48px;height:48px;border-radius:10px;background:rgba(224,138,30,0.15);border:1px solid var(--amber-dim);display:grid;place-items:center;font-size:1.5rem;margin-bottom:1.25rem">♿</div>
-            <h3 style="font-family:var(--f-d);font-size:1.4rem;color:var(--white);margin-bottom:.6rem">EN 81-70 Wheelchair Accessibility</h3>
-            <p style="font-size:.95rem;color:var(--steel-lt);line-height:1.6">Extra-wide automatic telescopic sliding doors (800mm to 1100mm clear width) with zero-bump flush threshold sills, non-glare interior lighting, and durable anti-slip composite floor surfaces.</p>
+          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:2rem">
+            <div style="width:48px;height:48px;border-radius:10px;background:rgba(224,138,30,0.15);border:1px solid var(--amber-dim);display:grid;place-items:center;font-size:1.5rem;margin-bottom:1.25rem">🔌</div>
+            <h3 style="font-family:var(--f-d);font-size:1.4rem;color:var(--white);margin-bottom:.6rem">Cat6A &amp; Cat7 S/FTP Copper Cabling</h3>
+            <p style="font-size:.95rem;color:var(--steel-lt);line-height:1.6">High-bandwidth shielded twisted pair copper cabling supporting 10Gbps Ethernet, high-wattage PoE+ (802.3at/bt), and zero-crosstalk noise isolation.</p>
           </div>
 
           <!-- Card 2 -->
-          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:2rem;transition:all .25s var(--ease)">
-            <div style="width:48px;height:48px;border-radius:10px;background:rgba(224,138,30,0.15);border:1px solid var(--amber-dim);display:grid;place-items:center;font-size:1.5rem;margin-bottom:1.25rem">🎛️</div>
-            <h3 style="font-family:var(--f-d);font-size:1.4rem;color:var(--white);margin-bottom:.6rem">Ergonomic Inclined COP &amp; Braille</h3>
-            <p style="font-size:.95rem;color:var(--steel-lt);line-height:1.6">Dual-height Car Operating Panels (COP) positioned ergonomically at 900mm–1100mm height for seated wheelchair users, featuring raised tactile numbers and dual Arabic/English Braille characters.</p>
+          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:2rem">
+            <div style="width:48px;height:48px;border-radius:10px;background:rgba(224,138,30,0.15);border:1px solid var(--amber-dim);display:grid;place-items:center;font-size:1.5rem;margin-bottom:1.25rem">⚡</div>
+            <h3 style="font-family:var(--f-d);font-size:1.4rem;color:var(--white);margin-bottom:.6rem">Singlemode &amp; Multimode Fiber Backbone</h3>
+            <p style="font-size:.95rem;color:var(--steel-lt);line-height:1.6">OS2 singlemode and OM4 multimode fiber optic risers, precision fusion splicing, OTDR loss testing, and high-density fiber patch enclosure termination.</p>
           </div>
 
           <!-- Card 3 -->
-          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:2rem;transition:all .25s var(--ease)">
-            <div style="width:48px;height:48px;border-radius:10px;background:rgba(224,138,30,0.15);border:1px solid var(--amber-dim);display:grid;place-items:center;font-size:1.5rem;margin-bottom:1.25rem">🛗</div>
-            <h3 style="font-family:var(--f-d);font-size:1.4rem;color:var(--white);margin-bottom:.6rem">Soft VVVF Acceleration Drive</h3>
-            <p style="font-size:.95rem;color:var(--steel-lt);line-height:1.6">Specialized low-jerk travel profiles engineered for gentle start, smooth deceleration, and ±2mm exact flush floor levelling to completely eliminate tripping hazards for seniors.</p>
-          </div>
-
-          <!-- Card 4 -->
-          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:2rem;transition:all .25s var(--ease)">
-            <div style="width:48px;height:48px;border-radius:10px;background:rgba(224,138,30,0.15);border:1px solid var(--amber-dim);display:grid;place-items:center;font-size:1.5rem;margin-bottom:1.25rem">🚨</div>
-            <h3 style="font-family:var(--f-d);font-size:1.4rem;color:var(--white);margin-bottom:.6rem">Automatic Floor Rescue &amp; Voice</h3>
-            <p style="font-size:.95rem;color:var(--steel-lt);line-height:1.6">Integrated Automatic Rescue Device (ARD) lowers car to the nearest floor during power failures, automatically releases doors, and connects to 24/7 emergency dispatch hotline.</p>
-          </div>
-
-          <!-- Card 5 -->
-          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:2rem;transition:all .25s var(--ease)">
-            <div style="width:48px;height:48px;border-radius:10px;background:rgba(224,138,30,0.15);border:1px solid var(--amber-dim);display:grid;place-items:center;font-size:1.5rem;margin-bottom:1.25rem">🪞</div>
-            <h3 style="font-family:var(--f-d);font-size:1.4rem;color:var(--white);margin-bottom:.6rem">128-Beam Safety Curtain &amp; Mirror</h3>
-            <p style="font-size:.95rem;color:var(--steel-lt);line-height:1.6">Full-height 128-beam infrared safety sensors instantly prevent door contact with passengers, paired with a rear wall glass mirror for safe wheelchair reversing visibility.</p>
-          </div>
-
-          <!-- Card 6 -->
-          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:2rem;transition:all .25s var(--ease)">
-            <div style="width:48px;height:48px;border-radius:10px;background:rgba(224,138,30,0.15);border:1px solid var(--amber-dim);display:grid;place-items:center;font-size:1.5rem;margin-bottom:1.25rem">🛋️</div>
-            <h3 style="font-family:var(--f-d);font-size:1.4rem;color:var(--white);margin-bottom:.6rem">Continuous Handrails &amp; Folding Seat</h3>
-            <p style="font-size:.95rem;color:var(--steel-lt);line-height:1.6">Dual-tier 32mm brushed stainless steel grab rails extending across three cabin walls, with optional heavy-duty wall-mounted cushioned folding seat for senior passenger comfort.</p>
+          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:2rem">
+            <div style="width:48px;height:48px;border-radius:10px;background:rgba(224,138,30,0.15);border:1px solid var(--amber-dim);display:grid;place-items:center;font-size:1.5rem;margin-bottom:1.25rem">🗄️</div>
+            <h3 style="font-family:var(--f-d);font-size:1.4rem;color:var(--white);margin-bottom:.6rem">Server Rack &amp; Patch Panel Termination</h3>
+            <p style="font-size:.95rem;color:var(--steel-lt);line-height:1.6">42U/45U server rack enclosures, horizontal/vertical cable organizers, keystone jack dress-outs, and FLUKE DSX-8000 certified channel testing reports.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Section #f2 (Floor 2 - Architectural Entrance Showcase) -->
-    <section id="f2" class="pad" data-floor="2" data-label="Design">
+    <!-- Section #f2 (Floor 2 - Cable Pulling & Containment Engineering) -->
+    <section id="f2" class="pad" data-floor="2" data-label="Pulling">
       <div class="wrap">
         <div style="background:linear-gradient(135deg, rgba(224,138,30,0.1), rgba(20,24,29,0.95));border:1px solid var(--amber-dim);border-radius:16px;padding:3rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center">
           <div style="position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--amber-dim);box-shadow:0 20px 45px rgba(0,0,0,0.8)">
-            <img src="accessibility_lift_entrance_3d.jpg" alt="Luxury Villa Wheelchair Accessible Elevator Entrance Foyer" style="width:100%;height:auto;display:block;object-fit:cover">
+            <img src="cctv_ip_camera_3d.jpg" alt="Vandal-Proof 4K IP Dome Camera & EMT Conduit Cabling" style="width:100%;height:auto;display:block;object-fit:cover">
             <div style="position:absolute;bottom:1rem;left:1rem;background:rgba(14,17,21,0.85);backdrop-filter:blur(10px);padding:.6rem 1rem;border-radius:8px;border:1px solid var(--amber-dim);font-family:var(--f-m);font-size:.78rem;color:var(--amber-lt)">
-              ZERO-THRESHOLD ENTRANCE FOYER
+              EMT CONDUIT &amp; 4K DOME CAMERA
             </div>
           </div>
           <div>
-            <div class="eyebrow">02 — ARCHITECTURAL INTEGRATION</div>
+            <div class="eyebrow">02 — CABLE PULLING &amp; CONTAINMENT</div>
             <h2 style="font-size:clamp(1.8rem,3vw,2.6rem);color:var(--white);margin-bottom:1rem;line-height:1.1">
-              Seamless Barrier-Free Entrance Design
+              Industrial Cable Pulling &amp; Conduit Containment
             </h2>
             <p style="color:var(--steel-lt);font-size:1.02rem;line-height:1.65;margin-bottom:1.5rem">
-              Our accessibility elevators blend seamlessly into high-end UAE villa interiors and commercial lobbies. Featuring automatic telescopic doors in champagne gold and glass, flush floor thresholds for effortless wheelchair passage, and low-height wall call stations in Arabic and English.
+              Heavy-duty cable pulling and raceway containment engineered for multi-story risers, basement parking, and outdoor perimeters. Installed according to ADMCC &amp; UAE Civil Defence safety standards.
             </p>
             <div style="display:grid;gap:.8rem;font-size:.92rem">
-              <div style="display:flex;align-items:center;gap:.7rem;color:var(--paper)"><span style="color:var(--amber-lt);font-weight:700">✓</span> Zero-tripping threshold alignment (±2mm precision)</div>
-              <div style="display:flex;align-items:center;gap:.7rem;color:var(--paper)"><span style="color:var(--amber-lt);font-weight:700">✓</span> Wide 800mm – 1100mm clear door openings</div>
-              <div style="display:flex;align-items:center;gap:.7rem;color:var(--paper)"><span style="color:var(--amber-lt);font-weight:700">✓</span> Multi-lingual tactile &amp; illuminated wall call stations</div>
+              <div style="display:flex;align-items:center;gap:.7rem;color:var(--paper)"><span style="color:var(--amber-lt);font-weight:700">✓</span> Galvanized Iron (GI) Cable Trays, Wire Mesh &amp; Ladder Racks</div>
+              <div style="display:flex;align-items:center;gap:.7rem;color:var(--paper)"><span style="color:var(--amber-lt);font-weight:700">✓</span> Rigid EMT Steel Conduits &amp; Weatherproof IP67 Flexible Fittings</div>
+              <div style="display:flex;align-items:center;gap:.7rem;color:var(--paper)"><span style="color:var(--amber-lt);font-weight:700">✓</span> Riser Shaft Vertical Cable Pulling &amp; Strain Relief Clamps</div>
+              <div style="display:flex;align-items:center;gap:.7rem;color:var(--paper)"><span style="color:var(--amber-lt);font-weight:700">✓</span> Civil Defence Approved Fire-Stop Penetration Sealing</div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Section #f3 (Floor 3 - Technical Specification Matrix Table) -->
-    <section id="f3" class="pad" data-floor="3" data-label="Specs" style="background:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+    <!-- Section #f3 (Floor 3 - CCTV Installations & Camera Deployment) -->
+    <section id="f3" class="pad" data-floor="3" data-label="CCTV" style="background:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+      <div class="wrap">
+        <div style="max-width:760px;margin-bottom:3.5rem">
+          <span class="eyebrow">03 — CAMERA DEPLOYMENT</span>
+          <h2 style="font-size:clamp(2rem,4vw,3.2rem);color:var(--white);margin-bottom:.8rem">4K Ultra-HD &amp; Specialized IP Cameras</h2>
+          <p style="font-size:1.05rem;color:var(--steel-lt);line-height:1.65">High-performance IP surveillance cameras tailored for indoor corridors, outdoor perimeters, vehicle parking, and high-security zones.</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:1.8rem">
+          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:2rem">
+            <div style="font-size:2rem;margin-bottom:1rem">📹</div>
+            <h3 style="font-family:var(--f-d);font-size:1.35rem;color:var(--white);margin-bottom:.5rem">4K Vandal-Proof Domes &amp; Bullets</h3>
+            <p style="font-size:.9rem;color:var(--steel-lt)">IK10 impact-resistant and IP67 weather-sealed enclosures with Smart IR night vision up to 50 meters.</p>
+          </div>
+
+          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:2rem">
+            <div style="font-size:2rem;margin-bottom:1rem">🔄</div>
+            <h3 style="font-family:var(--f-d);font-size:1.35rem;color:var(--white);margin-bottom:.5rem">360° Panoramic Fisheye &amp; PTZ</h3>
+            <p style="font-size:.9rem;color:var(--steel-lt)">360-degree blind-spot-free coverage paired with 40x optical zoom PTZ tracking and automated guard tours.</p>
+          </div>
+
+          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:2rem">
+            <div style="font-size:2rem;margin-bottom:1rem">🚗</div>
+            <h3 style="font-family:var(--f-d);font-size:1.35rem;color:var(--white);margin-bottom:.5rem">ANPR License Plate Cameras</h3>
+            <p style="font-size:.9rem;color:var(--steel-lt)">High-speed vehicle plate capture for car park barrier gates, access control, and ADMCC compliance.</p>
+          </div>
+
+          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:2rem">
+            <div style="font-size:2rem;margin-bottom:1rem">🌡️</div>
+            <h3 style="font-family:var(--f-d);font-size:1.35rem;color:var(--white);margin-bottom:.5rem">Thermal &amp; Perimeter Intrusion</h3>
+            <p style="font-size:.9rem;color:var(--steel-lt)">Dual-spectrum thermal imaging cameras for early fire detection and long-range perimeter defense.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section #f4 (Floor 4 - Network Configuration & VMS Integration) -->
+    <section id="f4" class="pad" data-floor="4" data-label="Network">
+      <div class="wrap">
+        <div style="max-width:760px;margin-bottom:3.5rem">
+          <span class="eyebrow">04 — NETWORK &amp; VMS CONFIGURATION</span>
+          <h2 style="font-size:clamp(2rem,4vw,3.2rem);color:var(--white);margin-bottom:.8rem">Managed Network &amp; Storage Architecture</h2>
+          <p style="font-size:1.05rem;color:var(--steel-lt);line-height:1.65">Enterprise Video Management System (VMS) setup, managed PoE+ network switches, SAN storage arrays, and mobile remote monitoring.</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:1.8rem">
+          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:1.8rem">
+            <h4 style="font-size:1.25rem;color:var(--white);margin-bottom:.5rem">🌐 Managed Layer 2/3 PoE+ Switches</h4>
+            <p style="font-size:.9rem;color:var(--steel-lt);margin:0">Isolated CCTV VLANs, IGMP video multicast snooping, 10G SFP+ fiber uplinks, and power budget optimization.</p>
+          </div>
+
+          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:1.8rem">
+            <h4 style="font-size:1.25rem;color:var(--white);margin-bottom:.5rem">💾 Enterprise RAID SAN / NVR Storage</h4>
+            <p style="font-size:.9rem;color:var(--steel-lt);margin:0">Hot-swappable RAID 5/6 storage arrays engineered for 30/60/90-day continuous 4K video retention under ADMCC mandates.</p>
+          </div>
+
+          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:1.8rem">
+            <h4 style="font-size:1.25rem;color:var(--white);margin-bottom:.5rem">🖥️ Central VMS &amp; Video Matrix</h4>
+            <p style="font-size:.9rem;color:var(--steel-lt);margin:0">Multi-screen control room matrix, AI object detection, facial recognition, and secure mobile app remote viewing.</p>
+          </div>
+
+          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:1.8rem">
+            <h4 style="font-size:1.25rem;color:var(--white);margin-bottom:.5rem">🛡️ ADMCC Compliance &amp; Filing</h4>
+            <p style="font-size:.9rem;color:var(--steel-lt);margin:0">As-built drawings, camera coverage field-of-view layout maps, certified technician inspections, and final ADMCC clearance.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section #f5 (Floor 5 - Technical Specification Matrix Table) -->
+    <section id="f5" class="pad" data-floor="5" data-label="Specs" style="background:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
       <div class="wrap">
         <div style="max-width:760px;margin-bottom:2.5rem">
-          <span class="eyebrow">03 — COMPLIANCE MATRIX</span>
-          <h2 style="font-size:clamp(2rem,3.5vw,3rem);color:var(--white);margin-bottom:.8rem">EN 81-70 Technical Specification Matrix</h2>
-          <p style="font-size:1.05rem;color:var(--steel-lt);line-height:1.65">Detailed technical parameters for architectural specification and authority submission across Abu Dhabi &amp; Dubai.</p>
+          <span class="eyebrow">05 — TECHNICAL SPECIFICATIONS</span>
+          <h2 style="font-size:clamp(2rem,3.5vw,3rem);color:var(--white);margin-bottom:.8rem">CCTV &amp; ELV Technical Specification Matrix</h2>
+          <p style="font-size:1.05rem;color:var(--steel-lt);line-height:1.65">Detailed technical engineering parameters for consultant approval and authority submission across Abu Dhabi &amp; Dubai.</p>
         </div>
 
         <div class="table-card">
           <table>
             <thead>
               <tr>
-                <th>Specification Parameter</th>
-                <th>EN 81-70 Standard Requirement</th>
-                <th>Al Dirayah Custom Engineering Specification</th>
+                <th>System Parameter</th>
+                <th>Standard Regulatory Requirement</th>
+                <th>Al Dirayah Engineering Specification</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td class="highlight">Door Clear Opening Width</td>
-                <td>Minimum 800 mm</td>
-                <td>800 mm / 900 mm / 1000 mm / 1100 mm Telescopic Doors</td>
+                <td class="highlight">Structured Cabling Grade</td>
+                <td>TIA/EIA-568 Category 6 minimum</td>
+                <td>Cat6A S/FTP &amp; Cat7 10Gbps Shielded Copper + OS2 Fiber Optic</td>
               </tr>
               <tr>
-                <td class="highlight">Car Operating Panel Height</td>
-                <td>900 mm – 1100 mm from floor</td>
-                <td>Dual-Height Ergonomic Horizontal COP with Inclined Faceplate</td>
+                <td class="highlight">Camera Resolution &amp; Sensor</td>
+                <td>1080p Full HD minimum</td>
+                <td>4K Ultra-HD (3840x2160) 8MP Sony Starvis Low-Light Sensor</td>
               </tr>
               <tr>
-                <td class="highlight">Floor Levelling Accuracy</td>
-                <td>± 10 mm max deviation</td>
-                <td>± 2 mm Exact Flush Levelling (VVVF Micro-Encoder Control)</td>
+                <td class="highlight">Conduit Containment</td>
+                <td>PVC / EMT conduit enclosure</td>
+                <td>Heavy-Duty Galvanized EMT Steel Conduits &amp; GI Wire Trays</td>
               </tr>
               <tr>
-                <td class="highlight">Door Hold Delay Timer</td>
-                <td>Minimum 2 – 20 seconds adjustable</td>
-                <td>Programmable Extended Hold (5 – 30 seconds) with Nudge Button</td>
+                <td class="highlight">Network Infrastructure</td>
+                <td>Unmanaged PoE Switch</td>
+                <td>Managed Layer 2/3 PoE+ (802.3at/bt) with Isolated Video VLANs</td>
               </tr>
               <tr>
-                <td class="highlight">Door Safety Sensor</td>
-                <td>Multi-beam light curtain required</td>
-                <td>128-Beam 3D Infrared Curtain with Reopening Interlock</td>
+                <td class="highlight">NVR Video Retention</td>
+                <td>30 Days Continuous Storage</td>
+                <td>30 – 90 Days RAID 5/6 SAN Storage (ADMCC Compliant)</td>
               </tr>
               <tr>
-                <td class="highlight">Emergency Power Backup</td>
-                <td>Automatic landing device (ARD)</td>
-                <td>Heavy-Duty ARD Battery Bank + Auto-Door Release + 24/7 Hotline</td>
+                <td class="highlight">Enclosure Rating</td>
+                <td>IP65 Weatherproof</td>
+                <td>IP67 Weatherproof + IK10 Vandal-Proof Sealed Housing</td>
               </tr>
               <tr>
-                <td class="highlight">Voice Guidance Synthesizer</td>
-                <td>Audio &amp; visual indicators</td>
-                <td>Multi-Lingual Floor Announcement Synthesizer (Arabic &amp; English)</td>
+                <td class="highlight">Authority Clearances</td>
+                <td>Local Security Permit</td>
+                <td>Full ADMCC (Abu Dhabi) &amp; SIRA (Dubai) Technical Filing &amp; Clearance</td>
               </tr>
             </tbody>
           </table>
@@ -358,37 +412,7 @@ td.highlight { color: var(--white); font-weight: 600; font-family: var(--f-m); }
       </div>
     </section>
 
-    <!-- Section #f4 (Floor 4 - Ideal Application Sectors) -->
-    <section id="f4" class="pad" data-floor="4" data-label="Sectors">
-      <div class="wrap">
-        <div style="max-width:760px;margin-bottom:3rem">
-          <span class="eyebrow">04 — SECTOR APPLICATIONS</span>
-          <h2 style="font-size:clamp(2rem,3.5vw,3rem);color:var(--white);margin-bottom:.8rem">Building Application Domains</h2>
-          <p style="font-size:1.05rem;color:var(--steel-lt)">Custom accessibility installations across private homes, healthcare institutions, and public infrastructure.</p>
-        </div>
-
-        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:1.5rem">
-          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:1.8rem">
-            <h4 style="font-size:1.3rem;color:var(--white);margin-bottom:.5rem">🏡 Private Villa Estates</h4>
-            <p style="font-size:.9rem;color:var(--steel-lt);margin:0">Bespoke residential lifts tailored for multi-generational families, ensuring elderly parents move freely across all villa floors.</p>
-          </div>
-          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:1.8rem">
-            <h4 style="font-size:1.3rem;color:var(--white);margin-bottom:.5rem">🏥 Healthcare &amp; Rehab Centers</h4>
-            <p style="font-size:.9rem;color:var(--steel-lt);margin:0">Heavy-duty stretcher &amp; wheelchair elevators engineered for hospitals, nursing homes, and outpatient clinics.</p>
-          </div>
-          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:1.8rem">
-            <h4 style="font-size:1.3rem;color:var(--white);margin-bottom:.5rem">🏢 Commercial Towers &amp; Malls</h4>
-            <p style="font-size:.9rem;color:var(--steel-lt);margin:0">Fully compliant EN 81-70 commercial passenger lifts with high traffic handling and dual COP panels.</p>
-          </div>
-          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:1.8rem">
-            <h4 style="font-size:1.3rem;color:var(--white);margin-bottom:.5rem">🏛️ Government &amp; Public Facilities</h4>
-            <p style="font-size:.9rem;color:var(--steel-lt);margin:0">Barrier-free mobility solutions approved for municipality, educational, and public utility buildings.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ══════════ PH — MASTER FOOTER & CONTACT (Identical to lifts.html) ══════════ -->
+    <!-- ══════════ PH — MASTER FOOTER & CONTACT ══════════ -->
     <section id="ph" class="pad" data-floor="PH" data-label="Contact" style="padding-top:4rem;padding-bottom:3rem;background:var(--ink-2);border-top:1px solid var(--line)">
       <div class="wrap">
         
@@ -396,32 +420,32 @@ td.highlight { color: var(--white); font-weight: 600; font-family: var(--f-m); }
         <div style="background:linear-gradient(135deg, rgba(224,138,30,0.12), rgba(20,24,29,0.95));border:1px solid var(--amber-dim);border-radius:14px;padding:2.5rem;display:grid;grid-template-columns:1.4fr 1fr;gap:2rem;align-items:center;margin-bottom:4rem;box-shadow:0 15px 40px rgba(0,0,0,0.5)">
           <div>
             <p class="eyebrow" style="color:var(--amber-lt);font-family:var(--f-m);font-size:.78rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:.5rem">PENTHOUSE — DIRECT TECHNICAL CONSULTATION</p>
-            <h2 style="font-family:var(--f-d);font-size:clamp(2rem,4vw,3.2rem);color:var(--white);margin-bottom:.8rem;line-height:1.05">Book a Site Technical Survey</h2>
-            <p style="color:var(--steel-lt);font-size:1rem;margin-bottom:1.5rem;max-width:560px;line-height:1.6">Provide building rise, number of stops, or existing OEM status. Our senior engineers measure, inspect, and deliver a comprehensive technical proposal within 24 hours.</p>
+            <h2 style="font-family:var(--f-d);font-size:clamp(2rem,4vw,3.2rem);color:var(--white);margin-bottom:.8rem;line-height:1.05">Book a CCTV &amp; Cabling Site Survey</h2>
+            <p style="color:var(--steel-lt);font-size:1rem;margin-bottom:1.5rem;max-width:560px;line-height:1.6">Provide building floor plans, camera counts, or ADMCC requirements. Our senior ELV engineers inspect, design, and deliver a comprehensive technical proposal within 24 hours.</p>
             <button class="big-cta" onclick="openSurveyModal('Footer CTA')" style="display:inline-flex;align-items:center;gap:.6rem;padding:.85rem 1.8rem;font-size:1rem">Request On-Site Survey &rarr;</button>
           </div>
             
           
           <div style="display:grid;gap:1rem;background:rgba(14,17,21,0.6);padding:1.5rem;border-radius:10px;border:1px solid var(--line)">
             <div style="display:flex;align-items:center;gap:.8rem">
+              <div style="width:36px;height:36px;border-radius:6px;background:var(--amber-dim);border:1px solid var(--amber-lt);display:grid;place-items:center;color:var(--amber-lt);font-size:1.1rem">📹</div>
+              <div>
+                <b style="font-size:.9rem;color:var(--white);display:block">ADMCC &amp; OSHAD Certified</b>
+                <span style="font-size:.78rem;color:var(--steel)">Certified ELV Engineers &amp; Security Compliance</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:.8rem">
               <div style="width:36px;height:36px;border-radius:6px;background:var(--amber-dim);border:1px solid var(--amber-lt);display:grid;place-items:center;color:var(--amber-lt);font-size:1.1rem">⚡</div>
               <div>
-                <b style="font-size:.9rem;color:var(--white);display:block">24/7 Rapid Callout Dispatch</b>
+                <b style="font-size:.9rem;color:var(--white);display:block">24/7 Rapid SLA Response</b>
                 <span style="font-size:.78rem;color:var(--steel)">SLA response: 30 minutes in Abu Dhabi &amp; 2 hours in Dubai</span>
               </div>
             </div>
             <div style="display:flex;align-items:center;gap:.8rem">
               <div style="width:36px;height:36px;border-radius:6px;background:var(--amber-dim);border:1px solid var(--amber-lt);display:grid;place-items:center;color:var(--amber-lt);font-size:1.1rem">📐</div>
               <div>
-                <b style="font-size:.9rem;color:var(--white);display:block">Free Shaft &amp; Pit Inspection</b>
-                <span style="font-size:.78rem;color:var(--steel)">EN 81-20/50 &amp; EN 115 Compliance Audit</span>
-              </div>
-            </div>
-            <div style="display:flex;align-items:center;gap:.8rem">
-              <div style="width:36px;height:36px;border-radius:6px;background:var(--amber-dim);border:1px solid var(--amber-lt);display:grid;place-items:center;color:var(--amber-lt);font-size:1.1rem">🛡️</div>
-              <div>
-                <b style="font-size:.9rem;color:var(--white);display:block">ADMCC &amp; OSHAD Certified</b>
-                <span style="font-size:.78rem;color:var(--steel)">Certified Engineers &amp; Safety Compliance</span>
+                <b style="font-size:.9rem;color:var(--white);display:block">FLUKE DSX Certified Testing</b>
+                <span style="font-size:.78rem;color:var(--steel)">10Gbps Channel Calibration &amp; Warranty</span>
               </div>
             </div>
           </div>
@@ -450,10 +474,10 @@ td.highlight { color: var(--white); font-weight: 600; font-family: var(--f-m); }
             <ul style="list-style:none;padding:0;margin:0;display:grid;gap:.65rem;font-size:.88rem">
               <li><a href="lifts.html" style="color:var(--steel);transition:color .2s">Vertical Lifts &amp; Elevators</a></li>
               <li><a href="escalators.html" style="color:var(--steel);transition:color .2s">Escalators &amp; Moving Walkways</a></li>
+              <li><a href="cctv-elv.html" style="color:var(--amber-lt);transition:color .2s">CCTV &amp; Structured Cabling</a></li>
               <li><a href="residential-elevators.html" style="color:var(--steel);transition:color .2s">Residential Villa Lifts</a></li>
               <li><a href="commercial-elevators.html" style="color:var(--steel);transition:color .2s">Commercial Tower Elevators</a></li>
               <li><a href="maintenance-modernization.html" style="color:var(--steel);transition:color .2s">24/7 Maintenance &amp; AMC</a></li>
-              <li><a href="engineering-services.html" style="color:var(--steel);transition:color .2s">Engineering &amp; Traffic Audits</a></li>
             </ul>
           </div>
 
@@ -488,10 +512,10 @@ td.highlight { color: var(--white); font-weight: 600; font-family: var(--f-m); }
       <form onsubmit="handleSurveySubmit(event)">
         <label>Product or Service Required *
           <select id="mEquip" required>
-            <option value="Elderly & People of Determination Customized Lifts (EN 81-70)" selected>Elderly &amp; People of Determination Customized Lifts (EN 81-70)</option>
+            <option value="ADMCC Certified CCTV & Structured Cabling System" selected>ADMCC Certified CCTV &amp; Structured Cabling System</option>
+            <option value="Cat6A / Cat7 Structured Cabling & Fiber Optic Backbone">Cat6A / Cat7 Structured Cabling &amp; Fiber Optic Backbone</option>
+            <option value="4K IP CCTV & VMS Network Infrastructure">4K IP CCTV &amp; VMS Network Infrastructure</option>
             <option value="MRL Gearless Passenger Elevators (EN 81-20/50)">MRL Gearless Passenger Elevators (EN 81-20/50)</option>
-            <option value="Custom Luxury Villa Elevators (MRL Traction)">Custom Luxury Villa Elevators (MRL Traction)</option>
-            <option value="Medical & Hospital Stretcher Elevators (EN 81-70)">Medical &amp; Hospital Stretcher Elevators (EN 81-70)</option>
             <option value="24/7 Rapid Emergency Response AMC Contract">24/7 Rapid Emergency Response AMC Contract</option>
           </select>
         </label>
@@ -603,7 +627,7 @@ td.highlight { color: var(--white); font-weight: 600; font-family: var(--f-m); }
   };
   window.handleSurveySubmit = function(e){
     e.preventDefault();
-    alert("Thank you! Your technical accessibility consultation request has been submitted. An Al Dirayah engineer will call you shortly.");
+    alert("Thank you! Your CCTV & ELV technical consultation request has been submitted. An Al Dirayah engineer will call you shortly.");
     closeSurveyModal();
   };
 
