@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customized Lifts for Elderly & People of Determination (EN 81-70) | Al Dirayah Contracting — Abu Dhabi</title>
+  <meta name="description" content="Custom accessibility elevators engineered for elderly family members and People of Determination in Abu Dhabi & Dubai. EN 81-70 compliant, low-height Braille controls, wheelchair access, soft VVVF drives, and emergency battery rescue by Al Dirayah Electromechanical Contracting LLC.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0E1115; --bg-alt: #14181D; --card: #1A1F26; --card-border: rgba(224,138,30,0.22);
+      --amber: #E08A1E; --amber-lt: #F5A93C; --amber-dim: rgba(224,138,30,0.15);
+      --white: #FFFFFF; --paper: #F3F4F6; --steel: #8C9BAE; --steel-lt: #BAC5D3;
+      --line: rgba(255,255,255,0.08); --radius: 12px; --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --f-h: 'Outfit', sans-serif; --f-b: 'Inter', sans-serif; --f-m: 'IBM Plex Mono', monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--paper); font-family: var(--f-b); line-height: 1.65; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    
+    /* Header & Nav */
+    .hdr { position: fixed; top: 0; left: 0; right: 0; z-index: 100; backdrop-filter: blur(16px); background: rgba(14,17,21,0.88); border-bottom: 1px solid var(--line); transition: all .3s; }
+    .hdr-wrap { max-width: 1380px; margin: 0 auto; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: flex; align-items: center; gap: .75rem; font-family: var(--f-h); font-weight: 800; font-size: 1.25rem; letter-spacing: 1px; color: var(--white); }
+    .brand-mark { width: 34px; height: 34px; background: linear-gradient(135deg, var(--amber-lt), var(--amber)); border-radius: 8px; display: grid; place-items: center; color: #000; font-weight: 900; font-size: .95rem; }
+    .nav-tabs { display: flex; gap: .35rem; background: rgba(255,255,255,0.04); padding: .25rem; border-radius: 10px; border: 1px solid var(--line); }
+    .nav-tab { padding: .45rem 1rem; font-size: .8rem; font-family: var(--f-m); font-weight: 500; border-radius: 7px; color: var(--steel); transition: all .2s; }
+    .nav-tab:hover, .nav-tab.act { color: var(--white); background: var(--card); border: 1px solid var(--amber-dim); }
+    .nav-tab.act { color: var(--amber-lt); border-color: var(--amber); }
+    .btn-survey { padding: .55rem 1.25rem; font-family: var(--f-m); font-size: .8rem; font-weight: 600; color: #000; background: linear-gradient(135deg, var(--amber-lt), var(--amber)); border-radius: 8px; transition: transform .2s, box-shadow .2s; cursor: pointer; border: none; }
+    .btn-survey:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(224,138,30,0.3); }
+
+    /* Hero Section */
+    .hero { padding: 9rem 1.5rem 4.5rem; max-width: 1380px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 3.5rem; align-items: center; }
+    .eyebrow { font-family: var(--f-m); font-size: .85rem; color: var(--amber-lt); text-transform: uppercase; letter-spacing: 2px; display: flex; align-items: center; gap: .6rem; margin-bottom: 1rem; }
+    .eyebrow::before { content:''; width: 24px; height: 2px; background: var(--amber-lt); }
+    .hero h1 { font-family: var(--f-h); font-size: clamp(2.4rem, 4.5vw, 3.8rem); font-weight: 800; line-height: 1.1; color: var(--white); margin-bottom: 1.25rem; }
+    .hero p { font-size: 1.1rem; color: var(--steel-lt); margin-bottom: 2rem; max-width: 620px; line-height: 1.7; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 1.2rem; align-items: center; }
+    .big-cta { background: linear-gradient(135deg, var(--amber-lt), var(--amber)); color: #000; font-family: var(--f-h); font-size: 1.1rem; font-weight: 700; padding: .9rem 2rem; border-radius: 8px; border: none; cursor: pointer; transition: all .2s; text-transform: uppercase; letter-spacing: .5px; }
+    .big-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(224,138,30,0.4); }
+    .btn-sec { background: rgba(255,255,255,0.05); color: var(--white); border: 1px solid var(--steel); font-family: var(--f-h); font-size: 1.1rem; font-weight: 700; padding: .85rem 2rem; border-radius: 8px; transition: all .2s; }
+    .btn-sec:hover { border-color: var(--amber-lt); color: var(--amber-lt); background: rgba(224,138,30,0.1); }
+
+    .hero-card { background: linear-gradient(135deg, rgba(224,138,30,0.12), rgba(20,24,29,0.95)); border: 1px solid var(--amber); border-radius: 16px; padding: 2.2rem; box-shadow: 0 25px 60px rgba(0,0,0,0.7); }
+    .hero-card h3 { font-family: var(--f-h); font-size: 1.5rem; color: var(--white); margin-bottom: 1rem; }
+    .hero-card-list { list-style: none; display: grid; gap: .8rem; font-size: .95rem; }
+    .hero-card-list li { display: flex; align-items: center; gap: .6rem; color: var(--steel-lt); }
+    .hero-card-list li span { color: var(--amber-lt); font-weight: 700; }
+
+    /* Section Component */
+    .section { padding: 5rem 1.5rem; max-width: 1380px; margin: 0 auto; }
+    .sec-hdr { text-align: center; max-width: 760px; margin: 0 auto 3.5rem; }
+    .sec-hdr h2 { font-family: var(--f-h); font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 800; color: var(--white); margin-bottom: .8rem; }
+    .sec-hdr p { font-size: 1.05rem; color: var(--steel-lt); line-height: 1.65; }
+
+    /* Cards Grid */
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.8rem; }
+    .feature-card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 2rem; transition: all .25s var(--ease); }
+    .feature-card:hover { border-color: var(--amber); transform: translateY(-4px); box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
+    .feature-icon { width: 48px; height: 48px; border-radius: 10px; background: rgba(224,138,30,0.15); border: 1px solid var(--amber-dim); display: grid; place-items: center; font-size: 1.5rem; margin-bottom: 1.25rem; }
+    .feature-card h3 { font-family: var(--f-h); font-size: 1.4rem; color: var(--white); margin-bottom: .6rem; font-weight: 700; }
+    .feature-card p { font-size: .95rem; color: var(--steel-lt); line-height: 1.6; }
+
+    /* Table Section */
+    .table-card { background: var(--card); border: 1px solid var(--card-border); border-radius: 14px; overflow: hidden; margin-top: 3rem; }
+    table { width: 100%; border-collapse: collapse; font-size: .92rem; text-align: left; }
+    th { font-family: var(--f-m); font-size: .8rem; color: var(--amber-lt); text-transform: uppercase; letter-spacing: 1px; background: rgba(224,138,30,0.1); padding: 1rem 1.2rem; border-bottom: 1px solid var(--card-border); }
+    td { padding: 1rem 1.2rem; border-bottom: 1px solid var(--line); color: var(--steel-lt); }
+    td.highlight { color: var(--white); font-weight: 600; font-family: var(--f-m); }
+
+    /* Sector Grid */
+    .sector-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
+    .sector-item { background: rgba(255,255,255,0.03); border: 1px solid var(--line); border-radius: 12px; padding: 1.5rem; }
+    .sector-item h4 { font-family: var(--f-h); font-size: 1.2rem; color: var(--white); margin-bottom: .4rem; }
+    .sector-item p { font-size: .88rem; color: var(--steel-lt); }
+
+    /* Footer */
+    footer { background: #0A0D11; border-top: 1px solid var(--line); padding: 4rem 1.5rem 2rem; margin-top: 5rem; }
+    .ftr-wrap { max-width: 1380px; margin: 0 auto; display: grid; grid-template-columns: 1.8fr 1.2fr 1.4fr; gap: 3rem; margin-bottom: 3rem; }
+
+    /* Modal */
+    .modal-overlay { display:none; position:fixed; inset:0; z-index:999; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); align-items:center; justify-content:center; padding:1.5rem; }
+    .modal-overlay.active { display:flex; }
+    .modal-card { background:#151A21; border:1px solid var(--amber); border-radius:16px; padding:2.5rem; max-width:540px; width:100%; position:relative; box-shadow:0 25px 60px rgba(0,0,0,0.9); }
+    .modal-close { position:absolute; top:1.2rem; right:1.2rem; background:none; border:none; color:var(--steel); font-size:1.5rem; cursor:pointer; }
+    .modal-card h3 { font-family:var(--f-h); font-size:1.8rem; color:var(--white); margin-bottom:.5rem; }
+    .modal-card p { font-size:.9rem; color:var(--steel-lt); margin-bottom:1.5rem; }
+    .modal-card label { display:block; font-family:var(--f-m); font-size:.78rem; color:var(--amber-lt); text-transform:uppercase; margin-bottom:.4rem; }
+    .modal-card input, .modal-card select, .modal-card textarea { width:100%; background:var(--bg); border:1px solid var(--line); color:var(--paper); padding:.75rem 1rem; border-radius:8px; font-family:var(--f-b); font-size:.9rem; margin-bottom:1rem; }
+    .modal-card button[type="submit"] { width:100%; background:linear-gradient(135deg, var(--amber-lt), var(--amber)); color:#000; font-family:var(--f-h); font-weight:700; font-size:1.1rem; padding:.85rem; border:none; border-radius:8px; cursor:pointer; text-transform:uppercase; margin-top:.5rem; }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="hdr">
+    <div class="hdr-wrap">
+      <a href="index.html" class="brand">
+        <div class="brand-mark">AD</div>
+        <span>AL DIRAYAH</span>
+      </a>
+      <nav class="nav-tabs">
+        <a href="index.html" class="nav-tab">Home</a>
+        <a href="lifts.html" class="nav-tab act">Lifts</a>
+        <a href="escalators.html" class="nav-tab">Escalators</a>
+        <a href="configurator.html" class="nav-tab">Configurator</a>
+        <a href="company-profile.html" class="nav-tab">Company Profile</a>
+      </nav>
+      <button class="btn-survey" onclick="openSurveyModal()">Request Survey 📐</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div>
+        <div class="eyebrow">♿ EN 81-70 ACCESSIBILITY &amp; INCLUSIVE MOBILITY</div>
+        <h1>Customized Lifts for Elderly &amp; People of Determination</h1>
+        <p>
+          Engineered for dignity, safety, and total independence. Our EN 81-70 compliant accessibility elevators are custom-built for private villas, residential communities, and commercial facilities across Abu Dhabi &amp; Dubai. Featuring zero-threshold entrances, ergonomic low-height Braille controls, soft VVVF acceleration, multi-lingual voice guidance, and 24/7 battery emergency rescue.
+        </p>
+        <div class="hero-actions">
+          <button class="big-cta" onclick="openSurveyModal('Elderly &amp; Determination Accessibility Lifts')">Request Site Survey 📐</button>
+          <a href="Al-Dirayah-Company-Profile.pdf" target="_blank" class="btn-sec">Download Profile (PDF) 📄</a>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <h3>EN 81-70 Accessibility Guarantee</h3>
+        <ul class="hero-card-list">
+          <li><span>✓</span> 800mm – 1100mm Clear Telescopic Door Openings</li>
+          <li><span>✓</span> Low-Height Inclined COP (900mm–1100mm)</li>
+          <li><span>✓</span> Tactile Buttons &amp; Arabic/English Braille</li>
+          <li><span>✓</span> ±2mm Exact Flush Floor Levelling</li>
+          <li><span>✓</span> Automatic Emergency Battery Rescue (ARD)</li>
+          <li><span>✓</span> Full-Height 128-Beam Infrared Safety Sensor</li>
+          <li><span>✓</span> 30 Min Response (Abu Dhabi) · 2 Hr (Dubai)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 6 In-Depth Feature Modules Grid -->
+    <section class="section">
+      <div class="sec-hdr">
+        <h2>Engineered Accessibility Features</h2>
+        <p>Every component is custom-tailored to provide effortless mobility, high contrast legibility, and maximum physical safety for senior citizens and People of Determination.</p>
+      </div>
+
+      <div class="grid-3">
+        <!-- Card 1 -->
+        <div class="feature-card">
+          <div class="feature-icon">♿</div>
+          <h3>EN 81-70 Wheelchair Accessibility</h3>
+          <p>Extra-wide automatic telescopic sliding doors (800mm to 1100mm clear width) with zero-bump flush threshold sills, non-glare interior lighting, and durable anti-slip composite floor surfaces.</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="feature-card">
+          <div class="feature-icon">🎛️</div>
+          <h3>Ergonomic Inclined COP &amp; Braille</h3>
+          <p>Dual-height Car Operating Panels (COP) positioned ergonomically at 900mm–1100mm height for seated wheelchair users, featuring raised tactile numbers and dual Arabic/English Braille characters.</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="feature-card">
+          <div class="feature-icon">🛗</div>
+          <h3>Soft VVVF Acceleration Drive</h3>
+          <p>Specialized low-jerk travel profiles engineered for gentle start, smooth deceleration, and ±2mm exact flush floor levelling to completely eliminate tripping hazards for seniors.</p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="feature-card">
+          <div class="feature-icon">🚨</div>
+          <h3>Automatic Floor Rescue &amp; Voice</h3>
+          <p>Integrated Automatic Rescue Device (ARD) lowers car to the nearest floor during power failures, automatically releases doors, and connects to 24/7 emergency dispatch hotline.</p>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="feature-card">
+          <div class="feature-icon">🪞</div>
+          <h3>128-Beam Safety Curtain &amp; Mirror</h3>
+          <p>Full-height 128-beam infrared safety sensors instantly prevent door contact with passengers, paired with a rear wall glass mirror for safe wheelchair reversing visibility.</p>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="feature-card">
+          <div class="feature-icon">🛋️</div>
+          <h3>Continuous Handrails &amp; Folding Seat</h3>
+          <p>Dual-tier 32mm brushed stainless steel grab rails extending across three cabin walls, with optional heavy-duty wall-mounted cushioned folding seat for senior passenger comfort.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technical Specification Matrix Table -->
+    <section class="section" style="background: var(--bg-alt); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
+      <div class="sec-hdr">
+        <h2>EN 81-70 Technical Specification Matrix</h2>
+        <p>Detailed technical parameters for architectural specification and authority submission across Abu Dhabi &amp; Dubai.</p>
+      </div>
+
+      <div class="table-card">
+        <table>
+          <thead>
+            <tr>
+              <th>Specification Parameter</th>
+              <th>EN 81-70 Standard Requirement</th>
+              <th>Al Dirayah Custom Engineering Specification</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="highlight">Door Clear Opening Width</td>
+              <td>Minimum 800 mm</td>
+              <td>800 mm / 900 mm / 1000 mm / 1100 mm Telescopic Doors</td>
+            </tr>
+            <tr>
+              <td class="highlight">Car Operating Panel Height</td>
+              <td>900 mm – 1100 mm from floor</td>
+              <td>Dual-Height Ergonomic Horizontal COP with Inclined Faceplate</td>
+            </tr>
+            <tr>
+              <td class="highlight">Floor Levelling Accuracy</td>
+              <td>± 10 mm max deviation</td>
+              <td>± 2 mm Exact Flush Levelling (VVVF Micro-Encoder Control)</td>
+            </tr>
+            <tr>
+              <td class="highlight">Door Hold Delay Timer</td>
+              <td>Minimum 2 – 20 seconds adjustable</td>
+              <td>Programmable Extended Hold (5 – 30 seconds) with Nudge Button</td>
+            </tr>
+            <tr>
+              <td class="highlight">Door Safety Sensor</td>
+              <td>Multi-beam light curtain required</td>
+              <td>128-Beam 3D Infrared Curtain with Reopening Interlock</td>
+            </tr>
+            <tr>
+              <td class="highlight">Emergency Power Backup</td>
+              <td>Automatic landing device (ARD)</td>
+              <td>Heavy-Duty ARD Battery Bank + Auto-Door Release + 24/7 Hotline</td>
+            </tr>
+            <tr>
+              <td class="highlight">Voice Guidance Synthesizer</td>
+              <td>Audio &amp; visual indicators</td>
+              <td>Multi-Lingual Floor Announcement Synthesizer (Arabic &amp; English)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Ideal Building Application Sectors -->
+    <section class="section">
+      <div class="sec-hdr">
+        <h2>Building Applications</h2>
+        <p>Custom accessibility installations across private homes, healthcare institutions, and public infrastructure.</p>
+      </div>
+
+      <div class="sector-grid">
+        <div class="sector-item">
+          <h4>🏡 Private Villa Estates</h4>
+          <p>Bespoke residential lifts tailored for multi-generational families, ensuring elderly parents move freely across all villa floors.</p>
+        </div>
+        <div class="sector-item">
+          <h4>🏥 Healthcare &amp; Rehab Centers</h4>
+          <p>Heavy-duty stretcher &amp; wheelchair elevators engineered for hospitals, nursing homes, and outpatient clinics.</p>
+        </div>
+        <div class="sector-item">
+          <h4>🏢 Commercial Towers &amp; Malls</h4>
+          <p>Fully compliant EN 81-70 commercial passenger lifts with high traffic handling and dual COP panels.</p>
+        </div>
+        <div class="sector-item">
+          <h4>🏛️ Government &amp; Public Facilities</h4>
+          <p>Barrier-free mobility solutions approved for municipality, educational, and public utility buildings.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Master Footer -->
+  <footer>
+    <div class="ftr-wrap">
+      <div>
+        <div style="font-family:var(--f-h);font-size:1.3rem;color:var(--white);font-weight:700;margin-bottom:.8rem">AL DIRAYAH ELECTROMECHANICAL</div>
+        <p style="font-size:.88rem;color:var(--steel);line-height:1.65;margin-bottom:1rem">Certified vertical transportation and accessibility lift engineering specialists in Abu Dhabi and across the UAE.</p>
+        <div style="font-family:var(--f-m);font-size:1rem;color:var(--amber-lt)">الدراية للمقاولات الكهروميكانيكية</div>
+      </div>
+      <div>
+        <h4 style="font-family:var(--f-h);font-size:1.1rem;color:var(--white);margin-bottom:1rem">QUICK LINKS</h4>
+        <ul style="list-style:none;display:grid;gap:.5rem;font-size:.88rem;color:var(--steel)">
+          <li><a href="index.html">Homepage</a></li>
+          <li><a href="lifts.html">Vertical Lifts &amp; Elevators</a></li>
+          <li><a href="escalators.html">Escalators &amp; Walkways</a></li>
+          <li><a href="company-profile.html">Company Profile</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="font-family:var(--f-h);font-size:1.1rem;color:var(--white);margin-bottom:1rem">ABU DHABI HQ</h4>
+        <p style="font-size:.88rem;color:var(--steel-lt);margin-bottom:.5rem">Mussafah Industrial Area, Abu Dhabi, UAE</p>
+        <p style="font-size:.88rem;color:var(--amber-lt);font-family:var(--f-m)">24/7 SLA: 30 Min (Abu Dhabi) · 2 Hr (Dubai)</p>
+      </div>
+    </div>
+    <div style="text-align:center;padding-top:1.5rem;border-top:1px solid var(--line);font-family:var(--f-m);font-size:.8rem;color:var(--steel)">
+      © 2026 Al Dirayah Electromechanical Contracting LLC. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- Survey Modal -->
+  <div class="modal-overlay" id="surveyModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeSurveyModal()">×</button>
+      <div style="font-family:var(--f-m);font-size:.75rem;color:var(--amber-lt);text-transform:uppercase;margin-bottom:.3rem">TECHNICAL CONSULTATION</div>
+      <h3>Request Site Survey &amp; Audit</h3>
+      <p>Schedule an on-site technical inspection by an Al Dirayah senior engineer for your accessibility elevator requirement.</p>
+      <form onsubmit="handleSurveySubmit(event)">
+        <label>Product or Service Required *
+          <select id="mEquip" required>
+            <option value="Elderly & People of Determination Customized Lifts (EN 81-70)" selected>Elderly &amp; People of Determination Customized Lifts (EN 81-70)</option>
+            <option value="Custom Luxury Villa Elevators (MRL Traction)">Custom Luxury Villa Elevators (MRL Traction)</option>
+            <option value="Medical & Hospital Stretcher Elevators (EN 81-70)">Medical &amp; Hospital Stretcher Elevators (EN 81-70)</option>
+            <option value="24/7 Rapid Emergency Response AMC Contract">24/7 Rapid Emergency Response AMC Contract</option>
+          </select>
+        </label>
+        <label>Your Name * <input type="text" id="mName" required placeholder="e.g. Eng. Mansoor Al-Ketbi"></label>
+        <label>Phone / WhatsApp * <input type="tel" id="mPhone" required placeholder="+971 50 000 0000"></label>
+        <label>Project Location *
+          <select id="mLoc" required>
+            <option value="Abu Dhabi City">Abu Dhabi City</option>
+            <option value="Dubai & Northern Emirates">Dubai &amp; Northern Emirates</option>
+            <option value="Al Ain & Regional">Al Ain &amp; Regional</option>
+          </select>
+        </label>
+        <button type="submit">Submit Technical Request &rarr;</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function openSurveyModal(pkg) {
+      var m = document.getElementById('surveyModal');
+      if (m) m.classList.add('active');
+    }
+    function closeSurveyModal() {
+      var m = document.getElementById('surveyModal');
+      if (m) m.classList.remove('active');
+    }
+    function handleSurveySubmit(e) {
+      e.preventDefault();
+      alert('Thank you! Your technical accessibility consultation request has been submitted. An Al Dirayah engineer will call you shortly.');
+      closeSurveyModal();
+    }
+  </script>
+</body>
+</html>
