@@ -79,7 +79,7 @@
     }
     .hud-scanline-beam.active { opacity: 0.6; }
 
-    /* --- HEADER (EXACT MATCH FOR LIFTS & ESCALATORS) --- */
+    /* --- HEADER (EXACT 1:1 MATCH FOR LIFTS & ESCALATORS) --- */
     header {
       position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: .9rem 0;
       transition: background .4s, backdrop-filter .4s, border-color .4s;
@@ -124,19 +124,18 @@
       position: fixed; right: clamp(10px, 2vw, 24px); top: 50%; transform: translateY(-50%);
       z-index: 999; background: rgba(14, 17, 21, 0.92); border: 1px solid var(--line-2);
       border-radius: 8px; padding: 12px 10px; display: flex; flex-direction: column; align-items: center; gap: 8px;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.8); backdrop-filter: blur(16px); width: 130px; transition: all 0.3s ease;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.8); backdrop-filter: blur(16px); width: 110px; transition: all 0.3s ease;
     }
     .cam-rec-head {
-      display: flex; align-items: center; gap: 6px; font-family: var(--f-m); font-size: 0.62rem;
-      color: #ff3333; font-weight: 700; text-transform: uppercase; border-bottom: 1px solid var(--line);
+      display: flex; align-items: center; gap: 6px; font-family: var(--f-m); font-size: 0.6rem;
+      color: var(--amber-lt); font-weight: 700; text-transform: uppercase; border-bottom: 1px solid var(--line);
       padding-bottom: 5px; width: 100%; justify-content: center;
     }
-    .cam-rec-head { color: var(--amber-lt); }
-    .cam-rec-head .dot { width: 6px; height: 6px; background: #00ff66; box-shadow:0 0 8px #00ff66; border-radius: 50%; animation: recBlink 1s infinite; }
+    .cam-rec-head .dot { width: 6px; height: 6px; background: #00ff66; box-shadow: 0 0 8px #00ff66; border-radius: 50%; animation: recBlink 1s infinite; }
     @keyframes recBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
     .cam-readout {
-      font-family: var(--f-m); font-size: 1.4rem; font-weight: 700; color: var(--amber-lt);
+      font-family: var(--f-m); font-size: 1.35rem; font-weight: 700; color: var(--amber-lt);
       line-height: 1; text-align: center; text-shadow: 0 0 12px rgba(245,169,60,0.5); margin-top: 2px;
     }
     .cam-ptz-metrics {
@@ -144,7 +143,7 @@
       line-height: 1.3; background: rgba(0,240,255,0.05); padding: 4px 6px; border-radius: 4px; border: 1px solid rgba(0,240,255,0.2); width: 100%;
     }
     .cam-rail {
-      width: 3px; height: 95px; background: rgba(255,255,255,0.08); border-radius: 2px;
+      width: 3px; height: 90px; background: rgba(255,255,255,0.08); border-radius: 2px;
       position: relative; overflow: hidden; margin: 4px 0;
     }
     .cam-rail-marker {
@@ -154,14 +153,14 @@
     }
     .cam-node-list { list-style: none; padding: 0; margin: 0; width: 100%; display: flex; flex-direction: column; gap: 3px; }
     .cam-node-item {
-      font-family: var(--f-m); font-size: 0.6rem; color: var(--steel-lt); padding: 3px 5px;
-      border-radius: 3px; cursor: pointer; transition: all 0.2s ease; text-align: left;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; gap: 4px;
+      font-family: var(--f-m); font-size: 0.62rem; color: var(--steel-lt); padding: 4px;
+      border-radius: 3px; cursor: pointer; transition: all 0.2s ease; text-align: center;
+      white-space: nowrap; display: block; width: 100%;
     }
     .cam-node-item:hover { color: #fff; background: rgba(255,255,255,0.06); }
     .cam-node-item.active {
       color: var(--ink); background: var(--amber); font-weight: 700;
-      box-shadow: 0 0 10px rgba(224,138,30,0.35); transform: scale(1.03);
+      box-shadow: 0 0 10px rgba(224,138,30,0.35); transform: scale(1.05);
     }
 
     /* Target Lock Toast Overlay */
@@ -352,7 +351,7 @@
     }
     .modal-card input:focus, .modal-card select:focus, .modal-card textarea:focus { border-color: var(--amber); }
 
-    /* --- RESPONSIVE MEDIA QUERIES --- */
+    /* --- RESPONSIVE MEDIA QUERIES (MATCHING LIFTS & ESCALATORS FLOATING INDICATOR) --- */
     @media (max-width: 1024px) {
       .hero-grid-layout { grid-template-columns: 1fr; gap: 2.5rem; }
       .grid-3 { grid-template-columns: 1fr 1fr; }
@@ -364,12 +363,23 @@
     @media (max-width: 920px) {
       nav { display: none; }
       .menu-toggle { display: block; }
-      #camHud { display: none; }
       .cctv-viewport-hud { display: none; }
       .ctrl-banner { padding: 2.5rem 1.5rem; }
     }
 
+    /* Mobile Indicator behavior: stays fixed on right like #fi on lifts page! */
     @media (max-width: 768px) {
+      #camHud {
+        display: flex !important; right: 8px; top: 50%; transform: translateY(-50%);
+        padding: 6px 5px; width: auto; min-width: 52px; gap: 5px; box-shadow: 0 10px 30px rgba(0,0,0,0.9);
+      }
+      .cam-rec-head { font-size: 0.52rem; padding-bottom: 3px; }
+      .cam-rec-head span.rec-txt { display: none; } /* Show dot, hide long text */
+      .cam-readout { font-size: 1.05rem; }
+      .cam-ptz-metrics { display: none; }
+      .cam-rail { height: 65px; width: 3px; }
+      .cam-node-list { display: none; } /* Compact indicator on mobile just like lifts.html */
+
       .grid-3 { grid-template-columns: 1fr; }
       .stats-ribbon { grid-template-columns: 1fr; }
       .hero-title { font-size: 2.8rem; }
@@ -409,7 +419,7 @@
   <!-- FLOATING CCTV CAMERA CONSOLE SIDEBAR HUD (#camHud) -->
   <aside id="camHud" aria-label="Camera Sequence Navigator">
     <div class="cam-rec-head">
-      <span class="dot"></span> DEMO SIMULATION
+      <span class="dot"></span> <span class="rec-txt">DEMO SIMULATION</span>
     </div>
 
     <div class="cam-readout" id="hudCamRead">CAM-01</div>
@@ -423,7 +433,7 @@
     </div>
 
     <ol class="cam-node-list" id="camList">
-      <!-- Generated via JS -->
+      <!-- Generated via JS: CAM 1, CAM 2, CAM 3, CAM 4, CAM 5, CAM 6 -->
     </ol>
   </aside>
 
@@ -431,7 +441,7 @@
   <div id="camLockToast">
     <div class="toast-icon"></div>
     <div class="toast-text">
-      TARGET LOCKED :: <span id="toastCamName">CAM-01 HERO ENTRANCE</span>
+      CAMERA LOCKED :: <span id="toastCamName">CAM 1 ENTRANCE</span>
     </div>
   </div>
 
@@ -516,7 +526,7 @@
             <div class="feed-hud">
               <div class="hud-top">
                 <div><span class="rec-dot" style="background:#00ff66; box-shadow:0 0 8px #00ff66;"></span>DEMO FEED :: CAM-01 (MAIN ENTRANCE)</div>
-                <div id="hudTime">2026-09-19 03:10:00</div>
+                <div id="hudTime">2026-09-19 03:37:00</div>
               </div>
               <div class="hud-bottom">
                 <div id="hudModeLabel">MODE: 4K ULTRA-HD (3840x2160 @ 60FPS)</div>
@@ -887,14 +897,16 @@
       let currentCamId = null;
       let toastTimer = null;
 
+      // Clean Camera Node Item Labels: CAM 1, CAM 2, CAM 3, CAM 4, CAM 5, CAM 6
       camSections.forEach((sec, idx) => {
-        const camId = sec.dataset.cam || ('0' + (idx + 1));
-        const label = sec.dataset.label || ('CAM ' + camId);
+        const rawCamId = sec.dataset.cam || ('0' + (idx + 1));
+        const numOnly = parseInt(rawCamId, 10);
+        const label = `CAM ${numOnly}`;
 
         const li = document.createElement('li');
         li.className = 'cam-node-item' + (idx === 0 ? ' active' : '');
-        li.dataset.camTarget = camId;
-        li.innerHTML = `<span style="color:var(--amber); font-weight:700;">${camId}</span> ${label}`;
+        li.dataset.camTarget = rawCamId;
+        li.textContent = label;
 
         li.addEventListener('click', () => {
           sec.scrollIntoView({ behavior: 'smooth' });
@@ -961,7 +973,7 @@
 
       function showTargetLockToast(camId, label) {
         if (!camLockToast || !toastCamName) return;
-        toastCamName.textContent = `CAM-${camId} ${label.toUpperCase()}`;
+        toastCamName.textContent = `CAM ${parseInt(camId, 10)} :: ${label.toUpperCase()}`;
         camLockToast.classList.add('show');
 
         clearTimeout(toastTimer);
