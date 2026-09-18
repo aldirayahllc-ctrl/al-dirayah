@@ -1,638 +1,771 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ADMCC Certified CCTV & Structured Cabling | Al Dirayah Contracting — Abu Dhabi</title>
-<meta name="description" content="Turnkey CCTV installation, Cat6A/Cat7 structured cabling, cable pulling, managed network configuration, and ADMCC compliance filing by Al Dirayah Electromechanical Contracting LLC in Abu Dhabi & Dubai.">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CCTV & ELV Infrastructure Solutions | Al Dirayah Electromechanical Contracting LLC</title>
+  <meta name="description" content="Enterprise CCTV surveillance, structured cabling (Cat6A/Cat7/Fiber), cable pulling, and network configuration solutions certified by SIRA & MCC in UAE.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;1,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #07090e;
+      --ink-2: #0e131d;
+      --ink-3: #161d2c;
+      --paper: #f4f5f8;
+      --amber: #d4af37;
+      --amber-lt: #f3e5ab;
+      --gold-glow: rgba(212,175,55,0.25);
+      --slate: #8a99ad;
+      --border: rgba(252,252,253,0.08);
+      --cyan-glow: #00f0ff;
+      --font-head: 'Barlow Condensed', sans-serif;
+      --font-body: 'IBM Plex Sans', sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+    }
 
-<style>
-:root{
-  --ink:#0E1115; --ink-2:#151A20; --surface:#1B2128; --surface-2:#232A33;
-  --line:#2B333D; --line-2:#3A4550;
-  --amber:#E08A1E; --amber-lt:#F5A93C; --amber-dim:#8A5A14;
-  --steel:#6E7885; --steel-lt:#9AA3B0; --paper:#E9E7E2; --white:#fff;
-  --f-d:"Barlow Condensed","Arial Narrow",sans-serif;
-  --f-b:"IBM Plex Sans",system-ui,sans-serif;
-  --f-m:"IBM Plex Mono",ui-monospace,monospace;
-  --f-a:"IBM Plex Sans Arabic",serif;
-  --ease:cubic-bezier(.16,1,.3,1);
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0; background:var(--ink); color:var(--paper);
-  font-family:var(--f-b); font-size:16px; line-height:1.6;
-  -webkit-font-smoothing:antialiased; overflow-x:hidden;
-}
-h1,h2,h3,h4{margin:0; text-wrap:balance; font-family:var(--f-d); font-weight:600; text-transform:uppercase; line-height:.95; letter-spacing:.01em}
-p{margin:0 0 1rem; max-width:62ch}
-a{color:inherit;text-decoration:none}
-:focus-visible{outline:2px solid var(--amber); outline-offset:3px; border-radius:2px}
-.wrap{max-width:1180px; margin:0 auto; padding:0 clamp(1.1rem,4vw,2.5rem)}
-#hero > .wrap{width:100%; position:relative; z-index:10}
-.eyebrow{font-family:var(--f-m); font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; color:var(--amber); margin:0 0 1rem}
-.mono{font-family:var(--f-m); font-variant-numeric:tabular-nums}
-.ar{font-family:var(--f-a); direction:rtl; unicode-bidi:isolate}
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; background: var(--ink); color: #e1e7ed; font-family: var(--font-body); }
+    body { overflow-x: hidden; }
 
-/* ── shaft backdrop (parallax) ─────────────────────────────── */
-#shaft{position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden}
-#dust{position:absolute; inset:0; width:100%; height:100%}
-.rail{position:absolute; top:-20vh; height:160vh; width:10px; background:
-  linear-gradient(90deg,#20272F 0%,#39424D 42%,#4A5560 50%,#39424D 58%,#20272F 100%);
-  box-shadow:0 0 30px rgba(0,0,0,.6)}
-.rail.l{left:7vw} .rail.r{right:7vw}
-#ticks{position:absolute; inset:0}
-.tick{position:absolute; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,#2A323B 12%,#2A323B 88%,transparent)}
-.tick b{position:absolute; left:calc(7vw + 22px); top:-9px; font-family:var(--f-m); font-size:.6rem; letter-spacing:.18em; color:#39434E}
-#glow{position:absolute; left:50%; top:0; width:min(1100px,120vw); height:60vh; transform:translateX(-50%);
-  background:radial-gradient(60% 60% at 50% 0%, rgba(224,138,30,.18), transparent 70%)}
+    /* --- TOP NAV --- */
+    .hdr {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(7, 9, 14, 0.85); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border); transition: all 0.3s ease;
+    }
+    .hdr-inner {
+      max-width: 1400px; margin: 0 auto; padding: 1rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: #fff; }
+    .brand-icon {
+      width: 42px; height: 42px; background: linear-gradient(135deg, var(--amber), #8a7322);
+      border-radius: 8px; display: grid; place-items: center; font-weight: 800; font-family: var(--font-head);
+      font-size: 1.4rem; color: var(--ink); box-shadow: 0 0 20px var(--gold-glow);
+    }
+    .brand-text h1 { font-family: var(--font-head); font-size: 1.25rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; line-height: 1; }
+    .brand-text p { font-size: 0.65rem; color: var(--amber); letter-spacing: 1.5px; font-family: var(--font-mono); margin-top: 2px; }
 
-/* ── floor indicator ──────────────────────────────────────── */
-#fi{
-  position:fixed; right:clamp(.8rem,2.5vw,2rem); top:50%; transform:translateY(-50%);
-  z-index:40; background:#0A0D10; border:1px solid var(--line-2); border-radius:8px;
-  padding:.75rem .6rem; display:flex; flex-direction:column; align-items:center; gap:.5rem;
-  box-shadow:0 12px 40px rgba(0,0,0,.7);
-}
-#fi .arrow{font-size:.9rem; color:var(--amber); line-height:1; transition:transform .4s var(--ease), opacity .3s}
-#fi .read{
-  font-family:var(--f-m); font-weight:600; font-size:1.45rem; color:var(--amber-lt);
-  min-width:2.1ch; text-align:center; line-height:1;
-  text-shadow:0 0 14px rgba(245,169,60,.55);
-}
-#fi .bar{width:3px; height:120px; background:#1A2027; border-radius:2px; overflow:hidden; position:relative}
-#fi .bar i{position:absolute; left:0; right:0; top:0; background:linear-gradient(180deg,var(--amber-lt),var(--amber-dim)); height:0%}
-#fi ol{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.34rem}
-#fi ol li{font-family:var(--f-m); font-size:.62rem; color:#39434E; letter-spacing:.06em; cursor:pointer; transition:color .3s, transform .2s}
-#fi ol li:hover{color:var(--steel-lt)}
-#fi ol li[data-on]{color:var(--amber); font-weight:600; transform:scale(1.15)}
-@media(max-width:700px){ #fi{padding:.5rem .4rem} #fi .bar{height:70px} #fi ol{display:none} }
+    /* Pill Navigation */
+    .nav-pills { display: flex; background: rgba(22, 29, 44, 0.8); border: 1px solid var(--border); border-radius: 40px; padding: 4px; gap: 4px; }
+    .nav-pill {
+      padding: 0.5rem 1.25rem; border-radius: 30px; font-family: var(--font-head); font-size: 0.95rem; font-weight: 600;
+      letter-spacing: 0.5px; color: var(--slate); text-decoration: none; transition: all 0.25s ease; display: flex; align-items: center; gap: 6px;
+    }
+    .nav-pill:hover { color: #fff; background: rgba(255,255,255,0.05); }
+    .nav-pill.active { background: linear-gradient(135deg, var(--amber), #a3821a); color: var(--ink); font-weight: 700; box-shadow: 0 2px 12px var(--gold-glow); }
 
-/* ── header ───────────────────────────────────────────────── */
-header{position:fixed; top:0; left:0; right:0; z-index:50; padding:.9rem 0;
-  transition:background .4s, backdrop-filter .4s, border-color .4s;
-  border-bottom:1px solid transparent}
-header.stuck{background:rgba(14,17,21,.92); backdrop-filter:blur(16px); border-bottom-color:var(--line)}
-header .wrap{display:flex; align-items:center; justify-content:space-between; gap:1rem}
-.brand{display:flex; align-items:center; gap:.7rem}
-.brand svg{width:34px;height:34px;flex:none}
-.brand .nm{font-family:var(--f-d); font-size:1.4rem; letter-spacing:.045em; text-transform:uppercase; font-weight:600; color:var(--white)}
+    .hdr-actions { display: flex; align-items: center; gap: 1rem; }
+    .btn-quote {
+      padding: 0.6rem 1.4rem; background: transparent; border: 1px solid var(--amber); color: var(--amber);
+      font-family: var(--font-head); font-size: 0.95rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      border-radius: 6px; text-decoration: none; transition: all 0.3s ease;
+    }
+    .btn-quote:hover { background: var(--amber); color: var(--ink); box-shadow: 0 0 20px var(--gold-glow); }
 
-/* Switcher pills */
-.div-switcher{display:flex; background:rgba(21,26,32,0.85); padding:3px; border-radius:6px; border:1px solid var(--line-2)}
-.sw-pill{font-family:var(--f-m); font-size:.64rem; letter-spacing:.12em; text-transform:uppercase; color:var(--steel-lt); padding:.35rem .75rem; border-radius:4px; transition:all .25s ease; display:inline-flex; align-items:center; gap:.4rem; text-decoration:none}
-.sw-pill:hover{color:var(--white); background:rgba(255,255,255,0.06)}
-.sw-pill.active{background:var(--amber); color:var(--ink); font-weight:600; box-shadow:0 0 12px rgba(224,138,30,0.35)}
-.sw-pill .icon{font-size:.75rem}
+    /* --- HERO SECTION --- */
+    #hero {
+      position: relative; min-height: 100vh; padding-top: 120px; display: flex; align-items: center;
+      background: radial-gradient(circle at 70% 30%, rgba(212,175,55,0.08) 0%, rgba(7,9,14,1) 70%);
+      overflow: hidden; border-bottom: 1px solid var(--border);
+    }
+    .hero-bg-grid {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 50px 50px; opacity: 0.3; pointer-events: none;
+    }
+    .hero-wrap {
+      max-width: 1400px; margin: 0 auto; padding: 3rem 2rem; width: 100%; position: relative; z-index: 10;
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3rem; align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; background: rgba(212,175,55,0.1);
+      border: 1px solid rgba(212,175,55,0.3); border-radius: 20px; color: var(--amber-lt);
+      font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 1.5rem;
+    }
+    .hero-badge .pulse { width: 8px; height: 8px; background: #00ff66; border-radius: 50%; box-shadow: 0 0 10px #00ff66; }
+    .hero-title {
+      font-family: var(--font-head); font-size: 4rem; font-weight: 800; line-height: 1.05; text-transform: uppercase;
+      letter-spacing: -0.5px; margin-bottom: 1.5rem; background: linear-gradient(180deg, #ffffff 40%, var(--slate) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-title span { background: linear-gradient(135deg, var(--amber-lt), var(--amber)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-desc { font-size: 1.1rem; line-height: 1.6; color: var(--slate); margin-bottom: 2rem; max-width: 620px; }
 
-nav{display:flex; gap:1.4rem}
-nav a{font-family:var(--f-m); font-size:.67rem; letter-spacing:.16em; text-transform:uppercase; color:var(--steel-lt); transition:color .25s}
-nav a:hover{color:var(--amber)}
-.cta-btn{font-family:var(--f-m); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase;
-  border:1px solid var(--amber); color:var(--amber); padding:.5rem .95rem; border-radius:3px; background:transparent; cursor:pointer;
-  transition:background .25s,color .25s,box-shadow .25s}
-.cta-btn:hover{background:var(--amber); color:var(--ink); box-shadow:0 0 14px rgba(224,138,30,.4)}
-@media(max-width:920px){ nav{display:none} }
+    /* CCTV Control Engine Toolbar */
+    .cctv-ctrls {
+      display: flex; flex-wrap: wrap; gap: 8px; background: rgba(14,19,29,0.9); padding: 12px;
+      border: 1px solid var(--border); border-radius: 12px; margin-bottom: 2.5rem; backdrop-filter: blur(10px);
+    }
+    .ctrl-btn {
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--slate);
+      padding: 8px 16px; border-radius: 6px; font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600;
+      cursor: pointer; transition: all 0.25s ease; display: flex; align-items: center; gap: 8px;
+    }
+    .ctrl-btn:hover { background: rgba(212,175,55,0.1); color: var(--amber-lt); border-color: rgba(212,175,55,0.4); }
+    .ctrl-btn.active { background: var(--amber); color: var(--ink); border-color: var(--amber); font-weight: 700; box-shadow: 0 0 15px var(--gold-glow); }
 
-/* ── sections ─────────────────────────────────────────────── */
-main{position:relative; z-index:2}
-section{position:relative}
-.pad{padding:clamp(5rem,13vh,8rem) 0}
+    /* Live Feed Simulation Frame */
+    .hero-feed-preview {
+      position: relative; border-radius: 16px; overflow: hidden; border: 1px solid rgba(212,175,55,0.3);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(212,175,55,0.15); background: var(--ink-2);
+    }
+    .hero-feed-preview img { width: 100%; height: 440px; object-fit: cover; display: block; filter: contrast(1.05) brightness(0.95); transition: filter 0.5s ease; }
+    .feed-hud {
+      position: absolute; inset: 0; padding: 20px; pointer-events: none;
+      display: flex; flex-direction: column; justify-content: space-between;
+      background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.8) 100%);
+    }
+    .hud-top { display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 0.75rem; color: #00ff66; text-shadow: 0 0 6px rgba(0,255,102,0.6); }
+    .hud-bottom { display: flex; justify-content: space-between; align-items: flex-end; font-family: var(--font-mono); font-size: 0.75rem; color: var(--amber-lt); }
+    .rec-dot { display: inline-block; width: 10px; height: 10px; background: #ff3333; border-radius: 50%; margin-right: 6px; animation: recBlink 1s infinite; }
+    @keyframes recBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
 
-/* Buttons & CTA */
-.big-cta { background: linear-gradient(135deg, var(--amber-lt), var(--amber)); color: var(--ink); font-family: var(--f-d); font-size: 1.15rem; font-weight: 700; padding: .9rem 2.2rem; border-radius: 6px; border: none; cursor: pointer; transition: all .25s var(--ease); text-transform: uppercase; letter-spacing: .5px; display: inline-flex; align-items: center; gap: .6rem; text-decoration: none; }
-.big-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(224,138,30,0.4); }
-.btn-sec { background: rgba(255,255,255,0.05); color: var(--white); border: 1px solid var(--line-2); font-family: var(--f-d); font-size: 1.1rem; font-weight: 700; padding: .85rem 2rem; border-radius: 6px; cursor: pointer; transition: all .25s var(--ease); display: inline-flex; align-items: center; gap: .6rem; text-decoration: none; }
-.btn-sec:hover { border-color: var(--amber-lt); color: var(--amber-lt); background: rgba(224,138,30,0.1); }
+    /* Key Stats Ribbon */
+    .stats-ribbon {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 2rem;
+    }
+    .stat-card {
+      background: rgba(22, 29, 44, 0.5); border: 1px solid var(--border); padding: 1.25rem; border-radius: 10px;
+    }
+    .stat-card .val { font-family: var(--font-head); font-size: 2rem; font-weight: 800; color: var(--amber); }
+    .stat-card .lbl { font-size: 0.8rem; color: var(--slate); text-transform: uppercase; font-family: var(--font-mono); margin-top: 4px; }
 
-/* Table styling */
-.table-card { background: var(--surface); border: 1px solid var(--line-2); border-radius: 12px; overflow: hidden; margin-top: 2rem; }
-table { width: 100%; border-collapse: collapse; font-size: .9rem; text-align: left; }
-th { font-family: var(--f-m); font-size: .78rem; color: var(--amber-lt); text-transform: uppercase; letter-spacing: 1px; background: rgba(224,138,30,0.1); padding: 1rem 1.2rem; border-bottom: 1px solid var(--line-2); }
-td { padding: 1rem 1.2rem; border-bottom: 1px solid var(--line); color: var(--steel-lt); }
-td.highlight { color: var(--white); font-weight: 600; font-family: var(--f-m); }
+    /* --- 3D EXPLODED CAMERA DISASSEMBLY (#f2) --- */
+    #f2 { position: relative; height: 340svh; background: #05070a; }
+    #f2 .pin {
+      position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; flex-direction: column; justify-content: center;
+    }
+    .f2-header {
+      position: absolute; top: 100px; left: 50%; transform: translateX(-50%); z-index: 20; text-align: center; width: 100%; max-width: 900px; padding: 0 1rem;
+    }
+    .f2-header h2 { font-family: var(--font-head); font-size: 3rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #fff; }
+    .f2-header p { font-family: var(--font-mono); color: var(--amber); font-size: 0.9rem; text-transform: uppercase; margin-top: 6px; }
 
-/* Modal overlay */
-.modal-overlay { display:none; position:fixed; inset:0; z-index:999; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); align-items:center; justify-content:center; padding:1.5rem; }
-.modal-overlay.active { display:flex; }
-.modal-card { background:var(--ink-2); border:1px solid var(--amber); border-radius:14px; padding:2.5rem; max-width:540px; width:100%; position:relative; box-shadow:0 25px 60px rgba(0,0,0,0.9); }
-.modal-close { position:absolute; top:1.2rem; right:1.2rem; background:none; border:none; color:var(--steel); font-size:1.5rem; cursor:pointer; }
-.modal-card h3 { font-family:var(--f-d); font-size:1.8rem; color:var(--white); margin-bottom:.5rem; }
-.modal-card p { font-size:.9rem; color:var(--steel-lt); margin-bottom:1.5rem; }
-.modal-card label { display:block; font-family:var(--f-m); font-size:.78rem; color:var(--amber-lt); text-transform:uppercase; margin-bottom:.4rem; }
-.modal-card input, .modal-card select, .modal-card textarea { width:100%; background:var(--ink); border:1px solid var(--line-2); color:var(--paper); padding:.75rem 1rem; border-radius:6px; font-family:var(--f-b); font-size:.9rem; margin-bottom:1rem; }
-.modal-card button[type="submit"] { width:100%; background:linear-gradient(135deg, var(--amber-lt), var(--amber)); color:var(--ink); font-family:var(--f-d); font-weight:700; font-size:1.1rem; padding:.85rem; border:none; border-radius:6px; cursor:pointer; text-transform:uppercase; margin-top:.5rem; }
-</style>
+    .viewport3d {
+      position: relative; width: 100%; max-width: 1200px; height: 600px; margin: 0 auto; display: flex; align-items: center; justify-content: center;
+    }
+    .img-3d-layer {
+      position: absolute; width: 100%; height: 100%; object-fit: contain; transition: opacity 0.4s ease, transform 0.4s ease;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.9));
+    }
+    .img-3d-base { opacity: 1; z-index: 2; }
+    .img-3d-exploded { opacity: 0; z-index: 3; }
+
+    /* Disassembly Callout Overlay */
+    .parts-overlay {
+      position: absolute; inset: 0; z-index: 10; pointer-events: none; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding: 4rem; align-content: center;
+    }
+    .parts-col { display: flex; flex-direction: column; gap: 1.5rem; }
+    .parts-col.right { align-items: flex-end; text-align: right; }
+    .part-tag {
+      background: rgba(14, 19, 29, 0.9); border: 1px solid rgba(212,175,55,0.4); padding: 12px 20px; border-radius: 8px;
+      backdrop-filter: blur(12px); max-width: 320px; opacity: 0; transform: translateY(20px); transition: all 0.4s ease;
+    }
+    .part-tag.visible { opacity: 1; transform: translateY(0); }
+    .part-num { font-family: var(--font-mono); font-size: 0.75rem; color: var(--amber); font-weight: 700; text-transform: uppercase; }
+    .part-name { font-family: var(--font-head); font-size: 1.2rem; font-weight: 700; color: #fff; margin: 2px 0; }
+    .part-desc { font-size: 0.8rem; color: var(--slate); line-height: 1.4; }
+
+    /* --- CABLING & NETWORK SPEC STUDIO (#cabling) --- */
+    #cabling { padding: 6rem 2rem; background: var(--ink-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .sec-wrap { max-width: 1400px; margin: 0 auto; }
+    .sec-head { text-align: center; max-width: 800px; margin: 0 auto 4rem; }
+    .sec-head .sub { font-family: var(--font-mono); color: var(--amber); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; }
+    .sec-head h2 { font-family: var(--font-head); font-size: 3.2rem; font-weight: 800; text-transform: uppercase; margin: 8px 0; color: #fff; }
+    .sec-head p { color: var(--slate); font-size: 1.05rem; }
+
+    .studio-grid { display: grid; grid-template-columns: 320px 1fr; gap: 2.5rem; background: rgba(7,9,14,0.6); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; backdrop-filter: blur(10px); }
+    .spec-menu { display: flex; flex-direction: column; gap: 10px; }
+    .spec-tab {
+      padding: 1rem 1.25rem; background: rgba(22, 29, 44, 0.6); border: 1px solid var(--border); border-radius: 10px;
+      color: var(--slate); font-family: var(--font-head); font-size: 1.1rem; font-weight: 700; cursor: pointer; text-align: left;
+      transition: all 0.25s ease; display: flex; align-items: center; justify-content: space-between;
+    }
+    .spec-tab:hover { background: rgba(212,175,55,0.1); color: var(--amber-lt); border-color: rgba(212,175,55,0.3); }
+    .spec-tab.active { background: linear-gradient(135deg, var(--amber), #9c7b19); color: var(--ink); border-color: var(--amber); box-shadow: 0 4px 20px var(--gold-glow); }
+
+    .spec-display { background: var(--ink); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 420px; }
+    .spec-header-box { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; }
+    .spec-title-group h3 { font-family: var(--font-head); font-size: 2.2rem; font-weight: 800; color: #fff; text-transform: uppercase; }
+    .spec-title-group p { font-family: var(--font-mono); font-size: 0.85rem; color: var(--amber); margin-top: 4px; }
+    .fluke-badge { padding: 8px 16px; background: rgba(0, 240, 255, 0.1); border: 1px solid var(--cyan-glow); color: var(--cyan-glow); font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; border-radius: 6px; }
+
+    .spec-metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+    .metric-box { background: rgba(22, 29, 44, 0.5); border: 1px solid var(--border); padding: 1.25rem; border-radius: 8px; }
+    .metric-box .m-label { font-family: var(--font-mono); font-size: 0.75rem; color: var(--slate); text-transform: uppercase; }
+    .metric-box .m-val { font-family: var(--font-head); font-size: 1.8rem; font-weight: 700; color: #fff; margin-top: 6px; }
+
+    .gauge-bar-wrap { background: rgba(255,255,255,0.05); height: 12px; border-radius: 6px; overflow: hidden; margin-top: 1rem; position: relative; }
+    .gauge-bar-fill { height: 100%; background: linear-gradient(90deg, var(--amber), #00f0ff); width: 85%; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+
+    /* --- SOLUTIONS GRID --- */
+    #solutions { padding: 6rem 2rem; background: var(--ink); }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem; }
+    .sol-card {
+      background: var(--ink-2); border: 1px solid var(--border); border-radius: 14px; padding: 2rem;
+      transition: all 0.3s ease; display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .sol-card:hover { transform: translateY(-8px); border-color: rgba(212,175,55,0.5); box-shadow: 0 12px 30px rgba(0,0,0,0.6); }
+    .sol-icon { width: 54px; height: 54px; background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); border-radius: 10px; display: grid; place-items: center; color: var(--amber); font-size: 1.5rem; margin-bottom: 1.5rem; }
+    .sol-card h3 { font-family: var(--font-head); font-size: 1.6rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem; text-transform: uppercase; }
+    .sol-card p { font-size: 0.95rem; color: var(--slate); line-height: 1.6; margin-bottom: 1.5rem; }
+    .sol-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .sol-tag { background: rgba(255,255,255,0.04); border: 1px solid var(--border); padding: 4px 10px; border-radius: 4px; font-family: var(--font-mono); font-size: 0.7rem; color: var(--amber-lt); }
+
+    /* --- CONTROL ROOM SHOWCASE BANNER --- */
+    .ctrl-banner {
+      position: relative; margin: 4rem 0; border-radius: 20px; overflow: hidden; border: 1px solid rgba(212,175,55,0.3);
+      min-height: 480px; display: flex; align-items: center; padding: 4rem;
+    }
+    .ctrl-banner img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.4) contrast(1.1); z-index: 1; }
+    .ctrl-banner-content { position: relative; z-index: 2; max-width: 650px; }
+    .ctrl-banner-content h2 { font-family: var(--font-head); font-size: 3.5rem; font-weight: 800; color: #fff; text-transform: uppercase; line-height: 1.05; margin-bottom: 1rem; }
+    .ctrl-banner-content p { color: #d0d7de; font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem; }
+
+    /* --- FOOTER --- */
+    footer { background: #040508; border-top: 1px solid var(--border); padding: 4rem 2rem 2rem; color: var(--slate); font-size: 0.9rem; }
+    .ft-inner { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .ft-brand h3 { font-family: var(--font-head); font-size: 1.5rem; color: #fff; margin-bottom: 1rem; text-transform: uppercase; }
+    .ft-brand p { max-width: 340px; line-height: 1.6; }
+    .ft-col h4 { font-family: var(--font-head); font-size: 1.1rem; color: var(--amber); margin-bottom: 1.25rem; text-transform: uppercase; letter-spacing: 1px; }
+    .ft-col ul { list-style: none; }
+    .ft-col ul li { margin-bottom: 0.75rem; }
+    .ft-col ul li a { color: var(--slate); text-decoration: none; transition: color 0.25s ease; }
+    .ft-col ul li a:hover { color: #fff; }
+    .ft-btm { max-width: 1400px; margin: 0 auto; padding-top: 2rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.8rem; }
+
+    @media (max-width: 1024px) {
+      .hero-wrap { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: 1fr 1fr; }
+      .studio-grid { grid-template-columns: 1fr; }
+      .stats-ribbon { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .grid-3 { grid-template-columns: 1fr; }
+      .stats-ribbon { grid-template-columns: 1fr; }
+      .hero-title { font-size: 2.8rem; }
+      .nav-pills { display: none; }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Parallax Shaft Backdrop -->
-  <div id="shaft" aria-hidden="true">
-    <canvas id="dust"></canvas>
-    <div class="rail l"></div>
-    <div class="rail r"></div>
-    <div id="ticks"></div>
-    <div id="glow"></div>
-  </div>
-
-  <!-- Floor Indicator & Elevator Position Gauge -->
-  <div id="fi" aria-label="Building Floor Navigation">
-    <div class="read" id="fiRead">L</div>
-    <div class="bar"><i id="fiBar"></i></div>
-    <div class="arrow" id="fiArrow" aria-hidden="true">▲</div>
-    <ol>
-      <li data-floor="L">L</li>
-      <li data-floor="1">1</li>
-      <li data-floor="2">2</li>
-      <li data-floor="3">3</li>
-      <li data-floor="4">4</li>
-      <li data-floor="5">5</li>
-      <li data-floor="PH">PH</li>
-    </ol>
-  </div>
-
-  <!-- Master Header Bar -->
-  <header id="hdr">
-    <div class="wrap">
-      <a href="index.html" class="brand" aria-label="Al Dirayah Electromechanical Contracting">
-        <svg viewBox="0 0 120 120" class="brand-mark" aria-hidden="true">
-          <rect width="120" height="120" rx="20" fill="#E08A1E"/>
-          <path d="M35 49 L60 29 L85 49" fill="none" stroke="#0E1115" stroke-width="10"/>
-          <path d="M35 70 L60 50 L85 70" fill="none" stroke="#0E1115" stroke-width="10" opacity=".62"/>
-          <path d="M35 91 L60 71 L85 91" fill="none" stroke="#0E1115" stroke-width="10" opacity=".34"/>
-        </svg>
-        <span class="nm">AL DIRAYAH</span>
+  <!-- NAVIGATION HEADER -->
+  <header class="hdr">
+    <div class="hdr-inner">
+      <a href="index.html" class="brand">
+        <div class="brand-icon">AD</div>
+        <div class="brand-text">
+          <h1>AL DIRAYAH</h1>
+          <p>ELECTROMECHANICAL CONTRACTING</p>
+        </div>
       </a>
 
-      <!-- Division Switcher Pills (With CCTV right after Escalators) -->
-      <div class="div-switcher">
-        <a href="index.html" class="sw-pill"><span class="icon">🏠</span> HUB</a>
-        <a href="lifts.html" class="sw-pill"><span class="icon">↕</span> LIFTS</a>
-        <a href="escalators.html" class="sw-pill"><span class="icon">↗</span> ESCALATORS</a>
-        <a href="cctv-elv.html" class="sw-pill active"><span class="icon">📹</span> CCTV &amp; ELV</a>
-      </div>
-
-      <nav>
-        <a href="#hero">OVERVIEW</a>
-        <a href="#l">CABLING</a>
-        <a href="#f2">PULLING</a>
-        <a href="#f3">CCTV</a>
-        <a href="#f4">NETWORK</a>
-        <a href="#f5">SPECS</a>
-        <a href="#ph">CONTACT</a>
+      <!-- Pill Navigation Menu -->
+      <nav class="nav-pills">
+        <a href="index.html" class="nav-pill">🏠 HUB</a>
+        <a href="lifts.html" class="nav-pill">↕ LIFTS</a>
+        <a href="escalators.html" class="nav-pill">↗ ESCALATORS</a>
+        <a href="cctv-elv.html" class="nav-pill active">📹 CCTV & ELV</a>
       </nav>
 
-      <button class="cta-btn" onclick="openSurveyModal('Nav Header CTA')">Site Survey &rarr;</button>
+      <div class="hdr-actions">
+        <a href="#contact" class="btn-quote">Get Inspection</a>
+      </div>
     </div>
   </header>
 
-  <main>
-    <!-- Section #hero (Lobby / Hero) -->
-    <section id="hero" class="pad" data-floor="L" data-label="Lobby" style="padding-top:7rem">
-      <div class="wrap">
-        <div style="display:grid;grid-template-columns:1.2fr 0.8fr;gap:3rem;align-items:center">
-          <div>
-            <div class="eyebrow">📹 ADMCC &amp; OSHAD CERTIFIED SECURITY INFRASTRUCTURE</div>
-            <h1 style="font-size:clamp(2.5rem,5vw,4.2rem);color:var(--white);margin-bottom:1rem;line-height:1.05">
-              CCTV &amp; Structured Cabling Solutions
-            </h1>
-            <p style="font-size:1.1rem;color:var(--steel-lt);margin-bottom:2rem;line-height:1.65;max-width:580px">
-              Turnkey Low Voltage (ELV) engineering for commercial towers, residential communities, and industrial facilities in Abu Dhabi &amp; Dubai. From Cat6A/Cat7 structured cabling and EMT conduit cable pulling to 4K IP CCTV installations, managed PoE+ network switches, NVR storage arrays, and ADMCC compliance approval.
-            </p>
-            <div style="display:flex;flex-wrap:wrap;gap:1.2rem;align-items:center">
-              <button class="big-cta" onclick="openSurveyModal('ADMCC Certified CCTV &amp; Cabling System')">Request Technical Survey 📐</button>
-              <a href="Al-Dirayah-Company-Profile.pdf" target="_blank" class="btn-sec">Download Profile (PDF) 📄</a>
-            </div>
-          </div>
+  <!-- HERO SECTION -->
+  <section id="hero">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-wrap">
+      <div class="hero-left">
+        <div class="hero-badge">
+          <span class="pulse"></span> SIRA & MCC CERTIFIED ELV ENGINEERS
+        </div>
+        <h1 class="hero-title">INTELLIGENT <span>CCTV & ELV</span> INFRASTRUCTURE</h1>
+        <p class="hero-desc">
+          High-definition IP surveillance systems, fiber-optic backbone trunking, structured cabling, and AI analytics command centers built for commercial towers, residential complexes, and mission-critical facilities across UAE.
+        </p>
 
-          <!-- Hero Image Card -->
-          <div style="position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--amber-dim);box-shadow:0 25px 60px rgba(0,0,0,0.95)">
-            <img src="cctv_control_room_3d.jpg" alt="ADMCC Certified VMS & 4K CCTV Command Center 3D Render" style="width:100%;height:auto;display:block;object-fit:cover">
-            <div style="position:absolute;bottom:1.2rem;left:1.2rem;right:1.2rem;background:rgba(14,17,21,0.88);backdrop-filter:blur(12px);padding:1rem 1.25rem;border-radius:10px;border:1px solid var(--amber-dim)">
-              <div style="font-family:var(--f-d);font-weight:700;font-size:1.2rem;color:var(--white);margin-bottom:.2rem">ADMCC Compliant Command Center</div>
-              <div style="font-size:.8rem;color:var(--amber-lt);font-family:var(--f-m)">4K Video Matrix · Server Racks · PoE+ Managed Network</div>
+        <!-- CCTV Interactive Toolbar -->
+        <div class="cctv-ctrls">
+          <button class="ctrl-btn active" onclick="switchCctvMode('4k')">📷 4K ULTRA-HD</button>
+          <button class="ctrl-btn" onclick="switchCctvMode('ir')">🌙 THERMAL IR</button>
+          <button class="ctrl-btn" onclick="switchCctvMode('grid')">🔲 LIVE GRID 2x2</button>
+          <button class="ctrl-btn" onclick="switchCctvMode('ai')">🧠 EDGE AI ANALYTICS</button>
+        </div>
+
+        <div class="stats-ribbon">
+          <div class="stat-card">
+            <div class="val">99.99%</div>
+            <div class="lbl">NETWORK UP-TIME</div>
+          </div>
+          <div class="stat-card">
+            <div class="val">10 GbE</div>
+            <div class="lbl">FIBER BACKBONE</div>
+          </div>
+          <div class="stat-card">
+            <div class="val">EN 50132</div>
+            <div class="lbl">SIRA COMPLIANT</div>
+          </div>
+          <div class="stat-card">
+            <div class="val">&lt; 1ms</div>
+            <div class="lbl">STREAM LATENCY</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Stream HUD Frame -->
+      <div class="hero-right">
+        <div class="hero-feed-preview">
+          <img id="cctvFeedImg" src="cctv_ip_camera_3d.jpg" alt="CCTV 4K Security Stream Preview">
+          <div class="feed-hud">
+            <div class="hud-top">
+              <div><span class="rec-dot"></span>LIVE :: CAM-04 (MAIN ENTRANCE)</div>
+              <div id="hudTime">2026-09-19 01:54:06</div>
+            </div>
+            <div class="hud-bottom">
+              <div id="hudModeLabel">MODE: 4K ULTRA-HD (3840x2160 @ 60FPS)</div>
+              <div>BITRATE: 12.4 Mbps</div>
             </div>
           </div>
         </div>
       </div>
-    </section>
-
-    <!-- Section #l (Floor 1 - Structured Cabling Infrastructure) -->
-    <section id="l" class="pad" data-floor="1" data-label="Cabling" style="background:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
-      <div class="wrap">
-        <div style="max-width:760px;margin-bottom:3.5rem">
-          <span class="eyebrow">01 — STRUCTURED CABLING</span>
-          <h2 style="font-size:clamp(2rem,4vw,3.2rem);color:var(--white);margin-bottom:.8rem">Cat6A / Cat7 &amp; Fiber Optic Backbone</h2>
-          <p style="font-size:1.05rem;color:var(--steel-lt);line-height:1.65">High-density structured cabling infrastructure engineered for high-speed data transmission, PoE+ power distribution, and zero-loss optical backhauling.</p>
-        </div>
-
-        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:1.8rem">
-          <!-- Card 1 -->
-          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:2rem">
-            <div style="width:48px;height:48px;border-radius:10px;background:rgba(224,138,30,0.15);border:1px solid var(--amber-dim);display:grid;place-items:center;font-size:1.5rem;margin-bottom:1.25rem">🔌</div>
-            <h3 style="font-family:var(--f-d);font-size:1.4rem;color:var(--white);margin-bottom:.6rem">Cat6A &amp; Cat7 S/FTP Copper Cabling</h3>
-            <p style="font-size:.95rem;color:var(--steel-lt);line-height:1.6">High-bandwidth shielded twisted pair copper cabling supporting 10Gbps Ethernet, high-wattage PoE+ (802.3at/bt), and zero-crosstalk noise isolation.</p>
-          </div>
-
-          <!-- Card 2 -->
-          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:2rem">
-            <div style="width:48px;height:48px;border-radius:10px;background:rgba(224,138,30,0.15);border:1px solid var(--amber-dim);display:grid;place-items:center;font-size:1.5rem;margin-bottom:1.25rem">⚡</div>
-            <h3 style="font-family:var(--f-d);font-size:1.4rem;color:var(--white);margin-bottom:.6rem">Singlemode &amp; Multimode Fiber Backbone</h3>
-            <p style="font-size:.95rem;color:var(--steel-lt);line-height:1.6">OS2 singlemode and OM4 multimode fiber optic risers, precision fusion splicing, OTDR loss testing, and high-density fiber patch enclosure termination.</p>
-          </div>
-
-          <!-- Card 3 -->
-          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:2rem">
-            <div style="width:48px;height:48px;border-radius:10px;background:rgba(224,138,30,0.15);border:1px solid var(--amber-dim);display:grid;place-items:center;font-size:1.5rem;margin-bottom:1.25rem">🗄️</div>
-            <h3 style="font-family:var(--f-d);font-size:1.4rem;color:var(--white);margin-bottom:.6rem">Server Rack &amp; Patch Panel Termination</h3>
-            <p style="font-size:.95rem;color:var(--steel-lt);line-height:1.6">42U/45U server rack enclosures, horizontal/vertical cable organizers, keystone jack dress-outs, and FLUKE DSX-8000 certified channel testing reports.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section #f2 (Floor 2 - Cable Pulling & Containment Engineering) -->
-    <section id="f2" class="pad" data-floor="2" data-label="Pulling">
-      <div class="wrap">
-        <div style="background:linear-gradient(135deg, rgba(224,138,30,0.1), rgba(20,24,29,0.95));border:1px solid var(--amber-dim);border-radius:16px;padding:3rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center">
-          <div style="position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--amber-dim);box-shadow:0 20px 45px rgba(0,0,0,0.8)">
-            <img src="cctv_ip_camera_3d.jpg" alt="Vandal-Proof 4K IP Dome Camera & EMT Conduit Cabling" style="width:100%;height:auto;display:block;object-fit:cover">
-            <div style="position:absolute;bottom:1rem;left:1rem;background:rgba(14,17,21,0.85);backdrop-filter:blur(10px);padding:.6rem 1rem;border-radius:8px;border:1px solid var(--amber-dim);font-family:var(--f-m);font-size:.78rem;color:var(--amber-lt)">
-              EMT CONDUIT &amp; 4K DOME CAMERA
-            </div>
-          </div>
-          <div>
-            <div class="eyebrow">02 — CABLE PULLING &amp; CONTAINMENT</div>
-            <h2 style="font-size:clamp(1.8rem,3vw,2.6rem);color:var(--white);margin-bottom:1rem;line-height:1.1">
-              Industrial Cable Pulling &amp; Conduit Containment
-            </h2>
-            <p style="color:var(--steel-lt);font-size:1.02rem;line-height:1.65;margin-bottom:1.5rem">
-              Heavy-duty cable pulling and raceway containment engineered for multi-story risers, basement parking, and outdoor perimeters. Installed according to ADMCC &amp; UAE Civil Defence safety standards.
-            </p>
-            <div style="display:grid;gap:.8rem;font-size:.92rem">
-              <div style="display:flex;align-items:center;gap:.7rem;color:var(--paper)"><span style="color:var(--amber-lt);font-weight:700">✓</span> Galvanized Iron (GI) Cable Trays, Wire Mesh &amp; Ladder Racks</div>
-              <div style="display:flex;align-items:center;gap:.7rem;color:var(--paper)"><span style="color:var(--amber-lt);font-weight:700">✓</span> Rigid EMT Steel Conduits &amp; Weatherproof IP67 Flexible Fittings</div>
-              <div style="display:flex;align-items:center;gap:.7rem;color:var(--paper)"><span style="color:var(--amber-lt);font-weight:700">✓</span> Riser Shaft Vertical Cable Pulling &amp; Strain Relief Clamps</div>
-              <div style="display:flex;align-items:center;gap:.7rem;color:var(--paper)"><span style="color:var(--amber-lt);font-weight:700">✓</span> Civil Defence Approved Fire-Stop Penetration Sealing</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section #f3 (Floor 3 - CCTV Installations & Camera Deployment) -->
-    <section id="f3" class="pad" data-floor="3" data-label="CCTV" style="background:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
-      <div class="wrap">
-        <div style="max-width:760px;margin-bottom:3.5rem">
-          <span class="eyebrow">03 — CAMERA DEPLOYMENT</span>
-          <h2 style="font-size:clamp(2rem,4vw,3.2rem);color:var(--white);margin-bottom:.8rem">4K Ultra-HD &amp; Specialized IP Cameras</h2>
-          <p style="font-size:1.05rem;color:var(--steel-lt);line-height:1.65">High-performance IP surveillance cameras tailored for indoor corridors, outdoor perimeters, vehicle parking, and high-security zones.</p>
-        </div>
-
-        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:1.8rem">
-          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:2rem">
-            <div style="font-size:2rem;margin-bottom:1rem">📹</div>
-            <h3 style="font-family:var(--f-d);font-size:1.35rem;color:var(--white);margin-bottom:.5rem">4K Vandal-Proof Domes &amp; Bullets</h3>
-            <p style="font-size:.9rem;color:var(--steel-lt)">IK10 impact-resistant and IP67 weather-sealed enclosures with Smart IR night vision up to 50 meters.</p>
-          </div>
-
-          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:2rem">
-            <div style="font-size:2rem;margin-bottom:1rem">🔄</div>
-            <h3 style="font-family:var(--f-d);font-size:1.35rem;color:var(--white);margin-bottom:.5rem">360° Panoramic Fisheye &amp; PTZ</h3>
-            <p style="font-size:.9rem;color:var(--steel-lt)">360-degree blind-spot-free coverage paired with 40x optical zoom PTZ tracking and automated guard tours.</p>
-          </div>
-
-          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:2rem">
-            <div style="font-size:2rem;margin-bottom:1rem">🚗</div>
-            <h3 style="font-family:var(--f-d);font-size:1.35rem;color:var(--white);margin-bottom:.5rem">ANPR License Plate Cameras</h3>
-            <p style="font-size:.9rem;color:var(--steel-lt)">High-speed vehicle plate capture for car park barrier gates, access control, and ADMCC compliance.</p>
-          </div>
-
-          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:2rem">
-            <div style="font-size:2rem;margin-bottom:1rem">🌡️</div>
-            <h3 style="font-family:var(--f-d);font-size:1.35rem;color:var(--white);margin-bottom:.5rem">Thermal &amp; Perimeter Intrusion</h3>
-            <p style="font-size:.9rem;color:var(--steel-lt)">Dual-spectrum thermal imaging cameras for early fire detection and long-range perimeter defense.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section #f4 (Floor 4 - Network Configuration & VMS Integration) -->
-    <section id="f4" class="pad" data-floor="4" data-label="Network">
-      <div class="wrap">
-        <div style="max-width:760px;margin-bottom:3.5rem">
-          <span class="eyebrow">04 — NETWORK &amp; VMS CONFIGURATION</span>
-          <h2 style="font-size:clamp(2rem,4vw,3.2rem);color:var(--white);margin-bottom:.8rem">Managed Network &amp; Storage Architecture</h2>
-          <p style="font-size:1.05rem;color:var(--steel-lt);line-height:1.65">Enterprise Video Management System (VMS) setup, managed PoE+ network switches, SAN storage arrays, and mobile remote monitoring.</p>
-        </div>
-
-        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:1.8rem">
-          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:1.8rem">
-            <h4 style="font-size:1.25rem;color:var(--white);margin-bottom:.5rem">🌐 Managed Layer 2/3 PoE+ Switches</h4>
-            <p style="font-size:.9rem;color:var(--steel-lt);margin:0">Isolated CCTV VLANs, IGMP video multicast snooping, 10G SFP+ fiber uplinks, and power budget optimization.</p>
-          </div>
-
-          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:1.8rem">
-            <h4 style="font-size:1.25rem;color:var(--white);margin-bottom:.5rem">💾 Enterprise RAID SAN / NVR Storage</h4>
-            <p style="font-size:.9rem;color:var(--steel-lt);margin:0">Hot-swappable RAID 5/6 storage arrays engineered for 30/60/90-day continuous 4K video retention under ADMCC mandates.</p>
-          </div>
-
-          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:1.8rem">
-            <h4 style="font-size:1.25rem;color:var(--white);margin-bottom:.5rem">🖥️ Central VMS &amp; Video Matrix</h4>
-            <p style="font-size:.9rem;color:var(--steel-lt);margin:0">Multi-screen control room matrix, AI object detection, facial recognition, and secure mobile app remote viewing.</p>
-          </div>
-
-          <div style="background:var(--surface);border:1px solid var(--line-2);border-radius:12px;padding:1.8rem">
-            <h4 style="font-size:1.25rem;color:var(--white);margin-bottom:.5rem">🛡️ ADMCC Compliance &amp; Filing</h4>
-            <p style="font-size:.9rem;color:var(--steel-lt);margin:0">As-built drawings, camera coverage field-of-view layout maps, certified technician inspections, and final ADMCC clearance.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section #f5 (Floor 5 - Technical Specification Matrix Table) -->
-    <section id="f5" class="pad" data-floor="5" data-label="Specs" style="background:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
-      <div class="wrap">
-        <div style="max-width:760px;margin-bottom:2.5rem">
-          <span class="eyebrow">05 — TECHNICAL SPECIFICATIONS</span>
-          <h2 style="font-size:clamp(2rem,3.5vw,3rem);color:var(--white);margin-bottom:.8rem">CCTV &amp; ELV Technical Specification Matrix</h2>
-          <p style="font-size:1.05rem;color:var(--steel-lt);line-height:1.65">Detailed technical engineering parameters for consultant approval and authority submission across Abu Dhabi &amp; Dubai.</p>
-        </div>
-
-        <div class="table-card">
-          <table>
-            <thead>
-              <tr>
-                <th>System Parameter</th>
-                <th>Standard Regulatory Requirement</th>
-                <th>Al Dirayah Engineering Specification</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="highlight">Structured Cabling Grade</td>
-                <td>TIA/EIA-568 Category 6 minimum</td>
-                <td>Cat6A S/FTP &amp; Cat7 10Gbps Shielded Copper + OS2 Fiber Optic</td>
-              </tr>
-              <tr>
-                <td class="highlight">Camera Resolution &amp; Sensor</td>
-                <td>1080p Full HD minimum</td>
-                <td>4K Ultra-HD (3840x2160) 8MP Sony Starvis Low-Light Sensor</td>
-              </tr>
-              <tr>
-                <td class="highlight">Conduit Containment</td>
-                <td>PVC / EMT conduit enclosure</td>
-                <td>Heavy-Duty Galvanized EMT Steel Conduits &amp; GI Wire Trays</td>
-              </tr>
-              <tr>
-                <td class="highlight">Network Infrastructure</td>
-                <td>Unmanaged PoE Switch</td>
-                <td>Managed Layer 2/3 PoE+ (802.3at/bt) with Isolated Video VLANs</td>
-              </tr>
-              <tr>
-                <td class="highlight">NVR Video Retention</td>
-                <td>30 Days Continuous Storage</td>
-                <td>30 – 90 Days RAID 5/6 SAN Storage (ADMCC Compliant)</td>
-              </tr>
-              <tr>
-                <td class="highlight">Enclosure Rating</td>
-                <td>IP65 Weatherproof</td>
-                <td>IP67 Weatherproof + IK10 Vandal-Proof Sealed Housing</td>
-              </tr>
-              <tr>
-                <td class="highlight">Authority Clearances</td>
-                <td>Local Security Permit</td>
-                <td>Full ADMCC (Abu Dhabi) &amp; SIRA (Dubai) Technical Filing &amp; Clearance</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- ══════════ PH — MASTER FOOTER & CONTACT ══════════ -->
-    <section id="ph" class="pad" data-floor="PH" data-label="Contact" style="padding-top:4rem;padding-bottom:3rem;background:var(--ink-2);border-top:1px solid var(--line)">
-      <div class="wrap">
-        
-        <!-- Top Contact CTA Banner -->
-        <div style="background:linear-gradient(135deg, rgba(224,138,30,0.12), rgba(20,24,29,0.95));border:1px solid var(--amber-dim);border-radius:14px;padding:2.5rem;display:grid;grid-template-columns:1.4fr 1fr;gap:2rem;align-items:center;margin-bottom:4rem;box-shadow:0 15px 40px rgba(0,0,0,0.5)">
-          <div>
-            <p class="eyebrow" style="color:var(--amber-lt);font-family:var(--f-m);font-size:.78rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:.5rem">PENTHOUSE — DIRECT TECHNICAL CONSULTATION</p>
-            <h2 style="font-family:var(--f-d);font-size:clamp(2rem,4vw,3.2rem);color:var(--white);margin-bottom:.8rem;line-height:1.05">Book a CCTV &amp; Cabling Site Survey</h2>
-            <p style="color:var(--steel-lt);font-size:1rem;margin-bottom:1.5rem;max-width:560px;line-height:1.6">Provide building floor plans, camera counts, or ADMCC requirements. Our senior ELV engineers inspect, design, and deliver a comprehensive technical proposal within 24 hours.</p>
-            <button class="big-cta" onclick="openSurveyModal('Footer CTA')" style="display:inline-flex;align-items:center;gap:.6rem;padding:.85rem 1.8rem;font-size:1rem">Request On-Site Survey &rarr;</button>
-          </div>
-            
-          
-          <div style="display:grid;gap:1rem;background:rgba(14,17,21,0.6);padding:1.5rem;border-radius:10px;border:1px solid var(--line)">
-            <div style="display:flex;align-items:center;gap:.8rem">
-              <div style="width:36px;height:36px;border-radius:6px;background:var(--amber-dim);border:1px solid var(--amber-lt);display:grid;place-items:center;color:var(--amber-lt);font-size:1.1rem">📹</div>
-              <div>
-                <b style="font-size:.9rem;color:var(--white);display:block">ADMCC &amp; OSHAD Certified</b>
-                <span style="font-size:.78rem;color:var(--steel)">Certified ELV Engineers &amp; Security Compliance</span>
-              </div>
-            </div>
-            <div style="display:flex;align-items:center;gap:.8rem">
-              <div style="width:36px;height:36px;border-radius:6px;background:var(--amber-dim);border:1px solid var(--amber-lt);display:grid;place-items:center;color:var(--amber-lt);font-size:1.1rem">⚡</div>
-              <div>
-                <b style="font-size:.9rem;color:var(--white);display:block">24/7 Rapid SLA Response</b>
-                <span style="font-size:.78rem;color:var(--steel)">SLA response: 30 minutes in Abu Dhabi &amp; 2 hours in Dubai</span>
-              </div>
-            </div>
-            <div style="display:flex;align-items:center;gap:.8rem">
-              <div style="width:36px;height:36px;border-radius:6px;background:var(--amber-dim);border:1px solid var(--amber-lt);display:grid;place-items:center;color:var(--amber-lt);font-size:1.1rem">📐</div>
-              <div>
-                <b style="font-size:.9rem;color:var(--white);display:block">FLUKE DSX Certified Testing</b>
-                <span style="font-size:.78rem;color:var(--steel)">10Gbps Channel Calibration &amp; Warranty</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Master 3-Column Footer Grid -->
-        <div style="display:grid;grid-template-columns:1.8fr 1.2fr 1.4fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid var(--line)">
-          <!-- Col 1: Profile -->
-          <div>
-            <div style="display:flex;align-items:center;gap:.7rem;font-family:var(--f-d);font-size:1.4rem;color:var(--white);font-weight:700;margin-bottom:1rem">
-              <svg viewBox="0 0 120 120" style="width:30px;height:30px;flex:none" aria-hidden="true">
-                <rect width="120" height="120" rx="20" fill="#E08A1E"/>
-                <path d="M35 49 L60 29 L85 49" fill="none" stroke="#0E1115" stroke-width="10"/>
-                <path d="M35 70 L60 50 L85 70" fill="none" stroke="#0E1115" stroke-width="10" opacity=".62"/>
-                <path d="M35 91 L60 71 L85 91" fill="none" stroke="#0E1115" stroke-width="10" opacity=".34"/>
-              </svg>
-              <span>AL DIRAYAH</span>
-            </div>
-            <p style="color:var(--steel-lt);font-size:.9rem;line-height:1.65;margin-bottom:1.2rem">Al Dirayah Electromechanical Contracting LLC. Certified vertical transportation and building infrastructure engineering specialists in Abu Dhabi and across the United Arab Emirates.</p>
-            <div style="font-family:var(--f-m);font-size:1.1rem;color:var(--amber-lt);direction:rtl;text-align:right">الدراية للمقاولات الكهروميكانيكية</div>
-          </div>
-
-          <!-- Col 2: Divisions -->
-          <div>
-            <h4 style="font-family:var(--f-d);font-size:1.1rem;color:var(--white);margin-bottom:1.2rem;letter-spacing:1px">DIVISIONS &amp; SERVICES</h4>
-            <ul style="list-style:none;padding:0;margin:0;display:grid;gap:.65rem;font-size:.88rem">
-              <li><a href="lifts.html" style="color:var(--steel);transition:color .2s">Vertical Lifts &amp; Elevators</a></li>
-              <li><a href="escalators.html" style="color:var(--steel);transition:color .2s">Escalators &amp; Moving Walkways</a></li>
-              <li><a href="cctv-elv.html" style="color:var(--amber-lt);transition:color .2s">CCTV &amp; Structured Cabling</a></li>
-              <li><a href="residential-elevators.html" style="color:var(--steel);transition:color .2s">Residential Villa Lifts</a></li>
-              <li><a href="commercial-elevators.html" style="color:var(--steel);transition:color .2s">Commercial Tower Elevators</a></li>
-              <li><a href="maintenance-modernization.html" style="color:var(--steel);transition:color .2s">24/7 Maintenance &amp; AMC</a></li>
-            </ul>
-          </div>
-
-          <!-- Col 3: Abu Dhabi HQ -->
-          <div>
-            <h4 style="font-family:var(--f-d);font-size:1.1rem;color:var(--white);margin-bottom:1.2rem;letter-spacing:1px">ABU DHABI HEADQUARTERS</h4>
-            <div style="display:grid;gap:.8rem;font-size:.88rem;color:var(--steel-lt)">
-              <div><b style="color:var(--white);display:block;margin-bottom:.2rem">Office Address:</b>Mussafah Industrial Area, Abu Dhabi, UAE</div>
-              <div><b style="color:var(--white);display:block;margin-bottom:.2rem">24/7 Emergency Dispatch:</b><span style="font-family:var(--f-m);color:var(--amber-lt)">+971 2 555 0192</span></div>
-              <div><b style="color:var(--white);display:block;margin-bottom:.2rem">Official Email:</b><span style="font-family:var(--f-m);color:var(--amber-lt)">service@aldirayah.ae</span></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Bottom Copyright Bar -->
-        <div style="padding-top:1.5rem;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;font-family:var(--f-m);font-size:.8rem;color:var(--steel)">
-          <span>© 2026 Al Dirayah Electromechanical Contracting LLC. All rights reserved.</span>
-          <span style="color:var(--amber-lt)">Keep it moving · الحركة لا تتوقف</span>
-        </div>
-
-      </div>
-    </section>
-  </main>
-
-  <!-- Integrated Request Survey Modal -->
-  <div class="modal-overlay" id="surveyModal">
-    <div class="modal-card">
-      <button class="modal-close" onclick="closeSurveyModal()">×</button>
-      <div style="font-family:var(--f-m);font-size:.75rem;color:var(--amber-lt);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:.3rem">TECHNICAL CONSULTATION</div>
-      <h3>Request Site Survey &amp; Audit</h3>
-      <p>Select your required product or service below to schedule an on-site technical inspection by an Al Dirayah senior engineer.</p>
-      <form onsubmit="handleSurveySubmit(event)">
-        <label>Product or Service Required *
-          <select id="mEquip" required>
-            <option value="ADMCC Certified CCTV & Structured Cabling System" selected>ADMCC Certified CCTV &amp; Structured Cabling System</option>
-            <option value="Cat6A / Cat7 Structured Cabling & Fiber Optic Backbone">Cat6A / Cat7 Structured Cabling &amp; Fiber Optic Backbone</option>
-            <option value="4K IP CCTV & VMS Network Infrastructure">4K IP CCTV &amp; VMS Network Infrastructure</option>
-            <option value="MRL Gearless Passenger Elevators (EN 81-20/50)">MRL Gearless Passenger Elevators (EN 81-20/50)</option>
-            <option value="24/7 Rapid Emergency Response AMC Contract">24/7 Rapid Emergency Response AMC Contract</option>
-          </select>
-        </label>
-        <label>Your Name * <input type="text" id="mName" required placeholder="e.g. Eng. Mansoor Al-Ketbi"></label>
-        <label>Phone / WhatsApp * <input type="tel" id="mPhone" required placeholder="+971 50 000 0000"></label>
-        <label>Project Location *
-          <select id="mLoc" required>
-            <option value="Abu Dhabi City">Abu Dhabi City</option>
-            <option value="Dubai & Northern Emirates">Dubai &amp; Northern Emirates</option>
-            <option value="Al Ain & Regional">Al Ain &amp; Regional</option>
-          </select>
-        </label>
-        <button type="submit">Submit Technical Request &rarr;</button>
-      </form>
     </div>
-  </div>
+  </section>
 
-<script>
-(function(){
-  "use strict";
-  var clamp = function(v,a,b){ return Math.max(a, Math.min(b, v)); };
-  var hdr = document.getElementById("hdr");
-  var fiBar = document.getElementById("fiBar");
-  var fiRead = document.getElementById("fiRead");
-  var fiArrow = document.getElementById("fiArrow");
-  var ticks = document.getElementById("ticks");
+  <!-- 3D EXPLODED CAMERA DISASSEMBLY SECTION (#f2) -->
+  <section id="f2">
+    <div class="pin">
+      <div class="f2-header">
+        <h2>3D HARDWARE ANATOMY</h2>
+        <p>SCROLL DOWN TO EXPLODE THE 4K DOME CAMERA ARCHITECTURE</p>
+      </div>
 
-  /* dust particles */
-  var cv = document.getElementById("dust");
-  if(cv){
-    var ctx = cv.getContext("2d");
-    var P = [];
-    var resizeCv = function(){ cv.width = innerWidth; cv.height = innerHeight; };
-    resizeCv();
-    addEventListener("resize", resizeCv, {passive:true});
-    for(var i=0; i<35; i++){
-      P.push({
-        x: Math.random()*innerWidth, y: Math.random()*innerHeight,
-        r: Math.random()*1.4 + .3, vy: -(Math.random()*.35 + .1), vx: (Math.random()-.5)*.15,
-        a: Math.random()*.5 + .15
-      });
+      <div class="viewport3d">
+        <img src="cctv_ip_camera_3d.jpg" class="img-3d-layer img-3d-base" id="baseCamImg" alt="Assembled Dome Camera">
+        <img src="cctv_camera_exploded_3d.jpg" class="img-3d-layer img-3d-exploded" id="explodedCamImg" alt="Exploded Dome Camera Architecture">
+
+        <!-- Callout overlays -->
+        <div class="parts-overlay">
+          <div class="parts-col left">
+            <div class="part-tag" id="tag1">
+              <div class="part-num">LAYER 01 // OPTICS</div>
+              <div class="part-name">IK10 Vandal Glass Dome</div>
+              <div class="part-desc">Anti-reflective polycarbonate housing rated for extreme high-impact industrial protection.</div>
+            </div>
+            <div class="part-tag" id="tag2">
+              <div class="part-num">LAYER 02 // SENSOR</div>
+              <div class="part-name">Sony STARVIS™ 4K CMOS</div>
+              <div class="part-desc">Ultra-low-light optical sensor delivering crisp color clarity in near 0-lux conditions.</div>
+            </div>
+            <div class="part-tag" id="tag3">
+              <div class="part-num">LAYER 03 // ILLUMINATION</div>
+              <div class="part-name">Dual Infrared LED Array</div>
+              <div class="part-desc">Smart IR illumination extending up to 50m night vision distance with auto-beam intensity.</div>
+            </div>
+          </div>
+
+          <div class="parts-col right">
+            <div class="part-tag" id="tag4">
+              <div class="part-num">LAYER 04 // LENS</div>
+              <div class="part-name">Motorized Varifocal Lens</div>
+              <div class="part-desc">2.7mm–13.5mm optical zoom with remote auto-focus & dynamic focal width mapping.</div>
+            </div>
+            <div class="part-tag" id="tag5">
+              <div class="part-num">LAYER 05 // CHASSIS</div>
+              <div class="part-name">IP67 Die-Cast Aluminum</div>
+              <div class="part-desc">Corrosion-proof sealed enclosure certified for dust-tight and underwater submergence safety.</div>
+            </div>
+            <div class="part-tag" id="tag6">
+              <div class="part-num">LAYER 06 // PROCESSOR</div>
+              <div class="part-name">PoE+ Edge AI Core Engine</div>
+              <div class="part-desc">IEEE 802.3at Gigabit network controller with deep-learning neural video analytics on-board.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CABLING & NETWORK INFRASTRUCTURE SPEC STUDIO (#cabling) -->
+  <section id="cabling">
+    <div class="sec-wrap">
+      <div class="sec-head">
+        <div class="sub">NETWORK BACKBONE & CABLING STUDIO</div>
+        <h2>ENGINEERED CABLING SPECIFICATIONS</h2>
+        <p>Interactive testing studio demonstrating certified channel parameters verified by Fluke DSX-8000 CableAnalyzer™</p>
+      </div>
+
+      <div class="studio-grid">
+        <!-- Spec Selection Menu -->
+        <div class="spec-menu">
+          <button class="spec-tab active" onclick="loadSpec('cat6a')">
+            <span>Cat6A S/FTP Shielded</span>
+            <span>10G</span>
+          </button>
+          <button class="spec-tab" onclick="loadSpec('cat7')">
+            <span>Cat7 High-Speed Trunk</span>
+            <span>10G+</span>
+          </button>
+          <button class="spec-tab" onclick="loadSpec('fiber')">
+            <span>OS2 Singlemode Fiber</span>
+            <span>100G</span>
+          </button>
+          <button class="spec-tab" onclick="loadSpec('rack')">
+            <span>42U Server Rack Chassis</span>
+            <span>PoE+</span>
+          </button>
+        </div>
+
+        <!-- Spec Detail Display Panel -->
+        <div class="spec-display">
+          <div>
+            <div class="spec-header-box">
+              <div class="spec-title-group">
+                <h3 id="specTitle">Cat6A S/FTP Shielded Copper System</h3>
+                <p id="specSub">ANSI/TIA-568-C.2 & ISO/IEC 11801 Class EA Certified</p>
+              </div>
+              <div class="fluke-badge" id="flukeStatus">FLUKE PASS :: 500 MHz</div>
+            </div>
+
+            <div class="spec-metrics-grid">
+              <div class="metric-box">
+                <div class="m-label">MAX BANDWIDTH</div>
+                <div class="m-val" id="specBandwidth">10 Gbps @ 100m</div>
+              </div>
+              <div class="metric-box">
+                <div class="m-label">SHIELDING TYPE</div>
+                <div class="m-val" id="specShield">Individual Pair Foil</div>
+              </div>
+              <div class="metric-box">
+                <div class="m-label">PoE SUPPORT</div>
+                <div class="m-label" style="font-size:0.6rem; color:var(--amber); margin-top:2px;">IEEE 802.3bt</div>
+                <div class="m-val" id="specPoe">Type 4 (90W)</div>
+              </div>
+            </div>
+
+            <p id="specDesc" style="color: var(--slate); line-height: 1.6; font-size: 1rem;">
+              Engineered for high-density 10 Gigabit Ethernet horizontal runs. Features foil shielding per pair plus an outer tinned copper braid to eliminate Alien Crosstalk (AXT) in complex industrial riser shafts.
+            </p>
+          </div>
+
+          <div>
+            <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:0.8rem; color:var(--amber-lt); margin-top:1.5rem;">
+              <span>CHANNEL PERFORMANCE FREQUENCY</span>
+              <span id="freqLabel">500 MHz MAX FREQ</span>
+            </div>
+            <div class="gauge-bar-wrap">
+              <div class="gauge-bar-fill" id="gaugeFill" style="width: 85%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPLETE ELV SOLUTIONS GRID -->
+  <section id="solutions">
+    <div class="sec-wrap">
+      <div class="sec-head">
+        <div class="sub">END-TO-END CAPABILITIES</div>
+        <h2>OUR INTEGRATED SURVEILLANCE & NETWORK SERVICES</h2>
+        <p>From precision cable pulling to automated video analytics NVR setup, we deliver turnkey ELV infrastructure.</p>
+      </div>
+
+      <div class="grid-3">
+        <!-- Solution 1 -->
+        <div class="sol-card">
+          <div>
+            <div class="sol-icon">🔌</div>
+            <h3>Structured Cabling Systems</h3>
+            <p>Design, laying, patching, and certification of high-performance Cat6A/Cat7 copper networks and singlemode/multimode fiber optic trunks.</p>
+          </div>
+          <div class="sol-tags">
+            <span class="sol-tag">TIA-568-D</span>
+            <span class="sol-tag">Fiber Splicing</span>
+            <span class="sol-tag">Fluke Certified</span>
+          </div>
+        </div>
+
+        <!-- Solution 2 -->
+        <div class="sol-card">
+          <div>
+            <div class="sol-icon">⛓️</div>
+            <h3>Cable Pulling & Containment</h3>
+            <p>Heavy-duty cable tray installation, GI conduit bending, riser shaft management, trunking, and fire-stop sealing across multi-story buildings.</p>
+          </div>
+          <div class="sol-tags">
+            <span class="sol-tag">GI Conduit</span>
+            <span class="sol-tag">Riser Trays</span>
+            <span class="sol-tag">Fire Penetration</span>
+          </div>
+        </div>
+
+        <!-- Solution 3 -->
+        <div class="sol-card">
+          <div>
+            <div class="sol-icon">📹</div>
+            <h3>CCTV Installation & Mounting</h3>
+            <p>Strategic positioning and installation of 4K IP dome, bullet, PTZ optical zoom, and thermal dual-spectrum security cameras.</p>
+          </div>
+          <div class="sol-tags">
+            <span class="sol-tag">4K Ultra-HD</span>
+            <span class="sol-tag">PTZ Zoom</span>
+            <span class="sol-tag">SIRA Approved</span>
+          </div>
+        </div>
+
+        <!-- Solution 4 -->
+        <div class="sol-card">
+          <div>
+            <div class="sol-icon">🖥️</div>
+            <h3>Network & Switch Configuration</h3>
+            <p>Managed Gigabit PoE+ switch deployment, VLAN segmentation for video isolated traffic, NVR RAID array setup, and remote viewer client setups.</p>
+          </div>
+          <div class="sol-tags">
+            <span class="sol-tag">VLAN Segregation</span>
+            <span class="sol-tag">PoE+ Switches</span>
+            <span class="sol-tag">RAID 6 NVR</span>
+          </div>
+        </div>
+
+        <!-- Solution 5 -->
+        <div class="sol-card">
+          <div>
+            <div class="sol-icon">🏛️</div>
+            <h3>Control Room Command Desks</h3>
+            <p>Custom video wall matrix displays, ergonomic operator workstations, central management software (CMS), and redundant power UPS backups.</p>
+          </div>
+          <div class="sol-tags">
+            <span class="sol-tag">Video Walls</span>
+            <span class="sol-tag">CMS Software</span>
+            <span class="sol-tag">24/7 Monitoring</span>
+          </div>
+        </div>
+
+        <!-- Solution 6 -->
+        <div class="sol-card">
+          <div>
+            <div class="sol-icon">📋</div>
+            <h3>SIRA & MCC Regulatory Approvals</h3>
+            <p>Comprehensive audit preparation, compliance testing, document submission, and liaison with Dubai SIRA & Abu Dhabi MCC authorities.</p>
+          </div>
+          <div class="sol-tags">
+            <span class="sol-tag">SIRA Dubai</span>
+            <span class="sol-tag">MCC Abu Dhabi</span>
+            <span class="sol-tag">Audit Pass</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTROL ROOM BANNER SHOWCASE -->
+      <div class="ctrl-banner">
+        <img src="cctv_control_room_3d.jpg" alt="Al Dirayah Modern Command Center & Control Room">
+        <div class="ctrl-banner-content">
+          <h2>ENTERPRISE SECURITY COMMAND CENTERS</h2>
+          <p>We build mission-critical control rooms equipped with video wall matrices, redundant fiber links, and automated incident alarm response systems.</p>
+          <a href="#contact" class="btn-quote" style="background:var(--amber); color:var(--ink);">Schedule Technical Audit</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="ft-inner">
+      <div class="ft-brand">
+        <h3>AL DIRAYAH ELECTROMECHANICAL</h3>
+        <p>Specialized Vertical Transportation, Escalator Engineering, Structured Cabling, and Enterprise CCTV Infrastructure across Abu Dhabi and Dubai, UAE.</p>
+      </div>
+      <div class="ft-col">
+        <h4>PORTFOLIO</h4>
+        <ul>
+          <li><a href="lifts.html">Passenger Lifts</a></li>
+          <li><a href="escalators.html">Commercial Escalators</a></li>
+          <li><a href="accessibility-elevators.html">Accessibility Lifts</a></li>
+          <li><a href="cctv-elv.html">CCTV & ELV Systems</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>SOLUTIONS</h4>
+        <ul>
+          <li><a href="#">Structured Cabling</a></li>
+          <li><a href="#">Fiber Optic Trunking</a></li>
+          <li><a href="#">4K IP Surveillance</a></li>
+          <li><a href="#">SIRA Compliance</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h4>CONTACT</h4>
+        <ul>
+          <li>Abu Dhabi, United Arab Emirates</li>
+          <li>Email: info@aldirayahllc.ae</li>
+          <li>Phone: +971 2 678 9123</li>
+          <li>Emergency 24/7 Hotline</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-btm">
+      <div>© 2026 AL DIRAYAH ELECTROMECHANICAL CONTRACTING LLC. ALL RIGHTS RESERVED.</div>
+      <div>EN 81-20 / EN 81-70 / TIA-568-D / SIRA / MCC CERTIFIED</div>
+    </div>
+  </footer>
+
+  <!-- INTERACTIVE SCRIPTS -->
+  <script>
+    // HUD Real-time Clock
+    function updateClock() {
+      const now = new Date();
+      const str = now.toISOString().replace('T', ' ').substring(0, 19);
+      const el = document.getElementById('hudTime');
+      if (el) el.textContent = str;
     }
-    (function animDust(){
-      ctx.clearRect(0,0,cv.width,cv.height);
-      for(var k=0; k<P.length; k++){
-        var p = P[k];
-        p.y += p.vy; p.x += p.vx;
-        if(p.y < 0){ p.y = cv.height; p.x = Math.random()*cv.width; }
-        ctx.fillStyle = "rgba(224,138,30," + p.a + ")";
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fill();
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Hero CCTV Mode Switcher
+    function switchCctvMode(mode) {
+      const btns = document.querySelectorAll('.ctrl-btn');
+      btns.forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+
+      const img = document.getElementById('cctvFeedImg');
+      const label = document.getElementById('hudModeLabel');
+
+      if (mode === '4k') {
+        img.style.filter = 'contrast(1.05) brightness(0.95)';
+        label.textContent = 'MODE: 4K ULTRA-HD (3840x2160 @ 60FPS)';
+      } else if (mode === 'ir') {
+        img.style.filter = 'grayscale(1) sepia(0.8) hue-rotate(90deg) contrast(1.4)';
+        label.textContent = 'MODE: THERMAL INFRARED (50m NIGHT VISION)';
+      } else if (mode === 'grid') {
+        img.style.filter = 'contrast(1.2) saturate(0.8)';
+        label.textContent = 'MODE: LIVE GRID 2x2 QUAD FEED (MULTI-CAM)';
+      } else if (mode === 'ai') {
+        img.style.filter = 'brightness(1.1) contrast(1.3) hue-rotate(180deg)';
+        label.textContent = 'MODE: EDGE AI THREAT DETECTION & BOUNDING';
       }
-      requestAnimationFrame(animDust);
-    })();
-  }
-
-  /* ticks generator */
-  if(ticks){
-    var h = 140;
-    for(var t=0; t<25; t++){
-      var d = document.createElement("div");
-      d.className = "tick"; d.style.top = (t*h) + "px";
-      d.innerHTML = "<b>" + String(t*10).padStart(3,"0") + " M</b>";
-      ticks.appendChild(d);
-    }
-  }
-
-  var secs = Array.prototype.slice.call(document.querySelectorAll("[data-floor]"));
-  var lis = document.querySelectorAll("#fi ol li");
-
-  var lastY = 0, ticking = false;
-  function frame(){
-    ticking = false;
-    var y = scrollY, vh = innerHeight, doc = document.documentElement;
-
-    hdr.classList.toggle("stuck", y > 40);
-
-    var total = doc.scrollHeight - vh;
-    if(fiBar) fiBar.style.height = clamp(y/(total||1)*100,0,100) + "%";
-
-    if(Math.abs(y-lastY) > 1){
-      if(fiArrow) fiArrow.style.transform = (y > lastY) ? "rotate(180deg)" : "rotate(0deg)";
-      lastY = y;
     }
 
-    var act = 0;
-    for(var i=0;i<secs.length;i++){
-      if(secs[i].getBoundingClientRect().top <= vh*0.45) act = i;
-    }
-    if(fiRead && fiRead.textContent !== secs[act].dataset.floor){
-      fiRead.textContent = secs[act].dataset.floor;
-    }
-    for(var j=0;j<lis.length;j++){
-      if(j===act) lis[j].setAttribute("data-on",""); else lis[j].removeAttribute("data-on");
-    }
-  }
+    // Scroll-driven 3D Exploded Disassembly Engine (#f2)
+    window.addEventListener('scroll', () => {
+      const f2 = document.getElementById('f2');
+      if (!f2) return;
+      const rect = f2.getBoundingClientRect();
+      const windowH = window.innerHeight;
+      
+      // Calculate progress through #f2 section (0 to 1)
+      const totalScrollable = rect.height - windowH;
+      let progress = -rect.top / totalScrollable;
+      progress = Math.max(0, Math.min(1, progress));
 
-  addEventListener("scroll", function(){ if(!ticking){ ticking=true; requestAnimationFrame(frame); } },{passive:true});
-  addEventListener("resize", frame, {passive:true});
+      const baseImg = document.getElementById('baseCamImg');
+      const explodedImg = document.getElementById('explodedCamImg');
 
-  window.openSurveyModal = function(type){
-    var m = document.getElementById("surveyModal");
-    var sel = document.getElementById("mEquip");
-    if(sel && type) sel.value = type;
-    if(m) m.classList.add("active");
-  };
-  window.closeSurveyModal = function(){
-    var m = document.getElementById("surveyModal");
-    if(m) m.classList.remove("active");
-  };
-  window.handleSurveySubmit = function(e){
-    e.preventDefault();
-    alert("Thank you! Your CCTV & ELV technical consultation request has been submitted. An Al Dirayah engineer will call you shortly.");
-    closeSurveyModal();
-  };
+      if (baseImg && explodedImg) {
+        // Crossfade images between progress 0.2 and 0.8
+        let explodeFactor = (progress - 0.15) / 0.7;
+        explodeFactor = Math.max(0, Math.min(1, explodeFactor));
 
-  frame();
-})();
-</script>
+        baseImg.style.opacity = 1 - explodeFactor;
+        explodedImg.style.opacity = explodeFactor;
+        explodedImg.style.transform = `scale(${1 + explodeFactor * 0.15})`;
+
+        // Toggle visibility of part callouts based on scroll threshold
+        const tags = [
+          { id: 'tag1', start: 0.2 },
+          { id: 'tag2', start: 0.3 },
+          { id: 'tag3', start: 0.4 },
+          { id: 'tag4', start: 0.5 },
+          { id: 'tag5', start: 0.6 },
+          { id: 'tag6', start: 0.7 }
+        ];
+
+        tags.forEach(t => {
+          const tagEl = document.getElementById(t.id);
+          if (tagEl) {
+            if (explodeFactor >= t.start) {
+              tagEl.classList.add('visible');
+            } else {
+              tagEl.classList.remove('visible');
+            }
+          }
+        });
+      }
+    });
+
+    // Cabling Spec Studio Interactive Data
+    const specData = {
+      cat6a: {
+        title: 'Cat6A S/FTP Shielded Copper System',
+        sub: 'ANSI/TIA-568-C.2 & ISO/IEC 11801 Class EA Certified',
+        fluke: 'FLUKE PASS :: 500 MHz',
+        bandwidth: '10 Gbps @ 100m',
+        shield: 'Individual Pair Foil',
+        poe: 'Type 4 (90W)',
+        desc: 'Engineered for high-density 10 Gigabit Ethernet horizontal runs. Features foil shielding per pair plus an outer tinned copper braid to eliminate Alien Crosstalk (AXT) in complex industrial riser shafts.',
+        freq: '500 MHz MAX FREQ',
+        gauge: '85%'
+      },
+      cat7: {
+        title: 'Cat7 S/FTP High-Speed Backbone Trunk',
+        sub: 'ISO/IEC 11801 Class F Specifications',
+        fluke: 'FLUKE PASS :: 600 MHz',
+        bandwidth: '10G / 40G Sub-30m',
+        shield: 'Screened Fully Shielded',
+        poe: 'High-Power PoE++',
+        desc: 'Ultra-low attenuation trunking cable designed for data centers and critical CCTV aggregation nodes requiring maximum noise immunity against heavy machinery interference.',
+        freq: '600 MHz MAX FREQ',
+        gauge: '92%'
+      },
+      fiber: {
+        title: 'OS2 Singlemode Optical Fiber Backbone',
+        sub: 'ITU-T G.652.D & ISO/IEC 11801 OS2 Standards',
+        fluke: 'OTDR TESTED :: 1310/1550nm',
+        bandwidth: '100 Gbps @ 10km',
+        shield: 'Armored Loose Tube',
+        poe: 'Composite Power Line',
+        desc: 'Immune to electromagnetic interference with near-zero signal loss over long distances. Essential for campus-wide IP security networks and inter-building riser links.',
+        freq: '100 Gbps BACKBONE',
+        gauge: '100%'
+      },
+      rack: {
+        title: '42U Industrial Server & NVR Chassis Rack',
+        sub: 'EIA-310-E Standard Heavy-Duty Enclosure',
+        fluke: 'THERMAL CLIMATE PASS',
+        bandwidth: '48-Port 10G Switches',
+        shield: 'Perforated Mesh Airflow',
+        poe: '2400W Redundant PSU',
+        desc: 'Rigid 42U rack setup featuring intelligent PDU power management, organized cable management wireways, active thermostatic cooling fans, and biometric access controls.',
+        freq: 'HEAVY INDUSTRIAL RACK',
+        gauge: '95%'
+      }
+    };
+
+    function loadSpec(key) {
+      const data = specData[key];
+      if (!data) return;
+
+      const tabs = document.querySelectorAll('.spec-tab');
+      tabs.forEach(t => t.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+
+      document.getElementById('specTitle').textContent = data.title;
+      document.getElementById('specSub').textContent = data.sub;
+      document.getElementById('flukeStatus').textContent = data.fluke;
+      document.getElementById('specBandwidth').textContent = data.bandwidth;
+      document.getElementById('specShield').textContent = data.shield;
+      document.getElementById('specPoe').textContent = data.poe;
+      document.getElementById('specDesc').textContent = data.desc;
+      document.getElementById('freqLabel').textContent = data.freq;
+      document.getElementById('gaugeFill').style.width = data.gauge;
+    }
+  </script>
 </body>
 </html>
