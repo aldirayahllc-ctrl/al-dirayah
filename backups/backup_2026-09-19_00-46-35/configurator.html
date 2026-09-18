@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Bespoke Lift Cabin Configurator | Al Dirayah Electromechanical Contracting LLC — Abu Dhabi</title>
+  <meta name="description" content="Customize luxury elevator cabin finishes, materials, COP operating panels, lighting profiles, and technical specs with Al Dirayah's interactive 3D configurator studio.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg: #0E1115;
+      --surface: #151A20;
+      --surface-2: #1B2128;
+      --ink-2: #12161B;
+      --amber: #E08A1E;
+      --amber-lt: #F5A93C;
+      --amber-dim: rgba(224,138,30,0.18);
+      --white: #FFFFFF;
+      --paper: #E2E8F0;
+      --steel: #64748B;
+      --steel-lt: #94A3B8;
+      --line: rgba(255,255,255,0.08);
+      --line-2: #3A4550;
+      --f-d: 'Barlow Condensed', sans-serif;
+      --f-m: 'IBM Plex Mono', monospace;
+      --f-s: 'Inter', sans-serif;
+      --ease: cubic-bezier(.16,1,.3,1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; background: var(--bg); color: var(--paper); font-family: var(--f-s); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    body { overflow-x: hidden; position: relative; width: 100%; }
+
+    /* Canvas background */
+    #dust { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 1; opacity: .45; }
+    
+    /* Vertical grid lines */
+    .ticks { position: fixed; inset: 0; pointer-events: none; z-index: 2; opacity: .12; background-image: linear-gradient(to bottom, var(--amber) 1px, transparent 1px); background-size: 100% 70px; }
+
+    /* Header Nav */
+    header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; background: rgba(14,17,21,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+    .brand-logo { display: flex; align-items: center; gap: .7rem; text-decoration: none; font-family: var(--f-d); font-size: 1.35rem; color: var(--white); font-weight: 700; letter-spacing: 1px; flex: none; }
+    .nav-pill { display: flex; align-items: center; gap: .3rem; background: rgba(21,26,32,0.9); border: 1px solid var(--line-2); border-radius: 40px; padding: 4px; overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
+    .nav-link { padding: .45rem 1rem; border-radius: 30px; font-family: var(--f-m); font-size: .75rem; text-decoration: none; color: var(--steel-lt); transition: all .25s; text-transform: uppercase; letter-spacing: .5px; white-space: nowrap; flex: none; }
+    .nav-link:hover, .nav-link.active { background: var(--amber); color: var(--bg); font-weight: 600; box-shadow: 0 0 15px rgba(224,138,30,0.4); }
+    .btn-survey-nav { background: var(--amber); color: var(--bg); border: none; font-family: var(--f-d); font-size: 1rem; font-weight: 700; padding: .55rem 1.2rem; border-radius: 6px; cursor: pointer; text-decoration: none; letter-spacing: 1px; transition: transform .2s, background .2s; flex: none; white-space: nowrap; }
+    .btn-survey-nav:hover { background: var(--amber-lt); transform: translateY(-2px); }
+
+    @media (max-width: 768px) {
+      header { padding: .8rem 1rem; flex-wrap: wrap; justify-content: space-between; }
+      .nav-pill { order: 3; width: 100%; margin-top: .4rem; justify-content: flex-start; }
+      .btn-survey-nav { font-size: .88rem; padding: .45rem 1rem; }
+    }
+
+    /* Main Container */
+    main { position: relative; z-index: 10; padding-top: 7rem; min-height: 100vh; }
+    .wrap { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* Hero */
+    .hero-config { text-align: center; margin-bottom: 2.5rem; }
+    .eyebrow { font-family: var(--f-m); font-size: .75rem; color: var(--amber-lt); text-transform: uppercase; letter-spacing: 2px; display: inline-block; margin-bottom: .6rem; }
+    h1.page-title { font-family: var(--f-d); font-size: clamp(2.2rem, 5vw, 4.4rem); color: var(--white); text-transform: uppercase; line-height: 1.05; margin-bottom: .8rem; }
+    .page-desc { color: var(--steel-lt); font-size: 1.02rem; max-width: 720px; margin: 0 auto; line-height: 1.6; }
+
+    /* Configurator Workspace Grid */
+    .config-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 2.5rem; align-items: start; margin-bottom: 4rem; }
+    @media (max-width: 900px) {
+      .config-grid { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
+    /* Preview Card - Mobile Sticky Sticky Top */
+    .preview-card { background: rgba(21,26,32,0.95); border: 1px solid var(--amber-dim); border-radius: 16px; padding: 1.8rem; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.7); position: sticky; top: 6rem; z-index: 20; backdrop-filter: blur(10px); }
+    .preview-svg-wrap { width: 100%; max-width: 340px; margin: 0 auto; border-radius: 12px; overflow: hidden; background: #0A0D10; padding: .8rem; border: 1px solid var(--line); }
+    .active-badge { margin-top: 1.2rem; font-family: var(--f-m); font-size: .8rem; color: var(--amber-lt); background: rgba(224,138,30,0.12); padding: .5rem 1rem; border-radius: 30px; border: 1px solid var(--amber-dim); display: inline-block; word-break: break-word; }
+
+    @media (max-width: 900px) {
+      .preview-card { position: relative; top: 0; padding: 1.2rem; }
+      .preview-svg-wrap { max-width: 260px; padding: .5rem; }
+    }
+
+    /* Controls Panel */
+    .controls-panel { background: rgba(21,26,32,0.7); border: 1px solid var(--line-2); border-radius: 16px; padding: 1.8rem; }
+    .section-label { font-family: var(--f-d); font-size: 1.3rem; color: var(--white); margin-bottom: 1rem; letter-spacing: 1px; text-transform: uppercase; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem; }
+    .section-label span { font-family: var(--f-m); font-size: .72rem; color: var(--amber-lt); }
+
+    /* Swatches Grid */
+    .swatches-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .9rem; margin-bottom: 1.8rem; }
+    @media (max-width: 480px) { .swatches-grid { grid-template-columns: 1fr; } }
+
+    .sw-card { background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: .9rem 1rem; cursor: pointer; transition: all .25s; display: flex; align-items: center; gap: .8rem; text-align: left; min-height: 54px; -webkit-tap-highlight-color: transparent; }
+    .sw-card:hover, .sw-card:active { border-color: var(--amber-lt); background: rgba(224,138,30,0.08); }
+    .sw-card.active { border-color: var(--amber); background: rgba(224,138,30,0.14); box-shadow: 0 0 18px rgba(224,138,30,0.3); }
+    .sw-chip { width: 38px; height: 30px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); flex: none; }
+    .sw-info b { display: block; font-family: var(--f-m); font-size: .62rem; color: var(--amber-lt); letter-spacing: 1px; margin-bottom: .2rem; }
+    .sw-info span { font-family: var(--f-s); font-size: .85rem; color: var(--white); font-weight: 600; display: block; line-height: 1.2; }
+
+    /* Capacity Range Sliders */
+    .control-group { margin-bottom: 1.2rem; }
+    .control-group label { display: flex; justify-content: space-between; font-family: var(--f-m); font-size: .78rem; color: var(--steel-lt); margin-bottom: .4rem; }
+    .control-group label b { color: var(--amber-lt); }
+    .control-group input[type="range"] { width: 100%; accent-color: var(--amber); height: 6px; cursor: pointer; }
+
+    /* Spec Box */
+    .spec-summary-box { background: #0A0D10; border: 1px solid var(--line-2); border-radius: 10px; padding: 1.2rem; margin-top: 1.5rem; word-break: break-word; }
+    .spec-summary-box code { display: block; font-family: var(--f-m); font-size: .75rem; color: var(--steel-lt); line-height: 1.65; white-space: pre-wrap; margin-bottom: .8rem; }
+
+    /* Action Buttons */
+    .btn-act-primary { width: 100%; background: var(--amber); color: var(--bg); font-family: var(--f-d); font-size: 1.1rem; font-weight: 700; padding: .85rem; border: none; border-radius: 6px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: all .2s; min-height: 48px; }
+    .btn-act-primary:hover { background: var(--amber-lt); box-shadow: 0 0 25px rgba(245,169,60,0.4); }
+    .btn-act-sec { width: 100%; background: transparent; color: var(--amber-lt); border: 1px solid var(--amber); font-family: var(--f-m); font-size: .82rem; font-weight: 600; padding: .75rem; border-radius: 6px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; margin-top: .8rem; transition: all .2s; min-height: 48px; }
+    .btn-act-sec:hover { background: rgba(224,138,30,0.15); }
+
+    /* Expansion Modules Grid */
+    .expansion-section { margin-bottom: 5rem; }
+    .exp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.4rem; margin-top: 1.5rem; }
+    .exp-card { background: rgba(21,26,32,0.7); border: 1px solid var(--line-2); border-radius: 12px; padding: 1.5rem; transition: all .3s; }
+    .exp-card:hover { border-color: var(--amber); transform: translateY(-3px); }
+    .exp-card .status { font-family: var(--f-m); font-size: .68rem; color: var(--amber-lt); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: .4rem; display: inline-block; }
+    .exp-card h3 { font-family: var(--f-d); font-size: 1.3rem; color: var(--white); margin-bottom: .5rem; }
+    .exp-card p { font-size: .88rem; color: var(--steel-lt); line-height: 1.5; }
+
+    /* Footer CTA Banner & 3-Column Grid */
+    #ph { background: var(--ink-2); border-top: 1px solid var(--line); padding: 4rem 0 3rem; }
+    .footer-grid { display: grid; grid-template-columns: 1.8fr 1.2fr 1.4fr; gap: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--line); }
+    @media (max-width: 900px) {
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
+    /* Floor Indicator */
+    #fi { position: fixed; right: 1rem; top: 50%; transform: translateY(-50%); z-index: 90; display: flex; flex-direction: column; align-items: center; gap: .4rem; background: rgba(21,26,32,0.9); border: 1px solid var(--line-2); padding: .8rem .5rem; border-radius: 30px; font-family: var(--f-m); font-size: .7rem; color: var(--steel-lt); }
+    #fi .fi-num { color: var(--amber-lt); font-weight: 700; font-size: 1rem; }
+    @media (max-width: 600px) { #fi { display: none; } }
+  </style>
+</head>
+<body>
+
+  <!-- Dust Canvas -->
+  <canvas id="dust"></canvas>
+  <div class="ticks"></div>
+
+  <!-- Header Navigation -->
+  <header>
+    <a href="index.html" class="brand-logo">
+      <svg viewBox="0 0 120 120" style="width:30px;height:30px;flex:none" aria-hidden="true">
+        <rect width="120" height="120" rx="20" fill="#E08A1E"/>
+        <path d="M35 49 L60 29 L85 49" fill="none" stroke="#0E1115" stroke-width="10"/>
+        <path d="M35 70 L60 50 L85 70" fill="none" stroke="#0E1115" stroke-width="10" opacity=".62"/>
+        <path d="M35 91 L60 71 L85 91" fill="none" stroke="#0E1115" stroke-width="10" opacity=".34"/>
+      </svg>
+      <span>AL DIRAYAH</span>
+    </a>
+
+    <div class="nav-pill">
+      <a href="index.html" class="nav-link">HUB</a>
+      <a href="lifts.html" class="nav-link">LIFTS</a>
+      <a href="escalators.html" class="nav-link">ESCALATORS</a>
+      <a href="configurator.html" class="nav-link active">CONFIGURATOR</a>
+    </div>
+
+    <button onclick="openSurveyModal('Configurator Page')" class="btn-survey-nav">REQUEST SURVEY</button>
+  </header>
+
+  <!-- Floor Indicator -->
+  <div id="fi">
+    <span>▲</span>
+    <span class="fi-num">CFG</span>
+    <span style="font-size:.6rem;color:var(--steel)">STUDIO</span>
+    <span>▼</span>
+  </div>
+
+  <!-- Main Workspace -->
+  <main>
+    <div class="wrap">
+      
+      <!-- Hero -->
+      <div class="hero-config">
+        <span class="eyebrow">CUSTOMIZATION STUDIO — INTERACTIVE CABIN DESIGNER</span>
+        <h1 class="page-title">Bespoke Elevator Cabin Configurator</h1>
+        <p class="page-desc">Customize luxury interior wall finishes, COP operating panels, flooring, ceiling lighting profiles, and architectural handrails. Built for consultants, architects, and building owners.</p>
+      </div>
+
+      <!-- Configurator Grid -->
+      <div class="config-grid">
+        
+        <!-- Live Preview Card (Sticky Top) -->
+        <div class="preview-card">
+          <div class="preview-svg-wrap">
+            <svg id="cabSvgStudio" viewBox="0 0 320 400" style="width:100%;height:auto">
+              <!-- Ceiling -->
+              <polygon points="20,32 300,32 240,80 80,80" fill="#232A33"/>
+              <rect id="cLight" x="100" y="45" width="120" height="12" rx="5" fill="#FFEAA7"/>
+              <!-- Back Wall -->
+              <polygon id="cWallB" points="80,80 240,80 240,330 80,330" fill="#4A5560" stroke="#2B3540" stroke-width="2"/>
+              <!-- Left Wall -->
+              <polygon id="cWallL" points="20,32 80,80 80,330 20,378" fill="#3A434D"/>
+              <!-- Right Wall -->
+              <polygon id="cWallR" points="300,32 240,80 240,330 300,378" fill="#333C46"/>
+              <!-- Floor -->
+              <polygon id="cFloor" points="20,378 300,378 240,330 80,330" fill="#2A313A"/>
+              <!-- Handrail -->
+              <rect id="cRail" x="88" y="228" width="144" height="6" rx="3" fill="#98A3B0"/>
+              <!-- COP Panel -->
+              <rect x="250" y="140" width="22" height="110" rx="4" fill="#1B2128" stroke="#E08A1E" stroke-width="1.5"/>
+              <g fill="#F5A93C">
+                <circle cx="261" cy="158" r="3.5"/><circle cx="261" cy="174" r="3.5"/>
+                <circle cx="261" cy="190" r="3.5"/><circle cx="261" cy="206" r="3.5"/>
+              </g>
+              <rect x="253" y="222" width="16" height="12" rx="2" fill="#0E1115"/>
+              <text x="261" y="231" text-anchor="middle" font-family="monospace" font-size="8" fill="#F5A93C">PH</text>
+            </svg>
+          </div>
+
+          <div class="active-badge" id="studioLabel">ACTIVE FINISH: ST-01 Brushed Stainless Steel</div>
+        </div>
+
+        <!-- Controls Panel -->
+        <div class="controls-panel">
+          
+          <div class="section-label">
+            1. Cabin Wall Finishes <span>MATERIAL SWATCHES</span>
+          </div>
+
+          <div class="swatches-grid">
+            <div class="sw-card active" onclick="setStudioSwatch(this, 'ST-01 Brushed Stainless Steel', '#4A5560', '#3A434D', '#333C46', '#2A313A', '#98A3B0')">
+              <div class="sw-chip" style="background:#4A5560"></div>
+              <div class="sw-info">
+                <b>ST-01</b>
+                <span>Brushed Steel</span>
+              </div>
+            </div>
+
+            <div class="sw-card" onclick="setStudioSwatch(this, 'GD-02 Executive Champagne Gold', '#D4AF37', '#B8860B', '#9A7B1C', '#1A1810', '#F5A93C')">
+              <div class="sw-chip" style="background:#D4AF37"></div>
+              <div class="sw-info">
+                <b>GD-02</b>
+                <span>Champagne Gold</span>
+              </div>
+            </div>
+
+            <div class="sw-card" onclick="setStudioSwatch(this, 'MR-03 High-Mirror Onyx Reflective', '#2C353F', '#1E252D', '#161C23', '#0D1117', '#E2E8F0')">
+              <div class="sw-chip" style="background:#2C353F"></div>
+              <div class="sw-info">
+                <b>MR-03</b>
+                <span>Mirror Onyx</span>
+              </div>
+            </div>
+
+            <div class="sw-card" onclick="setStudioSwatch(this, 'WD-04 Royal Teak Wood Veneer', '#8B5A2B', '#6E441F', '#543316', '#2B1A0B', '#D4AF37')">
+              <div class="sw-chip" style="background:#8B5A2B"></div>
+              <div class="sw-info">
+                <b>WD-04</b>
+                <span>Royal Teak Wood</span>
+              </div>
+            </div>
+
+            <div class="sw-card" onclick="setStudioSwatch(this, 'GR-04 Graphite & Brass Accents', '#2A313A', '#222831', '#1C222A', '#171C23', '#E08A1E')">
+              <div class="sw-chip" style="background:#2A313A"></div>
+              <div class="sw-info">
+                <b>GR-04</b>
+                <span>Graphite & Brass</span>
+              </div>
+            </div>
+
+            <div class="sw-card" onclick="setStudioSwatch(this, 'MB-06 Italian Marble Composite', '#E2E8F0', '#CBD5E1', '#94A3B8', '#1E293B', '#D4AF37')">
+              <div class="sw-chip" style="background:#E2E8F0"></div>
+              <div class="sw-info">
+                <b>MB-06</b>
+                <span>Italian Marble</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Capacity & Speed Sliders -->
+          <div class="section-label" style="margin-top:1.8rem">
+            2. Lift Parameters <span>CAPACITY &amp; SPEED</span>
+          </div>
+
+          <div class="control-group">
+            <label>Rated Load Capacity: <b id="valLoad">1600 kg (21 Persons)</b></label>
+            <input type="range" id="rngLoad" min="400" max="3200" step="100" value="1600" oninput="updateParams()">
+          </div>
+
+          <div class="control-group">
+            <label>Rated Speed: <b id="valSpeed">1.75 m/s</b></label>
+            <input type="range" id="rngSpeed" min="0.63" max="4.0" step="0.25" value="1.75" oninput="updateParams()">
+          </div>
+
+          <div class="section-label" style="margin-top:1.8rem">
+            3. Technical Specification <span>SUMMARY EXPORT</span>
+          </div>
+
+          <div class="spec-summary-box">
+            <code id="studioSpecCode">Model: Al Dirayah Bespoke AD-T1600
+Cabin Wall Finish: ST-01 Brushed Stainless Steel
+Rated Load: 1600 kg (21 Persons) | Rated Speed: 1.75 m/s
+Handrail: Anodized Metallic Rail | COP: Touch Microprocessor
+Safety Standard: EN 81-20/50 | ISO 25745 Class A+++</code>
+          </div>
+
+          <div style="margin-top:1.2rem">
+            <button onclick="copyStudioSpec()" class="btn-act-primary">📋 COPY SPECIFICATION TO CLIPBOARD</button>
+            <button onclick="openSurveyModal('Configurator Studio: ' + document.getElementById('studioLabel').textContent)" class="btn-act-sec">REQUEST CONSULTANT SITE AUDIT →</button>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Expansion Modules Section -->
+      <div class="expansion-section">
+        <div class="section-label" style="font-size:1.6rem;margin-bottom:1.2rem">
+          Advanced Customization Modules <span>EXPANSION SUITE</span>
+        </div>
+
+        <div class="exp-grid">
+          <div class="exp-card">
+            <span class="status">✓ ACTIVE</span>
+            <h3>01 · Wall Panel Finishes</h3>
+            <p>Select luxury metallic, wood veneer, or composite marble wall cladding options.</p>
+          </div>
+
+          <div class="exp-card">
+            <span class="status">✓ ACTIVE</span>
+            <h3>02 · Ceiling Illumination</h3>
+            <p>Custom LED perimeter illumination, indirect warmth, and starlight ceiling profiles.</p>
+          </div>
+
+          <div class="exp-card">
+            <span class="status">✓ ACTIVE</span>
+            <h3>03 · COP Operating Panels</h3>
+            <p>TFT multimedia displays, touch-screen call buttons, and biometric access controls.</p>
+          </div>
+
+          <div class="exp-card">
+            <span class="status" style="color:var(--steel)">COMING SOON</span>
+            <h3>04 · Flooring &amp; Inlays</h3>
+            <p>Granite stone, custom logo brass inlays, and anti-bacterial resin flooring solutions.</p>
+          </div>
+
+          <div class="exp-card">
+            <span class="status" style="color:var(--steel)">COMING SOON</span>
+            <h3>05 · Landing Entrance Doors</h3>
+            <p>Full glass panoramic landing doors, gold titanium frames, and fire-rated shutters.</p>
+          </div>
+
+          <div class="exp-card">
+            <span class="status" style="color:var(--steel)">COMING SOON</span>
+            <h3>06 · IoT &amp; Air Purification</h3>
+            <p>Built-in HEPA UV-C air sterilization units and real-time remote telemetry diagnostics.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Master 3-Column Footer Grid -->
+  <footer id="ph">
+    <div class="wrap">
+      
+      <!-- CTA Banner -->
+      <div style="background:linear-gradient(135deg, rgba(224,138,30,0.14), rgba(21,26,32,0.95));border:1px solid var(--amber);border-radius:14px;padding:2.5rem 2rem;box-shadow:0 20px 50px rgba(0,0,0,0.6);margin-bottom:3.5rem">
+        <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem">
+          <div style="max-width:680px">
+            <span class="eyebrow">DIRECT TECHNICAL CONSULTATION</span>
+            <h2 style="font-size:clamp(1.8rem,4vw,3.2rem);color:var(--white);margin-bottom:.6rem;line-height:1.05">Book a Site Technical Survey</h2>
+            <p style="color:var(--steel-lt);font-size:1rem;margin:0;line-height:1.6">Provide building rise, number of stops, or existing OEM status. Our senior engineers measure, inspect, and deliver a comprehensive technical proposal within 24 hours.</p>
+          </div>
+          <div>
+            <button onclick="openSurveyModal('Configurator CTA')" class="btn-survey-nav" style="font-size:1.05rem;padding:.9rem 1.8rem">Request On-Site Survey &rarr;</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3-Column Footer -->
+      <div class="footer-grid">
+        
+        <!-- Col 1: Branding -->
+        <div>
+          <div style="display:flex;align-items:center;gap:.7rem;font-family:var(--f-d);font-size:1.35rem;color:var(--white);font-weight:700;margin-bottom:1rem">
+            <svg viewBox="0 0 120 120" style="width:30px;height:30px;flex:none" aria-hidden="true">
+              <rect width="120" height="120" rx="20" fill="#E08A1E"/>
+              <path d="M35 49 L60 29 L85 49" fill="none" stroke="#0E1115" stroke-width="10"/>
+              <path d="M35 70 L60 50 L85 70" fill="none" stroke="#0E1115" stroke-width="10" opacity=".62"/>
+              <path d="M35 91 L60 71 L85 91" fill="none" stroke="#0E1115" stroke-width="10" opacity=".34"/>
+            </svg>
+            <span>AL DIRAYAH</span>
+          </div>
+          <p style="font-size:.88rem;color:var(--steel-lt);line-height:1.6;margin-bottom:1rem">Al Dirayah Electromechanical Contracting LLC. Certified vertical transportation and building infrastructure engineering specialists in Abu Dhabi and across the United Arab Emirates.</p>
+          <div style="font-family:var(--f-m);font-size:.85rem;color:var(--amber-lt);letter-spacing:1.5px">الدراية للمقاولات الكهروميكانيكية</div>
+        </div>
+
+        <!-- Col 2: Navigation Links -->
+        <div>
+          <h4 style="font-family:var(--f-d);font-size:1.1rem;color:var(--white);margin-bottom:1rem;letter-spacing:1px">DIVISIONS &amp; SERVICES</h4>
+          <ul style="list-style:none;display:grid;gap:.5rem;font-size:.88rem">
+            <li><a href="lifts.html" style="color:var(--steel-lt);text-decoration:none">Vertical Lifts &amp; Elevators</a></li>
+            <li><a href="escalators.html" style="color:var(--steel-lt);text-decoration:none">Escalators &amp; Moving Walkways</a></li>
+            <li><a href="residential-elevators.html" style="color:var(--steel-lt);text-decoration:none">Residential Villa Lifts</a></li>
+            <li><a href="commercial-elevators.html" style="color:var(--steel-lt);text-decoration:none">Commercial Tower Elevators</a></li>
+            <li><a href="maintenance-modernization.html" style="color:var(--steel-lt);text-decoration:none">24/7 Maintenance &amp; AMC</a></li>
+            <li><a href="configurator.html" style="color:var(--amber-lt);text-decoration:none">Interactive Cabin Configurator</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Abu Dhabi HQ -->
+        <div>
+          <h4 style="font-family:var(--f-d);font-size:1.1rem;color:var(--white);margin-bottom:1rem;letter-spacing:1px">ABU DHABI HEADQUARTERS</h4>
+          <div style="display:grid;gap:.7rem;font-size:.85rem;color:var(--steel-lt)">
+            <div><b style="color:var(--white);display:block;margin-bottom:.2rem">Office Address:</b>Mussafah Industrial Area, Abu Dhabi, UAE</div>
+            <div><b style="color:var(--white);display:block;margin-bottom:.2rem">24/7 Emergency Dispatch:</b><span style="font-family:var(--f-m);color:var(--amber-lt)">+971 2 555 0192</span></div>
+            <div><b style="color:var(--white);display:block;margin-bottom:.2rem">Official Email:</b><span style="font-family:var(--f-m);color:var(--amber-lt)">service@aldirayah.ae</span></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Copyright -->
+      <div style="padding-top:1.5rem;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;font-family:var(--f-m);font-size:.8rem;color:var(--steel)">
+        <span>© 2026 Al Dirayah Electromechanical Contracting LLC. All rights reserved.</span>
+        <span style="color:var(--amber-lt)">Keep it moving · الحركة لا تتوقف</span>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Interactive Scripts -->
+  <script>
+    // Dust Particles Canvas
+    (function(){
+      var canvas = document.getElementById("dust");
+      if(!canvas) return;
+      var ctx = canvas.getContext("2d");
+      var w, h, particles = [];
+      function resize(){
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+      }
+      window.addEventListener("resize", resize);
+      resize();
+      for(var i=0; i<45; i++){
+        particles.push({
+          x: Math.random()*w,
+          y: Math.random()*h,
+          r: Math.random()*1.5 + 0.5,
+          dx: (Math.random()-0.5)*0.3,
+          dy: (Math.random()-0.5)*0.3,
+          a: Math.random()*0.5 + 0.2
+        });
+      }
+      function draw(){
+        ctx.clearRect(0,0,w,h);
+        for(var i=0; i<particles.length; i++){
+          var p = particles[i];
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+          ctx.fillStyle = "rgba(245,169,60," + p.a + ")";
+          ctx.fill();
+          p.x += p.dx; p.y += p.dy;
+          if(p.x<0) p.x=w; if(p.x>w) p.x=0;
+          if(p.y<0) p.y=h; if(p.y>h) p.y=0;
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+
+    var currentFinish = "ST-01 Brushed Stainless Steel";
+
+    // Swatch Selector Engine
+    function setStudioSwatch(card, name, b, l, r, f, rail) {
+      document.querySelectorAll('.sw-card').forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+
+      document.getElementById('cWallB').setAttribute('fill', b);
+      document.getElementById('cWallL').setAttribute('fill', l);
+      document.getElementById('cWallR').setAttribute('fill', r);
+      document.getElementById('cFloor').setAttribute('fill', f);
+      document.getElementById('cRail').setAttribute('fill', rail);
+
+      currentFinish = name;
+      document.getElementById('studioLabel').textContent = "ACTIVE FINISH: " + name;
+      updateParams();
+    }
+
+    function updateParams() {
+      var load = document.getElementById('rngLoad').value;
+      var speed = document.getElementById('rngSpeed').value;
+      var persons = Math.round(load / 75);
+
+      document.getElementById('valLoad').textContent = load + " kg (" + persons + " Persons)";
+      document.getElementById('valSpeed').textContent = speed + " m/s";
+
+      var code = "Model: Al Dirayah Bespoke AD-T1600\n" +
+                 "Cabin Wall Finish: " + currentFinish + "\n" +
+                 "Rated Load: " + load + " kg (" + persons + " Persons) | Rated Speed: " + speed + " m/s\n" +
+                 "Handrail: Custom Anodized Rail | COP: Touch Microprocessor\n" +
+                 "Safety Standard: EN 81-20/50 | ISO 25745 Class A+++";
+      
+      document.getElementById('studioSpecCode').textContent = code;
+    }
+
+    function copyStudioSpec() {
+      var text = document.getElementById('studioSpecCode').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Specification summary copied to clipboard!");
+      }).catch(() => {
+        alert("Spec summary ready: " + text);
+      });
+    }
+
+    function openSurveyModal(src) {
+      alert("Technical Inspection Request for [" + src + "] recorded. Our senior engineer will contact you shortly.");
+    }
+  </script>
+</body>
+</html>
